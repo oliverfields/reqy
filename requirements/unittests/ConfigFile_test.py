@@ -11,7 +11,7 @@ class TestConfigFile():
 		assert cf.assigned_to == 'her'
 		assert cf.created_by == 'him'
 		assert cf.created_on == '2000-06-26'
-		assert description == 'The discription must contain\nline\nbreaks\nelse is does not count'
+		assert cf.description == 'The discription must contain\nline\nbreaks\nelse is does not count'
 		assert cf.depends_on == 'an array'
 		assert cf.documents == 'an array'
 		assert cf.estimated_effort == 10

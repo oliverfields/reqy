@@ -1,8 +1,15 @@
-from ConfigFile import *
+from Requirement import *
 
-cf = ConfigFile()
-cf.load_config_from_file('test_data')
+cf = Requirement()
+cf.load_config_from_file('unittests/test_data/valid_requirement_config.req')
+
+for setting in cf.valid_settings.keys():
+	if hasattr(cf, str(setting)):
+		print 'Setting "%s" has value "%s"' % (setting, getattr(cf, str(setting)))
+
+'''
 if cf.assigned_on == '':
 	print 'yay'
 
 print cf.assigned_on
+'''
