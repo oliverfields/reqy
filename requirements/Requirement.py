@@ -5,8 +5,10 @@ class Requirement(ConfigFile):
 	def __init__(self):
 		self.valid_settings = {
 				'test': '',
+				'test1': '',
 				'test2': '',
 				'test3': '',
+				'test4': '',
 			}
 		self.valid_file_extension = 'req'
 

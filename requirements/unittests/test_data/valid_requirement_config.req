@@ -1,6 +1,6 @@
 # And a comment
 Test: common
-Test:
+Test1:
   Here is som content mo fo!
   and here is some more
   andsomemore
@@ -8,3 +8,10 @@ Test:
   and even more
 Test2:yoooooooo
 Test3 : a fucked up setting
+test4   :
+  another   
+  multi
+  because
+  I 
+  
+  can
