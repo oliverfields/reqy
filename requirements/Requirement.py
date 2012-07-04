@@ -39,4 +39,12 @@ class Requirement(ConfigFile):
 		if self.is_valid_status(self.status) == False:
 			report_error(1, '%s: Status "%s" is not valid' % (self._file_name, self.status))
 
-#		if self.status != '
+		if self.description == '':
+			report_error(1, '%s: Description field is empty/missing' % (self._file_name))
+
+		if self.rationale == '':
+			report_error(1, '%s: Rationale field is empty/missing' % (self._file_name))
+
+		# If status is neither approved or elaboration reject reason must be stated
+		if (self.status == 'rejected' or self.status == 'postponed') and self.status_reason == '':
+			report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_name, self.status))

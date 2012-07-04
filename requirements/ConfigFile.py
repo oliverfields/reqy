@@ -55,15 +55,15 @@ class ConfigFile:
 					value = ''
 
 					# Break if no lines left
-					if i >= max_lines:
+					if i > max_lines:
 						break
 
 					# Skip comments
 					if lines[i].lstrip().startswith('#'):
 						i += 1
 						continue
-					# Skip blank lines
-					elif lines[i] == '\n':
+					# Skip lines that only contain whitespace
+					elif lines[i].strip() == '':
 						i += 1
 						continue
 					# Multi line settings
@@ -75,7 +75,7 @@ class ConfigFile:
 						while True:
 							if n == max_lines:
 								value = multi_line_value + lines[n].lstrip('  ')
-								i = n
+								i = max_lines + 1 # this was last line, so next loop will abort
 								break
 							elif n > max_lines:
 								i = n
@@ -105,7 +105,9 @@ class ConfigFile:
 					key = key.replace(' ', '_')
 					value = value.strip()
 
-                			self.assign_attribute(key, value) 
+					#print 'i: %s, Key: "%s", Value: "%s"' % (i, key, value)
+
+					self.assign_attribute(key, value)
 
 			finally:
 				conf_file.close()
