@@ -29,24 +29,8 @@ class ConfigFile:
 		else:
 			report_error(1, '%s: Key "%s" is not valid' % (self._file_name, key))
 
-
-
-	def parse_config_setting(self, setting):
-		""" Parse each setting and remove comments, pass on for assignment """
-		#print '%s' % setting
-		parsed_setting = setting.partition(':')
-		key = parsed_setting[0].strip()
-		key = key.lower()
-		value = parsed_setting[2].strip()
-
-                self.assign_attribute(key, value) 
-
-	def chop_newline(self, string):
-		string = string.rstrip('\n')
-		return string
-
 	def load_config_from_file(self, file_name):
-		""" Read config file and pass key values on """
+		""" Read config file and pass key values on for assignment """
 		if file_name.endswith(self.valid_file_extension) == False:
 			report_error(1, '%s: Invalid file extension, must be ".%s"' % (file_name, self.valid_file_extension))
 			return
@@ -59,44 +43,46 @@ class ConfigFile:
 				i = 0
 				max_lines = len(lines) - 1
 
+				# Process file line by line and extract key value pairs, note
+				# that values may span multiple lines if preceeded by '^[key]:$' and
+				# indented by two spaces
 				while True:
 					key = ''
 					value = ''
 
 					# Break if no lines left
-					if i > max_lines:
+					if i >= max_lines:
 						break
 
 					# Skip comments
 					if lines[i].lstrip().startswith('#'):
-						#print 'Comment %s' % lines[i]
+						i += 1
+						continue
+					# Skip blank lines
+					elif lines[i] == '\n':
 						i += 1
 						continue
 					# Multi line settings
 					elif lines[i].rstrip().endswith(':'):
-						key = lines[i].rstrip(':')
-						#print 'Key (multiline) %s' % lines[i]
-						# Collect following lines that start with double space
+						key = lines[i].rstrip(':\n')
 						n = i + 1
 						multi_line_value = ''
+						# Collect following lines that start with double space
 						while True:
-							#print 'Multiline %s, i %s' % (n, i)
 							if n == max_lines:
-								value = multi_line_value
+								value = multi_line_value + lines[n].lstrip('  ')
 								i = n
-								print 'how'
 								break
 							elif n > max_lines:
 								i = n
 								break
 							elif lines[n].startswith('  '):
-								multi_line_value += lines[n]
+								multi_line_value += lines[n].lstrip('  ')
 								n += 1
 							# If no longer multi line set index one back and continue loop
 							else:
-								value = multi_line_value + lines[n]
-								print 'afeawf'
-								i = n
+								value = multi_line_value
+								i = n 
 								break
 					else:
 						setting = lines[i].partition(':')
@@ -109,9 +95,12 @@ class ConfigFile:
 								error_line_number = i + 1
 								report_error(1, '%s: Unable to parse line %s "%s"' % (self._file_name, error_line_number, lines[i]))
 
-					print 'line: %s, key: "%s", value: "%s"' % (i, key, value)
-					if i >= max_lines:
-						break
+					# Tidy the key and values
+					key = key.strip()
+					key = key.lower()
+					value = value.strip()
+
+                			self.assign_attribute(key, value) 
 
 			finally:
 				conf_file.close()
