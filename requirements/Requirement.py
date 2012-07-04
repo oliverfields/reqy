@@ -4,17 +4,39 @@ class Requirement(ConfigFile):
 
 	def __init__(self):
 		self.valid_settings = {
-				'test': '',
-				'test1': '',
-				'test2': '',
-				'test3': '',
-				'test4': '',
+				'assigned_on': '',
+				'assigned_to': '',
+				'created_by': '',
+				'created_on': '',
+				'description': '',
+				'depends_on': '',
+				'documents': '',
+				'estimated_effort': '',
+				'estimated_cost': '',
+				'note': '',
+				'rationale': '',
+				'rejected_by': '',
+				'status': 'elaboration',
+				'status_reason': '',
+				'todo': '',
 			}
+		self.setup_attributes()
 		self.valid_file_extension = 'req'
 
-	def validate_settings(self):
-		if hasattr(self, 'test'):
-			if self.test == '':
-				report_error(1, '%s: Test attribute can not be empty' % self._file_name)
+	def is_valid_status(self, status):
+		if status == 'elaboration' or status == 'rejected' or status == 'approved' or status == 'postponed':
+			return True
 		else:
-			report_error(1, '%s: Test attribute missing' % self._file_name)
+			return False
+
+	def validate_settings(self):
+		# Check all attributes exist
+		for key in self.valid_settings.keys():
+		  if hasattr(self, str(key)) == False:
+				report_error(1, '%s: Missing attribute "%s"' % (self._file_name, key))
+
+		# Check mandatory attributes
+		if self.is_valid_status(self.status) == False:
+			report_error(1, '%s: Status "%s" is not valid' % (self._file_name, self.status))
+
+#		if self.status != '

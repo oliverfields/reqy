@@ -14,6 +14,10 @@ class ConfigFile:
 	
 	valid_file_extension = ''
 
+	def setup_attributes(self):
+		for key in self.valid_settings.keys():
+			self.assign_attribute(str(key), self.valid_settings[key])
+
 	def validate_settings(self):
 		""" Stub function, needs to be implemented by sub class """
 		pass
@@ -22,7 +26,7 @@ class ConfigFile:
 		""" Check valid key and is so assign to object attribute """
 		is_valid_key = False
 		for valid_key in self.valid_settings.keys():
-			if key == valid_key:
+			if key.lower() == valid_key.lower():
 				is_valid_key = True
 		if is_valid_key:
 			setattr(self, str(key), value)
@@ -98,6 +102,7 @@ class ConfigFile:
 					# Tidy the key and values
 					key = key.strip()
 					key = key.lower()
+					key = key.replace(' ', '_')
 					value = value.strip()
 
                 			self.assign_attribute(key, value) 
