@@ -1,0 +1,3 @@
+Description: This fails because status is rejected, but no status reason exists
+Rationale: To test
+Status: rejected

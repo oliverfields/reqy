@@ -1,0 +1,3 @@
+Description: This fails because status is postponed, but no status reason exists
+Rationale: To test
+Status: postponed
