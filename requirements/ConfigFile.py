@@ -1,16 +1,40 @@
 from Utility import *
+import os.path
 
 class ConfigFile:
 	'''
 	Load object attributes from configuration file
 	'''
 	def __init__(self):
+		self._parent = ''
 		self._valid_file_extension = ''
 		self._file_name = ''
+		self._file_path = ''
+		self._id = ''
+		self._name = ''
+		self._pretty_name = ''
 
 	def validate_settings(self):
 		""" Stub function, needs to be implemented by sub class """
 		pass
+
+	def set_name_and_id(self, file_name):
+		""" Extract from file name the an optional id prefix and a short name, discarding the file extension """
+		file_name = os.path.basename(file_name)
+		if file_name.startswith('_'):
+				report_error(1, '%s: File name cannot start with underscore, valid format is "[id_]a-nice-name.%s"' % (self._file_path, self._valid_file_extension))
+		file_name = file_name.rstrip(''.join(self._valid_file_extension))
+		file_name = file_name.rstrip('.')
+		file_strings = file_name.partition('_')
+		# If two last elements are empty the underscore wasn't there
+		if file_strings[1] == '' and file_strings[2] == '':
+			self._name = file_strings[0]
+			self._id = ''
+			self._pretty_name = self._name.replace('-', ' ').capitalize()
+		else:
+			self._name = file_strings[2]
+			self._id = file_strings[0]
+			self._pretty_name = '%s %s' % (self._id, self._name.replace('-', ' ').capitalize())
 
 	def assign_attribute(self, key, value):
 		""" Check valid key and is so assign to object attribute """
@@ -28,11 +52,15 @@ class ConfigFile:
 
 	def load_config_from_file(self, file_name):
 		""" Read config file and pass key values on for assignment """
+		self._file_name = os.path.basename(file_name)
+		self._file_path = file_name
+
 		if file_name.endswith(self._valid_file_extension) == False:
-			report_error(1, '%s: Invalid file extension, must be ".%s"' % (file_name, self._valid_file_extension))
+			report_error(1, '%s: Invalid file extension, must be ".%s"' % (self._file_path, self._valid_file_extension))
 			return
 
-		self._file_name = file_name
+		self.set_name_and_id(file_name)
+
 		try:
 			conf_file = open(file_name, "r")
 			try:
@@ -90,7 +118,7 @@ class ConfigFile:
 						else:
 								# Something strange happend, reset counter 1 and exit with error
 								error_line_number = i + 1
-								report_error(1, '%s: Unable to parse line %s "%s"' % (self._file_name, error_line_number, lines[i]))
+								report_error(1, '%s: Unable to parse line %s "%s"' % (self._file_path, error_line_number, lines[i]))
 
 					# Tidy the key and values
 					key = key.strip()
@@ -105,5 +133,12 @@ class ConfigFile:
 			finally:
 				conf_file.close()
 		except IOError:
-			report_error(1, '%s: Unable to read file' % file_name)
+			report_error(1, '%s: Unable to read file' % self._file_path)
 		self.validate_settings()
+
+	def dump_attributes(self):
+		""" Print all attribute values """
+		print "Attribute values:"
+		for setting in vars(self).keys():
+			if hasattr(self, setting):
+				print '"%s": "%s"' % (setting, getattr(self, setting))

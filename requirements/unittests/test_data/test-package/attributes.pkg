@@ -1,0 +1,18 @@
+# Full config file
+Assigned on: 2012-07-04
+Assigned to: testclient
+Created by: testuser
+Created on: 2012-07-04
+Description:
+  Nice requirement for testing with
+Depends on: none
+Documents: none
+Estimated effort: 400
+Estimated cost: 15000
+Note: A quick note
+Rationale: The why is paramount
+Rejected by: testclient2
+Status: approved
+Status reason: Not really
+Todo:
+  - Write tests

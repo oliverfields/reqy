@@ -4,6 +4,39 @@ import pytest
 class TestRequirement():
 	'''Unit tests'''
 
+	def test_file_nameing(self):
+		req = Requirement()
+		req.set_name_and_id('1-1_some-amazing-requirement.req')
+		assert req._name == 'some-amazing-requirement'
+		assert req._id == '1-1'
+		assert req._pretty_name == '1-1 Some amazing requirement'
+
+	def test_file_nameing_1(self):
+		req = Requirement()
+		req.set_name_and_id('some-amazing-requirement.req')
+		assert req._name == 'some-amazing-requirement'
+#		assert req._id == ''
+		assert req._pretty_name == 'Some amazing requirement'
+
+	def test_file_nameing_2(self):
+		""" Check invalid file name """
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.set_name_and_id('_afs.req')
+
+	def test_file_nameing_3(self):
+		req = Requirement()
+		req.set_name_and_id('/a/directory/hiearachy/some-amazing-requirement.req')
+		assert req._name == 'some-amazing-requirement'
+		assert req._pretty_name == 'Some amazing requirement'
+
+	def test_file_nameing_4(self):
+		req = Requirement()
+		req.set_name_and_id('/a/directory/hiearachy/22-21-11_some-amazing-requirement.req')
+		assert req._name == 'some-amazing-requirement'
+		assert req._id == '22-21-11'
+		assert req._pretty_name == '22-21-11 Some amazing requirement'
+
 	def test_valid_req_config(self):
 		req = Requirement()
 		req.load_config_from_file('unittests/test_data/requirement_config.req')
