@@ -4,19 +4,9 @@ class ConfigFile:
 	'''
 	Load object attributes from configuration file
 	'''
-
-	_file_name = ''
-	
-	# Must be populated to allow appropriate config settings
-	# in sub classes, must contain key value pairs where key is
-	# setting name and value is default value
-	valid_settings = {}
-	
-	valid_file_extension = ''
-
-	def setup_attributes(self):
-		for key in self.valid_settings.keys():
-			self.assign_attribute(str(key), self.valid_settings[key])
+	def __init__(self):
+		self._valid_file_extension = ''
+		self._file_name = ''
 
 	def validate_settings(self):
 		""" Stub function, needs to be implemented by sub class """
@@ -25,18 +15,21 @@ class ConfigFile:
 	def assign_attribute(self, key, value):
 		""" Check valid key and is so assign to object attribute """
 		is_valid_key = False
-		for valid_key in self.valid_settings.keys():
-			if key.lower() == valid_key.lower():
-				is_valid_key = True
+		# Get all object attributes, valid keys are the ones not
+		# starting with underscore, then check the setting is valid
+		for attribute in vars(self).keys():
+			if attribute.startswith('_') == False:
+				if key.lower() == attribute.lower():
+					is_valid_key = True
 		if is_valid_key:
-			setattr(self, str(key), value)
+			setattr(self, key, value)
 		else:
 			report_error(1, '%s: Key "%s" is not valid' % (self._file_name, key))
 
 	def load_config_from_file(self, file_name):
 		""" Read config file and pass key values on for assignment """
-		if file_name.endswith(self.valid_file_extension) == False:
-			report_error(1, '%s: Invalid file extension, must be ".%s"' % (file_name, self.valid_file_extension))
+		if file_name.endswith(self._valid_file_extension) == False:
+			report_error(1, '%s: Invalid file extension, must be ".%s"' % (file_name, self._valid_file_extension))
 			return
 
 		self._file_name = file_name
