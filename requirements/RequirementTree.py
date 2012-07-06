@@ -7,13 +7,15 @@ class RequirementTree:
 	""" The requirements repository model """
 
 	def __init__(self):
-		self.requirements = [] 
+		self._children = [] 
+		self._name = 'root'
+		self._pretty_name = 'Root'
 #		self.stakeholder = 
 #		self.document = Toot()
 #		self.glossary = Toot()
 
 	def load_repository(self, root_directory):
-		self.load_package(root_directory, False)
+		self.load_package(root_directory, self)
 
 	def load_package(self, package_directory, parent_package):
 		""" Recursively read package directory and create and link objects """
@@ -22,22 +24,30 @@ class RequirementTree:
 			package_path = os.path.join(package_directory, name)
 			if os.path.isdir(package_path):
 				package_attributes = os.path.join(os.path.join(package_directory, name), 'attributes.pkg')
-				print "Package: %s" % package_attributes
 				package = RequirementPackage()
 				package.load_config_from_file(package_attributes)
-				package.parent = parent_package
-				self.requirements.append(package)
+				parent_package._children.append(package) 
+				package._parent = parent_package
 				self.load_package(package_path, package)
 			elif os.path.isfile(package_path):
 				if package_path.endswith('.req'):
-					print "Requirement: %s" % name
 					requirement = Requirement()
 					requirement.load_config_from_file(os.path.join(package_directory, name))
-					requirement.parent = parent_package
-					self.requirements.append(requirement)
+					parent_package._children.append(requirement) 
+					requirement._parent = parent_package
 
 			else:
 				report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
+
+	def print_tree(self):
+		self.print_package(self, indent='  ')
+
+	def print_package(self, parent_package, indent):
+		indent += '  '
+		for package in parent_package._children:
+			print '%s%s' % (indent, package._pretty_name)
+			if package._children:
+				self.print_package(package, indent)
 
 	def dump_attributes(self):
 		""" Print all attribute values """

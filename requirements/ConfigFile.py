@@ -7,6 +7,7 @@ class ConfigFile:
 	'''
 	def __init__(self):
 		self._parent = ''
+		self._children = []
 		self._valid_file_extension = ''
 		self._file_name = ''
 		self._file_path = ''

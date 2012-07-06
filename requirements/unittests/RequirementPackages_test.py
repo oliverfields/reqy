@@ -4,6 +4,13 @@ import pytest
 class TestRequirement():
 	'''Unit tests'''
 
+	def test_file_nameing(self):
+		pkg = RequirementPackage()
+		pkg.set_name_and_id('/a/directory/hiearachy/2_pkg/attributes.pkg')
+		assert pkg._name == 'pkg'
+		assert pkg._id == '2'
+		assert pkg._pretty_name == '2 Pkg'
+
 	def test_valid_pkg_config(self):
 		pkg = RequirementPackage()
 		pkg.load_config_from_file('unittests/test_data/test-package/attributes.pkg')
