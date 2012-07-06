@@ -57,13 +57,12 @@ class TestRequirement():
 		req = Requirement()
 		req.load_config_from_file('unittests/test_data/requirement_config_4.req')
 
-		assert req.assigned_on == '2012-07-04 is a bad date'
-		assert req.assigned_to == 'testclientnot is not a client'
+		assert req.assigned_on == '2012-07-04'
 		assert req.description == 'Nice requirement for testing with'
-		assert req.depends_on == 'none nothing is not allowed setting'
+		assert req.depends_on == 'none'
 		assert req.documents == 'none'
-		assert req.estimated_effort == '4.00'
-		assert req.estimated_cost == '15, 000'
+		assert req.estimated_effort == '400'
+		assert req.estimated_cost == '15000'
 		assert req.note == 'A quick note'
 		assert req.rationale == 'The why is paramount'
 		assert req.status == 'elaboration'
@@ -77,6 +76,12 @@ class TestRequirement():
 		assert req.status == 'rejected'
 		assert req.status_reason == 'Something'
 		assert req.rejected_by == 'teststakeholder'
+
+	def test_valid_req_config_6_to_10(self):
+		""" all of these are just trying different things that should not cause exceptions """
+		for i in range(6, 10):
+			req = Requirement()
+			req.load_config_from_file('unittests/test_data/requirement_config_%s.req' % i)
 
 	def test_file_missing_extension(self):
 		req = Requirement()
@@ -112,3 +117,28 @@ class TestRequirement():
 		req = Requirement()
 		with pytest.raises(SystemExit):
 			req.load_config_from_file('unittests/test_data/invalid_requirement_config_5.req')
+
+	def test_invalid_req_config_6(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('unittests/test_data/invalid_requirement_config_6.req')
+
+	def test_invalid_req_config_7(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('unittests/test_data/invalid_requirement_config_7.req')
+
+	def test_invalid_req_config_8(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('unittests/test_data/invalid_requirement_config_8.req')
+
+	def test_invalid_req_config_9(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('unittests/test_data/invalid_requirement_config_9.req')
+
+	def test_invalid_req_config_10(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('unittests/test_data/invalid_requirement_config_10.req')

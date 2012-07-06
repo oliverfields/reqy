@@ -1,0 +1,5 @@
+Description: This does not fail because status is rejected and there is a rejected by
+Rationale: To test
+Status: rejected
+Status reason: Something 
+Rejected by: teststakeholder

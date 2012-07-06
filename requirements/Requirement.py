@@ -1,3 +1,4 @@
+import Settings
 from ConfigFile import *
 
 class Requirement(ConfigFile):
@@ -12,11 +13,12 @@ class Requirement(ConfigFile):
 		self.description = ''
 		self.depends_on = ''
 		self.documents = ''
-		self.estimated_effort = ''
-		self.estimated_cost = ''
+		self.estimated_effort = '0'
+		self.estimated_cost = '0'
 		self.note = ''
 		self.rationale = ''
 		self.rejected_by = ''
+		self.rejected_on = ''
 		self.status = 'elaboration'
 		self.status_reason = ''
 		self.todo = ''
@@ -44,6 +46,30 @@ class Requirement(ConfigFile):
 
 		if self.rationale == '':
 			report_error(1, '%s: Rationale field is empty or missing' % (self._file_path))
+
+		if self.is_integer(self.estimated_effort) == False:
+			report_error(1, '%s: Estimated effort field has value "%s", but it must be an integer' % (self._file_path, self.estimated_effort))
+
+		if self.is_integer(self.estimated_cost) == False:
+			report_error(1, '%s: Estimated cost field has value "%s", but it must be an integer' % (self._file_path, self.estimated_cost))
+
+		if self.is_string_date(self.created_on) == False:
+			report_error(1, '%s: Created on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.created_on))
+
+		if self.is_string_date(self.rejected_on) == False:
+			report_error(1, '%s: Rejected on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.rejected_on))
+
+		if self.is_string_date(self.assigned_on) == False:
+			report_error(1, '%s: Assigned on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.assigned_on))
+
+		try:
+			self.are_valid_links('stakeholders', 'Assigned to', self.assigned_to, False)
+			self.are_valid_links('stakeholders', 'Created by', self.created_by, False)
+			self.are_valid_links('stakeholders', 'Rejected by', self.rejected_by, False)
+			self.are_valid_links('documents', 'Documents', self.documents)
+			self.are_valid_links('requirements', 'Depends on', self.depends_on)
+		except Exception, error_message:
+			report_error(1, '%s: %s' % (self._file_path, error_message))
 
 		# If status is neither approved or elaboration reject reason must be stated
 		if (self.status == 'rejected' or self.status == 'postponed') and self.status_reason == '':

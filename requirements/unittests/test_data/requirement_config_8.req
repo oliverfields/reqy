@@ -1,0 +1,3 @@
+Description: Test for multi link list that the links are on one line and trailing comma
+Rationale: To test
+Documents: design/erd.png,class/apple.uml,

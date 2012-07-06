@@ -1,0 +1,5 @@
+Description: Test for multi link list that the links are on following lines 
+Rationale: To test
+Documents:
+  class/apple.uml,
+  design/erd.png

@@ -1,0 +1,4 @@
+Description: This fails because status is rejected, but no rejected by exists
+Rationale: To test
+Status: rejected
+Status reason: Something 

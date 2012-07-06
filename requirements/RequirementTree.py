@@ -1,4 +1,5 @@
 import os
+import Settings
 from Utility import *
 from Requirement import *
 from RequirementPackage import *
@@ -15,7 +16,7 @@ class RequirementTree:
 #		self.glossary = Toot()
 
 	def load_repository(self, root_directory):
-		self.load_package(root_directory, self)
+		self.load_package(os.path.join(root_directory, 'requirements'), self)
 
 	def load_package(self, package_directory, parent_package):
 		""" Recursively read package directory and create and link objects """
