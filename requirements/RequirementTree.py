@@ -40,13 +40,14 @@ class RequirementTree:
 				report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
 
 	def print_tree(self):
+		print self._pretty_name
 		self.print_package(self, indent='  ')
 
 	def print_package(self, parent_package, indent):
-		indent += '  '
 		for package in parent_package._children:
 			print '%s%s' % (indent, package._pretty_name)
 			if package._children:
+				indent += indent
 				self.print_package(package, indent)
 
 	def dump_attributes(self):
