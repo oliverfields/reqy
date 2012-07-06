@@ -48,3 +48,7 @@ class Requirement(ConfigFile):
 		# If status is neither approved or elaboration reject reason must be stated
 		if (self.status == 'rejected' or self.status == 'postponed') and self.status_reason == '':
 			report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+
+		# If status is rejected a rejected by user must be specified
+		if self.status == 'rejected' and self.rejected_by == '':
+			report_error(1, '%s: "Rejected by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))

@@ -68,6 +68,16 @@ class TestRequirement():
 		assert req.rationale == 'The why is paramount'
 		assert req.status == 'elaboration'
 
+	def test_valid_req_config_5(self):
+		req = Requirement()
+		req.load_config_from_file('unittests/test_data/requirement_config_5.req')
+
+		assert req.description == 'This does not fail because status is rejected and there is a rejected by'
+		assert req.rationale == 'To test'
+		assert req.status == 'rejected'
+		assert req.status_reason == 'Something'
+		assert req.rejected_by == 'teststakeholder'
+
 	def test_file_missing_extension(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
@@ -97,3 +107,8 @@ class TestRequirement():
 		req = Requirement()
 		with pytest.raises(SystemExit):
 			req.load_config_from_file('unittests/test_data/invalid_requirement_config_4.req')
+
+	def test_invalid_req_config_5(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('unittests/test_data/invalid_requirement_config_5.req')
