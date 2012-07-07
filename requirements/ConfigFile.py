@@ -8,14 +8,14 @@ class ConfigFile:
 	Load object attributes from configuration file
 	'''
 	def __init__(self):
-		self._parent = ''
-		self._children = []
+		self._parent = None
+		self._children = None
 		self._valid_file_extension = ''
-		self._file_name = ''
-		self._file_path = ''
-		self._id = ''
-		self._name = ''
-		self._pretty_name = ''
+		self._file_name = None
+		self._file_path = None
+		self._id = None
+		self._name = None
+		self._pretty_name = None
 
 	def is_integer(self, string):
 		""" If string is not empty, check if it is an integer """
@@ -36,57 +36,6 @@ class ConfigFile:
 				return True
 			else:
 				return False
-
-	def parse_link_list_string(self, link_list_string):
-		""" Accepts comma seperated string (may include line breaks) and returns array of each element """
-		link_list = []
-		link_list_string.replace('\n', '')
-
-		for link in link_list_string.split(','):
-			link = link.strip()
-			if len(link) > 0:
-				link_list.append(link)
-		
-		if len(link_list) > 0:
-			return link_list
-		else:
-			return False
-
-	def check_link_targets_exist(self, root_directory, link_list_string, file_extension):
-		""" Check link list targets exist on file system """
-		link_list = self.parse_link_list_string(link_list_string)
-		if link_list:
-			for link in link_list:
-				file_path = os.path.join(Settings.repository_directory, os.path.join(root_directory, link)) + file_extension
-				if os.path.isfile(file_path) == False:
-					raise Exception('"%s" is broken' % link)
-
-	def are_valid_links(self, root_directory, nice_attribute_name, link_list_string, multiple_allowed = True):
-		""" Check that each link listed in attribute exists as a file on disk """
-
-		# If value is string none, then we are done:)
-		link_list_string = link_list_string.strip()
-		if link_list_string == 'none':
-			return True
-
-		if root_directory == 'requirements':
-			file_extension = '.req'
-		elif root_directory == 'documents':
-			# Any extension is permissable
-			file_extension = ''
-		elif root_directory == 'stakeholders':
-			file_extension = '.sth'
-		else:
-			raise Exception('Field "%s" has unknown link list type "%s"' % (nice_attribute_name, root_directory))
-
-		# If multiple links not allowed, but there are more than one (i.e. a comma)
-		if multiple_allowed == False and link_list_string.find(',') > 0:
-			raise Exception('Field "%s" may only contain one link (content "%s")' % (nice_attribute_name, link_list_string))
-
-		try:
-			self.check_link_targets_exist(root_directory, link_list_string, file_extension)
-		except Exception, error_message:
-			raise Exception('Field "%s" %s link %s' % (nice_attribute_name, root_directory, error_message))
 
 	def validate_settings(self):
 		""" Stub function, needs to be implemented by sub class """

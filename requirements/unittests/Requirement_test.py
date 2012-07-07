@@ -9,17 +9,17 @@ class TestRequirement():
 		req.load_config_from_file('unittests/test_data/requirement_config.req')
 
 		assert req.assigned_on == '2012-07-04'
-		assert req.assigned_to == 'testclient'
-		assert req.created_by == 'testuser'
+		assert req.assigned_to[0].name == 'Tux'
+		assert req.created_by[0].name == 'Pikku My'
 		assert req.created_on == '2012-07-04'
 		assert req.description == 'Nice requirement for testing with'
-		assert req.depends_on == 'none'
-		assert req.documents == 'none'
+		assert req.depends_on == None
+		assert req.documents == None
 		assert req.estimated_effort == '400'
 		assert req.estimated_cost == '15000'
 		assert req.note == 'A quick note'
 		assert req.rationale == 'The why is paramount'
-		assert req.rejected_by == 'testclient2'
+		assert req.rejected_by[0].name == 'Test client'
 		assert req.status == 'approved'
 		assert req.status_reason == 'Not really'
 		assert req.todo == '- Write tests'
@@ -36,9 +36,9 @@ class TestRequirement():
 		req.load_config_from_file('unittests/test_data/requirement_config_2.req')
 
 		assert req.assigned_on == '2012-07-04'
-		assert req.assigned_to == 'testclient'
+		assert req.assigned_to[0].name == 'Tux'
 		assert req.description == 'Nice requirement for testing with\nAnd more text # this is not a comment'
-		assert req.depends_on == 'none'
+		assert req.depends_on == None
 		assert req.estimated_effort == '400'
 		assert req.rationale == 'The why is paramount # this is not a comment'
 		assert req.status == 'approved'
@@ -59,8 +59,8 @@ class TestRequirement():
 
 		assert req.assigned_on == '2012-07-04'
 		assert req.description == 'Nice requirement for testing with'
-		assert req.depends_on == 'none'
-		assert req.documents == 'none'
+		assert req.depends_on == None
+		assert req.documents == None
 		assert req.estimated_effort == '400'
 		assert req.estimated_cost == '15000'
 		assert req.note == 'A quick note'
@@ -75,13 +75,20 @@ class TestRequirement():
 		assert req.rationale == 'To test'
 		assert req.status == 'rejected'
 		assert req.status_reason == 'Something'
-		assert req.rejected_by == 'teststakeholder'
+		assert req.rejected_by[0].name == 'Moomin'
 
 	def test_valid_req_config_6_to_10(self):
 		""" all of these are just trying different things that should not cause exceptions """
 		for i in range(6, 10):
 			req = Requirement()
 			req.load_config_from_file('unittests/test_data/requirement_config_%s.req' % i)
+
+	def test_valid_req_config_11(self):
+		req = Requirement()
+		req.load_config_from_file('unittests/test_data/requirement_config_11.req')
+
+		assert req.documents[0].name == 'apple.uml'
+		assert req.documents[1].name == 'erd.png'
 
 	def test_file_missing_extension(self):
 		req = Requirement()

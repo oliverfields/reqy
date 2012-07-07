@@ -6,12 +6,12 @@ class Stakeholder(ConfigFile):
 	def __init__(self):
 		""" Public attributes (those not starting with underscore) are also the valid config file settings """
 		ConfigFile.__init__(self)
-		self.email = ''
-		self.name = ''
-		self.note = ''
-		self.organization = ''
-		self.phone = ''
-		self.role = ''
+		self.email = None
+		self.name = None
+		self.note = None
+		self.organization = None
+		self.phone = None
+		self.role = None
 		self._valid_file_extension = 'sth'
 
 	def validate_settings(self):
@@ -23,8 +23,8 @@ class Stakeholder(ConfigFile):
 
 		# Check mandatory attributes
 
-		if self.name == '':
+		if self.name == '' or self.name == None:
 			report_error(1, '%s: Name field is empty or missing' % (self._file_path))
 		
-		if self.role == '':
+		if self.role == '' or self.name == None:
 			report_error(1, '%s: Role field is empty or missing' % (self._file_path))

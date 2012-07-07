@@ -1,0 +1,5 @@
+Description: Check both document links load
+Rationale: to test
+Documents:
+  class/apple.uml,
+  design/erd.png
