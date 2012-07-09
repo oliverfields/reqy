@@ -90,6 +90,12 @@ class TestRequirement():
 
 		assert len(req.documents) == 2
 
+	def test_valid_req_config_12(self):
+		req = Requirement()
+		req.load_config_from_file('unittests/test_data/requirement_config_12.req')
+		assert len(req.documents) == 2
+		assert req.created_by[0] == 'testuser'
+
 	def test_file_missing_extension(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):

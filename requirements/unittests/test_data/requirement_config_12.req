@@ -1,0 +1,7 @@
+# Ensure Created by attrbute gets value test user
+Description: Check both document links load
+Rationale: to test
+Documents:
+  class/apple.uml,
+  design/erd.png
+Created by: testuser
