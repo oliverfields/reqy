@@ -57,3 +57,11 @@ class GlossaryTermDefinition(ConfigFile):
 		self.created_by = self.make_link_list('stakeholders', 'Created by', self.created_by, False)
 		self.rejected_by = self.make_link_list('stakeholders', 'Rejected by', self.rejected_by, False)
 		self.replaced_by = self.make_link_list('glossary', 'Replaced by', self.replaced_by)
+
+		if self.is_string_date(self.created_on) == False:
+			report_error(1, '%s: Created on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.created_on))
+
+		if self.is_string_date(self.rejected_on) == False:
+			report_error(1, '%s: Rejected on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.rejected_on))
+
+
