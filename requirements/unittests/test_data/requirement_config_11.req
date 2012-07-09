@@ -1,5 +1,6 @@
 Description: Check both document links load
 Rationale: to test
+Created by: testuser
 Documents:
   class/apple.uml,
   design/erd.png

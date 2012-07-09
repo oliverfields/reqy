@@ -1,6 +1,5 @@
 import Settings
 from ConfigFile import *
-from LinkList import *
 
 class Requirement(ConfigFile):
 
@@ -64,17 +63,13 @@ class Requirement(ConfigFile):
 		if self.is_string_date(self.assigned_on) == False:
 			report_error(1, '%s: Assigned on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.assigned_on))
 
-		# Read the link list attributes and change the string values to appropriate
-		# list objects, bit dirty..
-		try:
-			link_list = LinkList()
-			self.assigned_to = link_list.make_link_list('stakeholders', 'Assigned to', self.assigned_to, False)
-			self.created_by = link_list.make_link_list('stakeholders', 'Created by', self.created_by, False)
-			self.rejected_by = link_list.make_link_list('stakeholders', 'Rejected by', self.rejected_by, False)
-			self.documents = link_list.make_link_list('documents', 'Documents', self.documents)
-			self.depends_on = link_list.make_link_list('requirements', 'Depends on', self.depends_on)
-		except Exception, error_message:
-			report_error(1, '%s: %s' % (self._file_path, error_message))
+		# Read the link list attributes and re assign string attribute to
+		# appropriate list elements
+		self.assigned_to = self.make_link_list('stakeholders', 'Assigned to', self.assigned_to, False)
+		self.created_by = self.make_link_list('stakeholders', 'Created by', self.created_by, False)
+		self.rejected_by = self.make_link_list('stakeholders', 'Rejected by', self.rejected_by, False)
+		self.documents = self.make_link_list('documents', 'Documents', self.documents)
+		self.depends_on = self.make_link_list('requirements', 'Depends on', self.depends_on)
 
 		# If status is neither approved or elaboration reject reason must be stated
 		if (self.status == 'rejected' or self.status == 'postponed') and self.status_reason == '':

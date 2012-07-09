@@ -15,8 +15,8 @@ class TestRequirement():
 		pkg = RequirementPackage()
 		pkg.load_config_from_file('unittests/test_data/test-package/attributes.pkg')
 		assert pkg.assigned_on == '2012-07-04'
-		assert pkg.assigned_to[0].name == 'Tux'
-		assert pkg.created_by[0].name == 'Pikku My'
+		assert len(pkg.assigned_to)== 1
+		assert len(pkg.created_by) == 1
 		assert pkg.created_on == '2012-07-04'
 		assert pkg.description == 'Nice requirement for testing with'
 		assert pkg.depends_on == None 
@@ -25,7 +25,7 @@ class TestRequirement():
 		assert pkg.estimated_cost == '15000'
 		assert pkg.note == 'A quick note'
 		assert pkg.rationale == 'The why is paramount'
-		assert pkg.rejected_by[0].name == 'Test client'
+		assert len(pkg.rejected_by) == 1
 		assert pkg.status == 'approved'
 		assert pkg.status_reason == 'Not really'
 		assert pkg.todo == '- Write tests'

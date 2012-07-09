@@ -1,6 +1,5 @@
 import Settings
 from ConfigFile import *
-#from LinkList import *
 
 class GlossaryTermDefinition(ConfigFile):
 
@@ -54,3 +53,7 @@ class GlossaryTermDefinition(ConfigFile):
 		# If status is replaced then Replaced by must be specified
 		if self.status == 'replaced' and self.replaced_by == '':
 			report_error(1, '%s: "Replaced by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+
+		self.created_by = self.make_link_list('stakeholders', 'Created by', self.created_by, False)
+		self.rejected_by = self.make_link_list('stakeholders', 'Rejected by', self.rejected_by, False)
+		self.replaced_by = self.make_link_list('glossary', 'Replaced by', self.replaced_by)

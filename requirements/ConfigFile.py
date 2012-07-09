@@ -165,3 +165,60 @@ class ConfigFile:
 		for setting in vars(self).keys():
 			if hasattr(self, setting):
 				print '"%s": "%s"' % (setting, getattr(self, setting))
+
+	def parse_link_list_string(self, link_list_string):
+		""" Accepts comma seperated string (may include line breaks) and returns array of each element """
+		link_list = []
+
+		if link_list_string == None:
+			return None
+
+		link_list_string.replace('\n', '')
+
+		for link in link_list_string.split(','):
+			link = link.strip()
+			if len(link) > 0:
+				link_list.append(link)
+		
+		if len(link_list) > 0:
+			return link_list
+		else:
+			return None
+
+	def make_link_list(self, root_directory, nice_attribute_name, link_list_string, multiple_allowed = True):
+		""" Returns list(array) of link list string and checks that each link exists as a file on disk """
+
+		# If value None, then we are done:)
+		if link_list_string == None or link_list_string == 'none':
+			return None
+
+		link_list_string = link_list_string.strip()
+
+		if root_directory == 'requirements':
+			file_extension = '.req'
+		elif root_directory == 'documents':
+			# Any extension is permissable
+			file_extension = ''
+		elif root_directory == 'stakeholders':
+			file_extension = '.sth'
+		elif root_directory == 'glossary':
+			file_extension = '.def'
+		else:
+			report_error(1, '%s: Field "%s" has unknown link list type "%s"' % (self._file_path, nice_attribute_name, root_directory))
+
+		# If multiple links not allowed, but there are more than one (i.e. a comma)
+		if multiple_allowed == False and link_list_string.find(',') > 0:
+			report_error(1, '%s: Field "%s" may only contain one link (content "%s")' % (self._file_path, nice_attribute_name, link_list_string))
+
+		link_list_string = self.parse_link_list_string(link_list_string)
+		link_list = []
+		if link_list_string:
+			for link in link_list_string:
+				full_file_path = os.path.join(Settings.repository_directory, os.path.join(root_directory, link)) + file_extension
+
+				if os.path.isfile(full_file_path) == False:
+					report_error(1, '%s: "%s" link "%s" is broken (%s)' % (self._file_path, nice_attribute_name, link, full_file_path))
+
+				link_list.append(link)
+
+			return link_list

@@ -1,6 +1,6 @@
 from ..Requirement import *
-from ..LinkList import *
 import pytest
+
 
 class TestRequirement():
 	'''Unit tests'''
@@ -10,8 +10,8 @@ class TestRequirement():
 		req.load_config_from_file('unittests/test_data/requirement_config.req')
 
 		assert req.assigned_on == '2012-07-04'
-		assert req.assigned_to[0].name == 'Tux'
-		assert req.created_by[0].name == 'Pikku My'
+		assert len(req.assigned_to) == 1
+		assert len(req.created_by) == 1
 		assert req.created_on == '2012-07-04'
 		assert req.description == 'Nice requirement for testing with'
 		assert req.depends_on == None
@@ -20,7 +20,7 @@ class TestRequirement():
 		assert req.estimated_cost == '15000'
 		assert req.note == 'A quick note'
 		assert req.rationale == 'The why is paramount'
-		assert req.rejected_by[0].name == 'Test client'
+		assert len(req.rejected_by) == 1
 		assert req.status == 'approved'
 		assert req.status_reason == 'Not really'
 		assert req.todo == '- Write tests'
@@ -37,7 +37,7 @@ class TestRequirement():
 		req.load_config_from_file('unittests/test_data/requirement_config_2.req')
 
 		assert req.assigned_on == '2012-07-04'
-		assert req.assigned_to[0].name == 'Tux'
+		assert len(req.assigned_to) == 1
 		assert req.description == 'Nice requirement for testing with\nAnd more text # this is not a comment'
 		assert req.depends_on == None
 		assert req.estimated_effort == '400'
@@ -76,7 +76,7 @@ class TestRequirement():
 		assert req.rationale == 'To test'
 		assert req.status == 'rejected'
 		assert req.status_reason == 'Something'
-		assert req.rejected_by[0].name == 'Moomin'
+		assert len(req.rejected_by) == 1
 
 	def test_valid_req_config_6_to_10(self):
 		""" all of these are just trying different things that should not cause exceptions """
@@ -88,8 +88,7 @@ class TestRequirement():
 		req = Requirement()
 		req.load_config_from_file('unittests/test_data/requirement_config_11.req')
 
-		assert req.documents[0].name == 'apple.uml'
-		assert req.documents[1].name == 'erd.png'
+		assert len(req.documents) == 2
 
 	def test_file_missing_extension(self):
 		req = Requirement()
