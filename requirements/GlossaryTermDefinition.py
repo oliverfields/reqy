@@ -6,17 +6,17 @@ class GlossaryTermDefinition(ConfigFile):
 	def __init__(self):
 		""" Public attributes (those not starting with underscore) are also the valid config file settings """
 		ConfigFile.__init__(self)
-		self.created_by = ''
-		self.created_on = ''
-		self.definition = ''
-		self.note = ''
-		self.rejected_by = ''
-		self.rejected_on = ''
-		self.replaced_by = ''
+		self.created_by = None
+		self.created_on = None
+		self.definition = None
+		self.note = None
+		self.rejected_by = None
+		self.rejected_on = None
+		self.replaced_by = None
 		self.status = 'elaboration'
-		self.status_reason = ''
-		self.term = ''
-		self.todo = ''
+		self.status_reason = None
+		self.term = None
+		self.todo = None
 		self._valid_file_extension = 'def'
 
 	def is_valid_status(self, status):

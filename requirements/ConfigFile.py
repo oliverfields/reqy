@@ -76,7 +76,7 @@ class ConfigFile:
 	def load_config_from_file(self, file_name):
 		""" Read config file and pass key values on for assignment """
 		self._file_name = os.path.basename(file_name)
-		self._file_path = file_name
+		self._file_path = os.path.abspath(file_name)
 
 		if file_name.endswith(self._valid_file_extension) == False:
 			report_error(1, '%s: Invalid file extension, must be ".%s"' % (self._file_path, self._valid_file_extension))
@@ -159,12 +159,12 @@ class ConfigFile:
 			report_error(1, '%s: Unable to read file' % self._file_path)
 		self.validate_settings()
 
-	def dump_attributes(self):
+	def dump_attributes(self, prefix):
 		""" Print all attribute values """
-		print "Attribute values:"
+		print "%sAttribute values:" % prefix
 		for setting in vars(self).keys():
 			if hasattr(self, setting):
-				print '"%s": "%s"' % (setting, getattr(self, setting))
+				print '%s"%s": "%s"' % (prefix, setting, getattr(self, setting))
 
 	def parse_link_list_string(self, link_list_string):
 		""" Accepts comma seperated string (may include line breaks) and returns array of each element """

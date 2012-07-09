@@ -30,41 +30,56 @@ class RequirementTree:
 				parent_package._children.append(package) 
 				package._parent = parent_package
 				self.load_package(package_path, package)
-				self.load_link_list_objects(package)
+				package.assigned_to = self.get_link_list_objects('stakeholder', package.assigned_to)
+				package.created_by = self.get_link_list_objects('stakeholder', package.created_by)
+				package.documents = self.get_link_list_objects('documents', package.documents)
+				package.rejected_by = self.get_link_list_objects('stakeholder', package.rejected_by)
+				package.depends_on = self.get_link_list_objects('requirement', package.depends_on)
 			elif os.path.isfile(package_path):
 				if package_path.endswith('.req'):
 					requirement = Requirement()
 					requirement.load_config_from_file(os.path.join(package_directory, name))
-					self.load_link_list_objects(requirement)
+					requirement.assigned_to = self.get_link_list_objects('stakeholder', requirement.assigned_to)
+					requirement.created_by = self.get_link_list_objects('stakeholder', requirement.created_by)
+					requirement.documents = self.get_link_list_objects('documents', requirement.documents)
+					requirement.rejected_by = self.get_link_list_objects('stakeholder', requirement.rejected_by)
+					requirement.depends_on = self.get_link_list_objects('requirement', requirement.depends_on)
+
 					parent_package._children.append(requirement) 
 					requirement._parent = parent_package
 
 			else:
 				report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
 
-	def load_link_list_objects(self, object):
-		""" Replace link list attribute string list elements with appropriate objects """
-
-		link_lists = [ 'assigned_to', 'created_by', 'depends_on', 'documents', 'rejected_by' ] 
-
-		
-		if isinstance(object.documents, list):
-			print 'is a list'
-			new_object_documents = []
-			for file_path in object.documents:
-				print "daf" + file_path
-				doc = Document()
-				new_object_documents.append(doc.load_document(file_path))
-				print 'aaaaaaaaaa' + doc.name
-			
-			object.documents = new_object_documents
-
-			for d in new_object_documents:
-				print d.name
-
-
+	def get_link_list_objects(self, link_list_type, link_list):
+		""" Return list of objects based on passed link list """
+		if link_list == None:
+			return None
 		else:
-			print 'awer'
+			list_objects = []
+
+		if link_list_type == 'documents':
+			for link in link_list:
+				doc = Document()
+				doc.load_document(link)
+				list_objects.append(doc)
+		elif link_list_type == 'assigned_to' or link_list_type == 'created_by' or link_list_type == 'rejected_by':
+			for link in link_list:
+				sth = Stakeholder()
+				sth.load_config_from_file(link)
+				list_objects.append(sth)
+		elif link_list_type == 'requirement':
+			for link in link_list:
+				if link.endswith('.req'):
+					req = Requirement()
+					req.load_config_from_file(link)
+					list_objects.append(req)
+				elif link.endswith('attributes.pkg'):
+					pkg = RequirementPackage()
+					pkg.load_config_from_file(link)
+					list_objects.append(pkg)
+
+		return list_objects
 
 	def print_tree(self):
 		print self._pretty_name
@@ -72,10 +87,13 @@ class RequirementTree:
 
 	def print_package(self, parent_package, indent):
 		for package in parent_package._children:
+			print '%s----- %s -----' % (indent, package._pretty_name)
 			print '%s%s' % (indent, package._pretty_name)
+			package.dump_attributes(indent + indent)
 			if package._children:
 				indent += indent
 				self.print_package(package, indent)
+			print '%s----- /%s -----' % (indent, package._pretty_name)
 
 	def dump_attributes(self):
 		""" Print all attribute values """
