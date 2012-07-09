@@ -16,7 +16,7 @@ class RequirementTree:
 		self._pretty_name = 'Root'
 		self._file_path = None
 		self._item_list = {} # Dictionary of all items in tree
-		self._dependency_from_to = {} # Dictionary of all dependencies in tree
+		self._dependency_from_to = [] # List of all dependencies tuples in tree
 
 	def load_repository(self, root_directory):
 		self._file_path = root_directory
@@ -34,32 +34,32 @@ class RequirementTree:
 				self.add_to_item_list(package)
 				parent_package._children.append(package) 
 				package._parent = parent_package
-				self.add_dependency_from_to(package, parent_package)
+				self.add_dependency_from_to(package._file_path, parent_package._file_path)
 				self.load_package(package_path, package)
-				package.assigned_to = self.get_link_list_objects('stakeholder', package.assigned_to)
-				package.created_by = self.get_link_list_objects('stakeholder', package.created_by)
-				package.documents = self.get_link_list_objects('documents', package.documents)
-				package.rejected_by = self.get_link_list_objects('stakeholder', package.rejected_by)
-				package.depends_on = self.get_link_list_objects('requirement', package.depends_on)
+				package.assigned_to = self.get_link_list_objects(package, 'stakeholder', package.assigned_to)
+				package.created_by = self.get_link_list_objects(package, 'stakeholder', package.created_by)
+				package.documents = self.get_link_list_objects(package, 'documents', package.documents)
+				package.rejected_by = self.get_link_list_objects(package, 'stakeholder', package.rejected_by)
+				package.depends_on = self.get_link_list_objects(package, 'requirement', package.depends_on)
 			elif os.path.isfile(package_path):
 				if package_path.endswith('.req'):
 					requirement = Requirement()
 					requirement.load_config_from_file(os.path.join(package_directory, name))
-					requirement.assigned_to = self.get_link_list_objects('stakeholder', requirement.assigned_to)
-					requirement.created_by = self.get_link_list_objects('stakeholder', requirement.created_by)
-					requirement.documents = self.get_link_list_objects('documents', requirement.documents)
-					requirement.rejected_by = self.get_link_list_objects('stakeholder', requirement.rejected_by)
-					requirement.depends_on = self.get_link_list_objects('requirement', requirement.depends_on)
+					requirement.assigned_to = self.get_link_list_objects(requirement, 'stakeholder', requirement.assigned_to)
+					requirement.created_by = self.get_link_list_objects(requirement, 'stakeholder', requirement.created_by)
+					requirement.documents = self.get_link_list_objects(requirement, 'documents', requirement.documents)
+					requirement.rejected_by = self.get_link_list_objects(requirement, 'stakeholder', requirement.rejected_by)
+					requirement.depends_on = self.get_link_list_objects(requirement, 'requirement', requirement.depends_on)
 
 					parent_package._children.append(requirement) 
 					requirement._parent = parent_package
 					self.add_to_item_list(requirement)
-					self.add_dependency_from_to(requirement, parent_package)
+					self.add_dependency_from_to(requirement._file_path, parent_package._file_path)
 
 			else:
 				report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
 
-	def get_link_list_objects(self, link_list_type, link_list):
+	def get_link_list_objects(self, parent, link_list_type, link_list):
 		""" Return list of objects based on passed link list """
 		if link_list == None:
 			return None
@@ -70,39 +70,34 @@ class RequirementTree:
 			for link in link_list:
 				doc = Document()
 				doc.load_document(link)
+				self.add_dependency_from_to(doc._file_path, parent._file_path)
 				list_objects.append(doc)
 		elif link_list_type == 'assigned_to' or link_list_type == 'created_by' or link_list_type == 'rejected_by':
 			for link in link_list:
 				sth = Stakeholder()
 				sth.load_config_from_file(link)
+				self.add_dependency_from_to(sth._file_path, parent._file_path)
 				list_objects.append(sth)
 		elif link_list_type == 'requirement':
 			for link in link_list:
 				if link.endswith('.req'):
 					req = Requirement()
 					req.load_config_from_file(link)
+					self.add_dependency_from_to(req._file_path, parent._file_path)
 					list_objects.append(req)
 				elif link.endswith('attributes.pkg'):
 					pkg = RequirementPackage()
 					pkg.load_config_from_file(link)
+					self.add_dependency_from_to(pkg._file_path, parent._file_path)
 					list_objects.append(pkg)
-
-		for item in list_objects:
-			self.add_to_item_list(item)
-			self.add_dependency_from_to(item, object)
 
 		return list_objects
 
 	def add_to_item_list(self, item):
 		self._item_list[item._file_path] = item._file_name
 
-	def add_dependency_from_to(self, dep_from, dep_to):
-		try:
-			print dep_from._file_name
-		except Exception:
-			print dep_from + ' missing name'
-
-		self._dependency_from_to[dep_from._file_path +':'+ dep_to._file_path] = [dep_from._file_name, dep_to._file_name]
+	def add_dependency_from_to(self, dep_from_file_path, dep_to_file_path):
+		self._dependency_from_to.append([dep_from_file_path, dep_to_file_path])
 
 	def print_tree(self):
 		print self._pretty_name
