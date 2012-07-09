@@ -9,7 +9,7 @@ class ConfigFile:
 	'''
 	def __init__(self):
 		self._parent = None
-		self._children = None
+		self._children = None 
 		self._valid_file_extension = ''
 		self._file_name = None
 		self._file_path = None

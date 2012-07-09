@@ -1,6 +1,6 @@
 import Settings
 from ConfigFile import *
-from LinkList import *
+#from LinkList import *
 
 class GlossaryTermDefinition(ConfigFile):
 

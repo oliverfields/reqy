@@ -1,5 +1,9 @@
 import os
 import Settings
+from Requirement import *
+from Document import *
+from Stakeholder import *
+from GlossaryTermDefinition import *
 
 class LinkList:
 	""" Parse link list strings and load respective config files """
@@ -31,26 +35,20 @@ class LinkList:
 				file_path = os.path.join(Settings.repository_directory, os.path.join(root_directory, link)) + file_extension
 
 				if os.path.isfile(file_path) == False:
-					raise Exception('"%s" is broken' % link)
+					raise Exception('"%s" is broken' % file_path)
 
 				if root_directory == 'documents':
-#from Document import *
-
-
 					link_object = Document()
 					link_object.load_document(file_path)
 				elif root_directory == 'stakeholders':
-#from Stakeholder import *
 					link_object = Stakeholder()
 					link_object.load_config_from_file(file_path)
 				elif root_directory == 'requirements':
-#from Requirement import *
 					link_object = Requirement()
 					link_object.load_config_from_file(file_path)
 				elif root_directory == 'glossary':
 					link_object = GlossartTermDefinition()
 					link_object.load_config_from_file(file_path)
-#from GlossaryTermDefinition import *
 				else:
 					raise Exception('unknown link list type "%s"' % root_directory)
 

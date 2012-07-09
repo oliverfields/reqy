@@ -27,6 +27,8 @@ class RequirementTree:
 				package_attributes = os.path.join(os.path.join(package_directory, name), 'attributes.pkg')
 				package = RequirementPackage()
 				package.load_config_from_file(package_attributes)
+				if parent_package._children == None:
+					parent_package._children = []
 				parent_package._children.append(package) 
 				package._parent = parent_package
 				self.load_package(package_path, package)
@@ -34,6 +36,8 @@ class RequirementTree:
 				if package_path.endswith('.req'):
 					requirement = Requirement()
 					requirement.load_config_from_file(os.path.join(package_directory, name))
+					if parent_package._children == None:
+						parent_package._children = []
 					parent_package._children.append(requirement) 
 					requirement._parent = parent_package
 
