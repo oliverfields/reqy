@@ -1,4 +1,5 @@
 from ..Requirement import *
+from ..LinkList import *
 import pytest
 
 class TestRequirement():
