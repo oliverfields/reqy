@@ -36,22 +36,22 @@ class GlossaryTermDefinition(ConfigFile):
 		if self.is_valid_status(self.status) == False:
 			report_error(1, '%s: Status "%s" is not valid' % (self._file_path, self.status))
 
-		if self.definition == '':
+		if self.definition == '' or self.definition == None:
 			report_error(1, '%s: Definition field is empty or missing' % (self._file_path))
 		
-		if self.term == '':
+		if self.term == '' or self.term == None:
 			report_error(1, '%s: Term field is empty or missing' % (self._file_path))
 
 		# If status is neither approved or elaboration reject reason must be stated
-		if (self.status == 'rejected' or self.status == 'replaced') and self.status_reason == '':
+		if (self.status == 'rejected' or self.status == 'replaced') and (self.status_reason == '' or self.status_reason == None):
 			report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		# If status is rejected a rejected by user must be specified
-		if self.status == 'rejected' and self.rejected_by == '':
+		if self.status == 'rejected' and (self.rejected_by == '' or self.rejected_by == None):
 			report_error(1, '%s: "Rejected by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		# If status is replaced then Replaced by must be specified
-		if self.status == 'replaced' and self.replaced_by == '':
+		if self.status == 'replaced' and (self.replaced_by == None or self.replaced == ''):
 			report_error(1, '%s: "Replaced by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		self.created_by = self.make_link_list('stakeholders', 'Created by', self.created_by, False)

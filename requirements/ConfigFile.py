@@ -19,7 +19,7 @@ class ConfigFile:
 
 	def is_integer(self, string):
 		""" If string is not empty, check if it is an integer """
-		if string != '':
+		if string != None:
 			try:
 				int(string)
 				return True
@@ -27,9 +27,9 @@ class ConfigFile:
 				return False
 
 	def is_string_date(self, string):
-		""" Check if date is acceptable date YYYY-MM-DD """
-		if string == '':
-			return True
+		""" Check if date is acceptable date YYYY-MM-DD, or None """
+		if string == None:
+			return True 
 		else:
 			match = re.search(r'^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$', string)
 			if match:
@@ -159,7 +159,7 @@ class ConfigFile:
 			report_error(1, '%s: Unable to read file' % self._file_path)
 		self.validate_settings()
 
-	def dump_attributes(self, prefix):
+	def dump_attributes(self, prefix = ''):
 		""" Print all attribute values """
 		print "%sAttribute values:" % prefix
 		for setting in vars(self).keys():

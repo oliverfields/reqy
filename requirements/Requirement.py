@@ -6,22 +6,22 @@ class Requirement(ConfigFile):
 	def __init__(self):
 		""" Public attributes (those not starting with underscore) are also the valid config file settings """
 		ConfigFile.__init__(self)
-		self.assigned_on = ''
+		self.assigned_on = None
 		self.assigned_to = None
 		self.created_by = None
-		self.created_on = ''
-		self.description = ''
+		self.created_on = None
+		self.description = None
 		self.depends_on = None
 		self.documents = None
-		self.estimated_effort = '0'
-		self.estimated_cost = '0'
-		self.note = ''
-		self.rationale = ''
+		self.estimated_effort = None
+		self.estimated_cost = None
+		self.note = None
+		self.rationale = None
 		self.rejected_by = None
-		self.rejected_on = ''
+		self.rejected_on = None
 		self.status = 'elaboration'
-		self.status_reason = ''
-		self.todo = ''
+		self.status_reason = None
+		self.todo = None
 		self._valid_file_extension = 'req'
 
 	def is_valid_status(self, status):
@@ -42,10 +42,10 @@ class Requirement(ConfigFile):
 		if self.is_valid_status(self.status) == False:
 			report_error(1, '%s: Status "%s" is not valid' % (self._file_path, self.status))
 
-		if self.description == '':
+		if self.description == '' or self.rationale == None:
 			report_error(1, '%s: Description field is empty or missing' % (self._file_path))
 
-		if self.rationale == '':
+		if self.rationale == '' or self.rationale == None:
 			report_error(1, '%s: Rationale field is empty or missing' % (self._file_path))
 
 		if self.is_integer(self.estimated_effort) == False:
@@ -72,9 +72,9 @@ class Requirement(ConfigFile):
 		self.depends_on = self.make_link_list('requirements', 'Depends on', self.depends_on)
 
 		# If status is neither approved or elaboration reject reason must be stated
-		if (self.status == 'rejected' or self.status == 'postponed') and self.status_reason == '':
+		if (self.status == 'rejected' or self.status == 'postponed') and (self.status_reason == '' or self.status_reason == None):
 			report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		# If status is rejected a rejected by user must be specified
-		if self.status == 'rejected' and self.rejected_by == None:
+		if self.status == 'rejected' and (self.rejected_by == None or self.rejected_by == ''):
 			report_error(1, '%s: "Rejected by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
