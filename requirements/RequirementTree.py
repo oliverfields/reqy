@@ -12,10 +12,14 @@ class RequirementTree:
 
 	def __init__(self):
 		self._children = [] 
-		self._name = 'root'
+		self._file_name = 'root'
 		self._pretty_name = 'Root'
+		self._file_path = None
+		self._item_list = {} # Dictionary of all items in tree
+		self._dependency_from_to = {} # Dictionary of all dependencies in tree
 
 	def load_repository(self, root_directory):
+		self._file_path = root_directory
 		self.load_package(os.path.join(root_directory, 'requirements'), self)
 
 	def load_package(self, package_directory, parent_package):
@@ -27,8 +31,10 @@ class RequirementTree:
 				package_attributes = os.path.join(os.path.join(package_directory, name), 'attributes.pkg')
 				package = RequirementPackage()
 				package.load_config_from_file(package_attributes)
+				self.add_to_item_list(package)
 				parent_package._children.append(package) 
 				package._parent = parent_package
+				self.add_dependency_from_to(package, parent_package)
 				self.load_package(package_path, package)
 				package.assigned_to = self.get_link_list_objects('stakeholder', package.assigned_to)
 				package.created_by = self.get_link_list_objects('stakeholder', package.created_by)
@@ -47,6 +53,8 @@ class RequirementTree:
 
 					parent_package._children.append(requirement) 
 					requirement._parent = parent_package
+					self.add_to_item_list(requirement)
+					self.add_dependency_from_to(requirement, parent_package)
 
 			else:
 				report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
@@ -79,7 +87,22 @@ class RequirementTree:
 					pkg.load_config_from_file(link)
 					list_objects.append(pkg)
 
+		for item in list_objects:
+			self.add_to_item_list(item)
+			self.add_dependency_from_to(item, object)
+
 		return list_objects
+
+	def add_to_item_list(self, item):
+		self._item_list[item._file_path] = item._file_name
+
+	def add_dependency_from_to(self, dep_from, dep_to):
+		try:
+			print dep_from._file_name
+		except Exception:
+			print dep_from + ' missing name'
+
+		self._dependency_from_to[dep_from._file_path +':'+ dep_to._file_path] = [dep_from._file_name, dep_to._file_name]
 
 	def print_tree(self):
 		print self._pretty_name
