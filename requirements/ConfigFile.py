@@ -117,7 +117,7 @@ class ConfigFile:
 						multi_line_value = ''
 						# Collect following lines that start with double space
 						while True:
-							if n == max_lines:
+							if n == max_lines and lines[n].startswith('  '):
 								value = multi_line_value + lines[n].lstrip('  ')
 								i = max_lines + 1 # this was last line, so next loop will abort
 								break

@@ -94,7 +94,7 @@ class TestRequirement():
 		req = Requirement()
 		req.load_config_from_file('unittests/test_data/requirement_config_12.req')
 		assert len(req.documents) == 2
-		assert req.created_by[0] == 'testuser'
+		assert req.created_by[0].endswith('estuser.sth')
 
 	def test_file_missing_extension(self):
 		req = Requirement()
