@@ -219,6 +219,6 @@ class ConfigFile:
 				if os.path.isfile(full_file_path) == False:
 					report_error(1, '%s: "%s" link "%s" is broken (%s)' % (self._file_path, nice_attribute_name, link, full_file_path))
 
-				link_list.append(link)
+				link_list.append(full_file_path)
 
 			return link_list

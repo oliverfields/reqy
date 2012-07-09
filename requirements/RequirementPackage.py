@@ -6,6 +6,7 @@ class RequirementPackage(Requirement):
 
 	def __init__(self):
 		Requirement.__init__(self)
+		self._children = []
 		self._valid_file_extension = 'pkg'
 
 	def set_name_and_id(self, file_name):
