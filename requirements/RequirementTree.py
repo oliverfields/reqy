@@ -18,6 +18,8 @@ class RequirementTree:
 		self._file_name = 'root'
 		self._pretty_name = 'Root'
 		self._file_path = None
+		self._dependencies_from_to = None
+		self._node_list = None
 
 	def load_repository(self, root_directory):
 		self._file_path = os.path.abspath(root_directory)
@@ -99,6 +101,58 @@ class RequirementTree:
 				indent += indent
 				self.print_package(package, indent)
 			print '%s----- /%s -----' % (indent, package._pretty_name)
+
+	def get_dependencies(self):
+		"""
+		Public function to return list of dependencies between objects in tree.
+
+		Note that if function has been run, then it just returns cached list.
+		"""
+		if self._dependencies_from_to == None:
+			self._dependencies_from_to = []
+			self._get_dependencies(self)
+		
+		return self._dependencies_from_to
+
+	def _get_dependencies(self, parent_package):
+		"""
+		Private recursive method to find all dependencies in tree
+		"""
+		for package in parent_package._children:
+			# Add parent child dependency
+			self._dependencies_from_to.append([parent_package, package])
+
+			# Check if package has other dependecies
+			if package.depends_on != None:
+				for item in package.depends_on:
+					self._dependencies_from_to.append([package, item])
+
+			if package.documents != None:
+				for item in package.documents:
+					self._dependencies_from_to.append([package, item])
+
+			if package._children:
+				self._get_dependencies(package)
+
+		return self._dependencies_from_to
+
+	def get_tree_items(self):
+		""" Get list of each item in tree """
+		# Make sure dependencies are loaded
+		tree_items = self.get_dependencies()
+
+		if self._node_list == None:
+			self._node_list = []
+		# Make a list of all items 
+			for item in tree_items:
+				self._node_list.append(item[0])
+				self._node_list.append(item[1])
+
+		# Make a set of the list and then make the result a list and all duplicates
+		# are bye bye
+			self._node_list = list(set(self._node_list))
+
+		return self._node_list	
 
 	def dump_attributes(self):
 		""" Print all attribute values """

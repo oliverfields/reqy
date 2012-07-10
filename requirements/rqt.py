@@ -4,4 +4,12 @@ rt = RequirementTree()
 rt.load_repository('unittests/test_data/sample-repository')
 #rt.dump_attributes()
 
-#rt.print_tree()
+deps = rt.get_dependencies()
+
+for item in rt.get_tree_items():
+	print item
+
+print 'xxxxxxxxxxxxxxxxxxxxx'
+
+for item in rt.get_dependencies():
+	print item
