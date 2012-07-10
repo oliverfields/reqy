@@ -7,8 +7,8 @@ from Stakeholder import *
 from Document import *
 from GlossaryTermDefinition import *
 
-from pygraph.classes.digraph import digraph
-from pygraph.algorithms.searching import breadth_first_search
+#from pygraph.classes.digraph import digraph
+#from pygraph.algorithms.searching import breadth_first_search
 
 class RequirementTree:
 	""" The requirements repository model """
@@ -18,7 +18,6 @@ class RequirementTree:
 		self._file_name = 'root'
 		self._pretty_name = 'Root'
 		self._file_path = None
-		self._item_list = {} # Dictionary of all items in tree
 
 	def load_repository(self, root_directory):
 		self._file_path = os.path.abspath(root_directory)
@@ -33,7 +32,6 @@ class RequirementTree:
 				package_attributes = os.path.join(os.path.join(package_directory, name), 'attributes.pkg')
 				package = RequirementPackage()
 				package.load_config_from_file(package_attributes)
-				self.add_to_item_list(package)
 				parent_package._children.append(package) 
 				package._parent = parent_package
 				self.load_package(package_path, package)
@@ -54,7 +52,6 @@ class RequirementTree:
 
 					parent_package._children.append(requirement) 
 					requirement._parent = parent_package
-					self.add_to_item_list(requirement)
 
 			else:
 				report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
@@ -88,9 +85,6 @@ class RequirementTree:
 					list_objects.append(pkg)
 
 		return list_objects
-
-	def add_to_item_list(self, item):
-		self._item_list[item._file_path] = item._file_name
 
 	def print_tree(self):
 		print self._pretty_name
