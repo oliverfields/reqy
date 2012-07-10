@@ -7,6 +7,9 @@ from Stakeholder import *
 from Document import *
 from GlossaryTermDefinition import *
 
+from pygraph.classes.digraph import digraph
+from pygraph.algorithms.searching import breadth_first_search
+
 class RequirementTree:
 	""" The requirements repository model """
 
