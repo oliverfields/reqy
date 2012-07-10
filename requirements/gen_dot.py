@@ -10,19 +10,19 @@ print 'digraph reqy {'
 print 'root="%s"' % repo
 print 'graph [ fontname=Verdana, fontsize=12]'
 print 'node [ fontname=Verdana, fontsize=10]'
-print 'edge [ fontname=Verdana, fontsize=8, color="#666666"]'
+print 'edge [ fontname=Verdana, fontsize=8, color="#707792"]'
 print ''
 
 
 for item in rt.get_tree_items():
 	if isinstance(item, RequirementTree):
-		print '"%s" [ label="Project: %s", shape="box", color="grey", style="filled", fillcolor="lightgrey"]' % (item._file_path, item._pretty_name)
+		print '"%s" [ label="Project: %s", shape="box", color="#716eb1", style="filled", fillcolor="#9e9bd1"]' % (item._file_path, item._pretty_name)
 	elif isinstance(item, RequirementPackage):
-		print '"%s" [ label="Package: %s", color="grey", shape="box", style="rounded,filled", fillcolor="lightgrey"]' % (item._file_path, item._pretty_name)
+		print '"%s" [ label="Package: %s", color="#6ca59c", shape="box", style="rounded,filled", fillcolor="#99c8c2"]' % (item._file_path, item._pretty_name)
 	elif isinstance(item, Requirement):
-		print '"%s" [ label="Requirement: %s", color="grey", style="filled", fillcolor="lightgrey"]' % (item._file_path, item._pretty_name)
+		print '"%s" [ label="Requirement: %s", color="#7dd396", style="filled", fillcolor="#a9e6bd"]' % (item._file_path, item._pretty_name)
 	elif isinstance(item, Document):
-		print '"%s" [ label="Reference: %s", color="lightgrey"]' % (item._file_path, item._pretty_name)
+		print '"%s" [ label="Reference: %s", color="#a9e6bd" ]' % (item._file_path, item._pretty_name)
 	else:
 		report_error(1, 'Unknown item type "%s"' % item)
 
