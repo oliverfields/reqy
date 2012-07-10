@@ -19,7 +19,7 @@ class RequirementTree:
 		self._dependency_from_to = [] # List of all dependencies tuples in tree
 
 	def load_repository(self, root_directory):
-		self._file_path = root_directory
+		self._file_path = os.path.abspath(root_directory)
 		self.load_package(os.path.join(root_directory, 'requirements'), self)
 
 	def load_package(self, package_directory, parent_package):
