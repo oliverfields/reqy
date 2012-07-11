@@ -19,14 +19,14 @@ class Requirement(ConfigFile):
 		self.rationale = None
 		self.rejected_by = None
 		self.rejected_on = None
-		self.signed_off_by = None
+		self.approved_by = None
 		self.status = 'elaboration'
 		self.status_reason = None
 		self.todo = None
 		self._valid_file_extension = 'req'
 
 	def is_valid_status(self, status):
-		if status == 'elaboration' or status == 'rejected' or status == 'implementation' or status == 'postponed' or status == 'signed-off':
+		if status == 'elaboration' or status == 'rejected' or status == 'implementation' or status == 'postponed' or status == 'approved':
 			return True
 		else:
 			return False
@@ -66,6 +66,7 @@ class Requirement(ConfigFile):
 
 		# Read the link list attributes and re assign string attribute to
 		# appropriate list elements
+		self.approved_by = self.make_link_list('stakeholders', 'Approved by', self.approved_by, False)
 		self.assigned_to = self.make_link_list('stakeholders', 'Assigned to', self.assigned_to, False)
 		self.created_by = self.make_link_list('stakeholders', 'Created by', self.created_by, False)
 		self.rejected_by = self.make_link_list('stakeholders', 'Rejected by', self.rejected_by, False)
@@ -73,13 +74,13 @@ class Requirement(ConfigFile):
 		self.depends_on = self.make_link_list('requirements', 'Depends on', self.depends_on)
 
 		# If status is neither implementation or elaboration status reason must be stated
-		if (self.status == 'rejected' or self.status == 'postponed' or self.status == 'signed-off') and (self.status_reason == '' or self.status_reason == None):
+		if (self.status == 'rejected' or self.status == 'postponed') and (self.status_reason == '' or self.status_reason == None):
 			report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		# If status is rejected a rejected by user must be specified
 		if self.status == 'rejected' and (self.rejected_by == None or self.rejected_by == ''):
 			report_error(1, '%s: "Rejected by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
-		# If status is signed-off a signed of by user must be specified
-		if self.status == 'signed-off' and (self.signed_off_by == None or self.signed_off_by == ''):
-			report_error(1, '%s: "Signed off by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+		# If status is approved a approved_by user must be specified
+		if self.status == 'approved' and (self.approved_by == None or self.approved_by == ''):
+			report_error(1, '%s: "Approved by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))

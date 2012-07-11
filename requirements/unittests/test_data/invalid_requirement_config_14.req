@@ -1,0 +1,8 @@
+# Ensure fail because status approved, but no approved by
+Description: Check both document links load
+Rationale: to test
+Status: approved
+Documents:
+  class/apple.uml,
+  design/erd.png
+Created by: testuser

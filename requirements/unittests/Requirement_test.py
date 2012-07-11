@@ -96,6 +96,12 @@ class TestRequirement():
 		assert len(req.documents) == 2
 		assert req.created_by[0].endswith('estuser.sth')
 
+	def test_valid_req_config_13(self):
+		req = Requirement()
+		req.load_config_from_file('unittests/test_data/requirement_config_13.req')
+		assert req.status == 'approved'
+		assert req.approved_by[0].endswith('testuser.sth')
+
 	def test_file_missing_extension(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
@@ -155,3 +161,8 @@ class TestRequirement():
 		req = Requirement()
 		with pytest.raises(SystemExit):
 			req.load_config_from_file('unittests/test_data/invalid_requirement_config_10.req')
+
+	def test_invalid_req_config_14(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('unittests/test_data/invalid_requirement_config_14.req')

@@ -1,0 +1,9 @@
+# Ensure signed-off by and status signed-off are ok 
+Description: Check both document links load
+Rationale: to test
+Status: approved
+Approved by: testuser
+Documents:
+  class/apple.uml,
+  design/erd.png
+Created by: testuser
