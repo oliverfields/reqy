@@ -6,5 +6,5 @@ class TestRequirementTree():
 
 	def test_sample_repo_load(self):
 		tree = RequirementTree()
-		tree.load_repository('unittests/test_data/sample-repository')
+		tree.load_repository('requirements/unittests/test_data/sample-repository')
 

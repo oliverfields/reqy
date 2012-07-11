@@ -1,4 +1,3 @@
-import Settings
 from ConfigFile import *
 
 class Requirement(ConfigFile):
@@ -37,32 +36,32 @@ class Requirement(ConfigFile):
 		# Check all attributes exist
 		for key, value in vars(self).items():
 		  if hasattr(self, key) == False:
-				report_error(1, '%s: Missing attribute "%s"' % (self._file_path, key))
+				Utility.report_error(1, '%s: Missing attribute "%s"' % (self._file_path, key))
 
 		# Check mandatory attributes
 		if self.is_valid_status(self.status) == False:
-			report_error(1, '%s: Status "%s" is not valid' % (self._file_path, self.status))
+			Utility.report_error(1, '%s: Status "%s" is not valid' % (self._file_path, self.status))
 
 		if self.description == '' or self.rationale == None:
-			report_error(1, '%s: Description field is empty or missing' % (self._file_path))
+			Utility.report_error(1, '%s: Description field is empty or missing' % (self._file_path))
 
 		if self.rationale == '' or self.rationale == None:
-			report_error(1, '%s: Rationale field is empty or missing' % (self._file_path))
+			Utility.report_error(1, '%s: Rationale field is empty or missing' % (self._file_path))
 
 		if self.is_integer(self.estimated_effort) == False:
-			report_error(1, '%s: Estimated effort field has value "%s", but it must be an integer' % (self._file_path, self.estimated_effort))
+			Utility.report_error(1, '%s: Estimated effort field has value "%s", but it must be an integer' % (self._file_path, self.estimated_effort))
 
 		if self.is_integer(self.estimated_cost) == False:
-			report_error(1, '%s: Estimated cost field has value "%s", but it must be an integer' % (self._file_path, self.estimated_cost))
+			Utility.report_error(1, '%s: Estimated cost field has value "%s", but it must be an integer' % (self._file_path, self.estimated_cost))
 
 		if self.is_string_date(self.created_on) == False:
-			report_error(1, '%s: Created on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.created_on))
+			Utility.report_error(1, '%s: Created on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.created_on))
 
 		if self.is_string_date(self.rejected_on) == False:
-			report_error(1, '%s: Rejected on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.rejected_on))
+			Utility.report_error(1, '%s: Rejected on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.rejected_on))
 
 		if self.is_string_date(self.assigned_on) == False:
-			report_error(1, '%s: Assigned on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.assigned_on))
+			Utility.report_error(1, '%s: Assigned on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.assigned_on))
 
 		# Read the link list attributes and re assign string attribute to
 		# appropriate list elements
@@ -75,12 +74,12 @@ class Requirement(ConfigFile):
 
 		# If status is neither implementation or elaboration status reason must be stated
 		if (self.status == 'rejected' or self.status == 'postponed') and (self.status_reason == '' or self.status_reason == None):
-			report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+			Utility.report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		# If status is rejected a rejected by user must be specified
 		if self.status == 'rejected' and (self.rejected_by == None or self.rejected_by == ''):
-			report_error(1, '%s: "Rejected by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+			Utility.report_error(1, '%s: "Rejected by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		# If status is approved a approved_by user must be specified
 		if self.status == 'approved' and (self.approved_by == None or self.approved_by == ''):
-			report_error(1, '%s: "Approved by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+			Utility.report_error(1, '%s: "Approved by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))

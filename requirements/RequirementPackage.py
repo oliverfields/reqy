@@ -1,4 +1,3 @@
-import Settings
 from Requirement import *
 
 class RequirementPackage(Requirement):

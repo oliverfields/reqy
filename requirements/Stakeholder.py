@@ -1,4 +1,3 @@
-import Settings
 from ConfigFile import *
 
 class Stakeholder(ConfigFile):

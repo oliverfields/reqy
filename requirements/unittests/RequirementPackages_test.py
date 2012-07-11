@@ -13,7 +13,7 @@ class TestRequirement():
 
 	def test_valid_pkg_config(self):
 		pkg = RequirementPackage()
-		pkg.load_config_from_file('unittests/test_data/test-package/attributes.pkg')
+		pkg.load_config_from_file('requirements/unittests/test_data/test-package/attributes.pkg')
 		assert pkg.assigned_on == '2012-07-04'
 		assert len(pkg.assigned_to)== 1
 		assert len(pkg.created_by) == 1

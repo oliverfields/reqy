@@ -1,5 +1,4 @@
-import Settings
-from Utility import *
+import Utility
 import os.path
 import re
 
@@ -45,7 +44,7 @@ class ConfigFile:
 		""" Extract from file name the an optional id prefix and a short name, discarding the file extension """
 		file_name = os.path.basename(file_name)
 		if file_name.startswith('_'):
-				report_error(1, '%s: File name cannot start with underscore, valid format is "[id_]a-nice-name.%s"' % (self._file_path, self._valid_file_extension))
+				Utility.report_error(1, '%s: File name cannot start with underscore, valid format is "[id_]a-nice-name.%s"' % (self._file_path, self._valid_file_extension))
 		file_name = file_name.rstrip(''.join(self._valid_file_extension))
 		file_name = file_name.rstrip('.')
 		file_strings = file_name.partition('_')
@@ -71,7 +70,7 @@ class ConfigFile:
 		if is_valid_key:
 			setattr(self, key, value)
 		else:
-			report_error(1, '%s: Key "%s" is not valid' % (self._file_name, key))
+			Utility.report_error(1, '%s: Key "%s" is not valid' % (self._file_name, key))
 
 	def load_config_from_file(self, file_name):
 		""" Read config file and pass key values on for assignment """
@@ -79,7 +78,7 @@ class ConfigFile:
 		self._file_path = os.path.abspath(file_name)
 
 		if file_name.endswith(self._valid_file_extension) == False:
-			report_error(1, '%s: Invalid file extension, must be ".%s"' % (self._file_path, self._valid_file_extension))
+			Utility.report_error(1, '%s: Invalid file extension, must be ".%s"' % (self._file_path, self._valid_file_extension))
 			return
 
 		self.set_name_and_id(file_name)
@@ -141,7 +140,7 @@ class ConfigFile:
 						else:
 								# Something strange happend, reset counter 1 and exit with error
 								error_line_number = i + 1
-								report_error(1, '%s: Unable to parse line %s "%s"' % (self._file_path, error_line_number, lines[i]))
+								Utility.report_error(1, '%s: Unable to parse line %s "%s"' % (self._file_path, error_line_number, lines[i]))
 
 					# Tidy the key and values
 					key = key.strip()
@@ -156,7 +155,7 @@ class ConfigFile:
 			finally:
 				conf_file.close()
 		except IOError:
-			report_error(1, '%s: Unable to read file' % self._file_path)
+			Utility.report_error(1, '%s: Unable to read file' % self._file_path)
 		self.validate_settings()
 
 	def dump_attributes(self, prefix = ''):
@@ -204,20 +203,20 @@ class ConfigFile:
 		elif root_directory == 'glossary':
 			file_extension = '.def'
 		else:
-			report_error(1, '%s: Field "%s" has unknown link list type "%s"' % (self._file_path, nice_attribute_name, root_directory))
+			Utility.report_error(1, '%s: Field "%s" has unknown link list type "%s"' % (self._file_path, nice_attribute_name, root_directory))
 
 		# If multiple links not allowed, but there are more than one (i.e. a comma)
 		if multiple_allowed == False and link_list_string.find(',') > 0:
-			report_error(1, '%s: Field "%s" may only contain one link (content "%s")' % (self._file_path, nice_attribute_name, link_list_string))
+			Utility.report_error(1, '%s: Field "%s" may only contain one link (content "%s")' % (self._file_path, nice_attribute_name, link_list_string))
 
 		link_list_string = self.parse_link_list_string(link_list_string)
 		link_list = []
 		if link_list_string:
 			for link in link_list_string:
-				full_file_path = os.path.join(Settings.repository_directory, os.path.join(root_directory, link)) + file_extension
+				full_file_path = os.path.join(Utility.get_repo_dir(), os.path.join(root_directory, link)) + file_extension
 
 				if os.path.isfile(full_file_path) == False:
-					report_error(1, '%s: "%s" link "%s" is broken (%s)' % (self._file_path, nice_attribute_name, link, full_file_path))
+					Utility.report_error(1, '%s: "%s" link "%s" is broken (%s)' % (self._file_path, nice_attribute_name, link, full_file_path))
 
 				link_list.append(full_file_path)
 

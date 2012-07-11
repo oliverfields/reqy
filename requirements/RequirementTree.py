@@ -1,6 +1,4 @@
 import os
-import Settings
-from Utility import *
 from Requirement import *
 from RequirementPackage import *
 from Stakeholder import *

@@ -1,12 +1,5 @@
 #!/usr/bin/python
-#from requirements.Document import Document
-
-#doc = Document()
-#doc.load_document('README2')
-
-#print doc._pretty_name
-
-from requirements import Utility
+import Action
 import getopt
 import sys
 import os
@@ -15,22 +8,79 @@ def usage(mode='default'):
 	executable_name = os.path.basename(sys.argv[0])
 
 	usage_message = {
-		'build': 'xxx',
-		'edit': 'x11',
-		'find': 'x13',
-		'new': 'new [package <name>] [requirement <name>] [stakeholder <name>] [glossary <name>] [repository <name>]',
-		'report': 'xyy',
+		'build': ' <directory>',
+		'dependency': '(dep) [to|from] <document|package|requirement>',
+		'new': ' [glossary|package|repository|requirement(req)|stakeholder] <name>',
+		'report': ' <name>',
 	}
 
 	if mode == 'default':
-		print 'Usage: %s [mode] [actions]' % executable_name
-		for key, message in usage_message:
-			print 'hoi'
+		modes = ''
+		for key, message in usage_message.items():
+			modes = '%s|%s' % (key, modes)
+
+		modes = modes.lstrip('|')
+		modes = modes.rstrip('|')
+		print 'Usage: %s [%s] <actions>' % (executable_name, modes)
 	else:
-		print 'Usage: %s %s' % (executable_name, usage_message[mode])
+		print 'Usage: %s %s%s' % (executable_name, mode, usage_message[mode])
+
+	sys.exit(1)
 
 def new_mode():
-	usage('new')
+	if len(sys.argv) == 4:
+		actions = ['glossary', 'package', 'repository', 'requirement', 'stakeholder']
+		valid_action = False
+		action = sys.argv[2]
+
+		if action == 'req':
+			action = 'requirement'
+
+		for valid_action in actions:
+			if action == valid_action:
+				valid_action = True
+
+		if valid_action:
+			Action.new_item(action, sys.argv[3])
+		else:
+			print 'Error: Action "%s" not recognized' % action 
+			usage('new')
+	else:
+		print 'Error: Too few or too many arguments'
+		usage('new')
+
+def dependency_mode():
+	valid_arguments = False
+
+	if len(sys.argv) == 4:
+		direction = sys.argv[2]
+		item = sys.argv[3]
+
+		if direction == 'to' or direction == 'from':
+			valid_arguments = True
+		else:
+			print 'Error: Unknown dependency direction "%s", must be either "to" or "from"' % direction
+	else:
+		print 'Error: Too few or too many arguments'
+
+	if valid_arguments:
+		Action.list_dependency(direction, item)
+	else:
+		usage('dependency')
+
+def build_mode():
+	if len(sys.argv) == 3:
+		Action.build_artifacts(sys.argv[2])
+	else:
+		print 'Error: Too few or too many arguments'
+		usage('build')
+
+def report_mode():
+	if len(sys.argv) == 3:
+		Action.run_report(sys.argv[2])
+	else:
+		print 'Error: Too few or too many arguments'
+		usage('report')
 
 try:
 	mode = sys.argv[1]
@@ -39,29 +89,17 @@ except Exception:
 
 options, remainder = getopt.getopt(sys.argv[2:], 'o:v', ['output=', 'verbose', 'version=', ])
 
-if mode == "find":
-	pass
-elif mode == "edit":
-	pass
+if mode == "dependency" or mode == "dep":
+	dependency_mode()
 elif mode == "new":
 	new_mode()
 elif mode == "build":
-	pass
+	build_mode()
 elif mode == "report":
-	pass
+	report_mode()
 else:
+	if mode != '':
+		print 'Error: Unknown mode "%s"' % mode
 	usage()
 
-
-for opt, arg in options:
-	if opt in ('-o', '--output'):
-		output_filename = arg
-	elif opt in ('-v', '--verbose'):
-		verbose = True
-	elif opt == '--version':
-		version = arg
-
-print 'VERSION   :', version
-print 'VERBOSE   :', verbose
-print 'OUTPUT    :', output_filename
-print 'REMAINING :', remainder
+print 'my os.getcwd =>', os.getcwd( )
