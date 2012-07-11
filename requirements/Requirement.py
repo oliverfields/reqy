@@ -19,13 +19,14 @@ class Requirement(ConfigFile):
 		self.rationale = None
 		self.rejected_by = None
 		self.rejected_on = None
+		self.signed_off_by = None
 		self.status = 'elaboration'
 		self.status_reason = None
 		self.todo = None
 		self._valid_file_extension = 'req'
 
 	def is_valid_status(self, status):
-		if status == 'elaboration' or status == 'rejected' or status == 'approved' or status == 'postponed':
+		if status == 'elaboration' or status == 'rejected' or status == 'implementation' or status == 'postponed' or status == 'signed-off':
 			return True
 		else:
 			return False
@@ -71,10 +72,14 @@ class Requirement(ConfigFile):
 		self.documents = self.make_link_list('documents', 'Documents', self.documents)
 		self.depends_on = self.make_link_list('requirements', 'Depends on', self.depends_on)
 
-		# If status is neither approved or elaboration reject reason must be stated
-		if (self.status == 'rejected' or self.status == 'postponed') and (self.status_reason == '' or self.status_reason == None):
+		# If status is neither implementation or elaboration status reason must be stated
+		if (self.status == 'rejected' or self.status == 'postponed' or self.status == 'signed-off') and (self.status_reason == '' or self.status_reason == None):
 			report_error(1, '%s: "Status reason" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
 		# If status is rejected a rejected by user must be specified
 		if self.status == 'rejected' and (self.rejected_by == None or self.rejected_by == ''):
 			report_error(1, '%s: "Rejected by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+
+		# If status is signed-off a signed of by user must be specified
+		if self.status == 'signed-off' and (self.signed_off_by == None or self.signed_off_by == ''):
+			report_error(1, '%s: "Signed off by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))

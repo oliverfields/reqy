@@ -21,7 +21,7 @@ class TestRequirement():
 		assert req.note == 'A quick note'
 		assert req.rationale == 'The why is paramount'
 		assert len(req.rejected_by) == 1
-		assert req.status == 'approved'
+		assert req.status == 'implementation'
 		assert req.status_reason == 'Not really'
 		assert req.todo == '- Write tests'
 
@@ -42,7 +42,7 @@ class TestRequirement():
 		assert req.depends_on == None
 		assert req.estimated_effort == '400'
 		assert req.rationale == 'The why is paramount # this is not a comment'
-		assert req.status == 'approved'
+		assert req.status == 'implementation'
 		assert req.status_reason == 'Not really'
 
 	def test_valid_req_config_3(self):
