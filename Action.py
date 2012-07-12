@@ -81,6 +81,20 @@ def list_dependencies(dependency_direction, item_name):
 	For each requirement or requirement package, check if dependency to target
 	requirement, requirement package or document is either to, from or none 
 	"""
+
+	'''
+to:
+each req that has a dependency to item, in addition all dependencies to the req
+
+from:
+earch item that the item links to
+
+none:
+each item that does not link to item
+
+Basically to and none are opposites and from is easy to do
+'''
+
 	from requirements import RequirementTree
 
 	repo_dir = get_repo_dir()
