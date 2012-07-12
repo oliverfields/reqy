@@ -11,7 +11,8 @@ def usage(mode='default'):
 	usage_message = {
 		'build': ' <directory>',
 		'dependency': '(dep) [to|from] <document|package|requirement>',
-		'new': ' [glossary|package|repository|requirement(req)|stakeholder] <name>',
+		'init': ' ',
+		'new': ' [glossary|package|requirement(req)|stakeholder] <name>',
 		'report': ' <name>',
 	}
 
@@ -28,7 +29,7 @@ def usage(mode='default'):
 
 def new_mode():
 	if len(sys.argv) == 4:
-		actions = ['glossary', 'package', 'repository', 'requirement', 'stakeholder']
+		actions = ['glossary', 'package', 'requirement', 'stakeholder']
 		is_valid_action = False
 		action = sys.argv[2]
 
@@ -60,6 +61,7 @@ def dependency_mode():
 		else:
 			report_error(1, 'Unknown dependency direction "%s", must be either "to" or "from"' % direction)
 	else:
+		usage('dependency')
 		report_error(1, 'Wrong number of arguments')
 
 	if valid_arguments:
@@ -82,6 +84,13 @@ def report_mode():
 		usage('report')
 		report_error(1, 'Wrong number of arguments')
 
+def init_mode():
+	if len(sys.argv) == 2:
+		Action.init_repo()
+	else:
+		usage('init')
+		report_error(1, 'Wrong number of arguments')
+
 try:
 	mode = sys.argv[1]
 except Exception:
@@ -98,6 +107,8 @@ elif mode == "build":
 	build_mode()
 elif mode == "report":
 	report_mode()
+elif mode == "init":
+	init_mode()
 else:
 	usage()
 	report_error(1, 'Unknown mode "%s"' % mode)
