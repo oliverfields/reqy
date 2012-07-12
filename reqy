@@ -101,5 +101,3 @@ else:
 	if mode != '':
 		print 'Error: Unknown mode "%s"' % mode
 	usage()
-
-print 'my os.getcwd =>', os.getcwd( )
