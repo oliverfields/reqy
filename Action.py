@@ -5,9 +5,6 @@ from requirements.Utility import report_notice
 from shutil import copyfile
 import os
 
-def init_repo():
-	print 'Initalising if empty dir'
-
 def new_item(item_type, item_path):
 	repo_dir = get_repo_dir()
 	item_settings = {

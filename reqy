@@ -1,6 +1,4 @@
 #!/usr/bin/python
-import Action
-from requirements.Utility import report_error
 import getopt
 import sys
 import os
@@ -84,18 +82,23 @@ def report_mode():
 		usage('report')
 		report_error(1, 'Wrong number of arguments')
 
-def init_mode():
-	if len(sys.argv) == 2:
-		Action.init_repo()
-	else:
-		usage('init')
-		report_error(1, 'Wrong number of arguments')
-
 try:
 	mode = sys.argv[1]
 except Exception:
 	usage()
 	sys.exit(0)
+
+# Bit hackish, but if init mode then can't import other stuff they will checks if
+# a valid repository dir exists, which of course shouldn't happen, as we
+# are creating a new repository
+if mode == 'init':
+	import InitRepo
+	InitRepo.init_repo()
+	sys.exit(0)
+else:
+	import Action
+	from requirements.Utility import report_error
+
 
 options, remainder = getopt.getopt(sys.argv[2:], 'o:v', ['output=', 'verbose', 'version=', ])
 
@@ -107,8 +110,6 @@ elif mode == "build":
 	build_mode()
 elif mode == "report":
 	report_mode()
-elif mode == "init":
-	init_mode()
 else:
 	usage()
 	report_error(1, 'Unknown mode "%s"' % mode)

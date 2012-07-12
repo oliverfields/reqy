@@ -26,18 +26,14 @@ def get_repo_dir():
 	report_error(1, 'Not a repository directory (or any of the parent directories)')
 
 def find_repository_root_dir(directory):
-	print 'aaa: %s' % directory
 	repo_dir = False
 
 	try:
-		print '1: %s' % directory
 		# project.conf not found and not in root check parent directory
 		if repo_dir == False:
 			if os.path.realpath(directory) == '/':
-				print 'Giving up..'
 				return False
 			else:
-				print 'repo_dir not found, checking parent dir'
 				find_repository_root_dir(os.path.abspath(os.path.join(directory, os.path.pardir)))
 		else:
 			return repo_dir
