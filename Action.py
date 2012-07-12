@@ -76,13 +76,26 @@ def new_item(item_type, item_path):
 	except:
 		report_error(1, 'Unable to copy template "%s" to "%s"' % (template_file, abs_path))
 
-def list_dependency(dependency_direction, item_name):
-	print dependency_direction
-	print item_name
+def list_dependencies(dependency_direction, item_name):
+	"""
+	For each requirement or requirement package, check if dependency to target
+	requirement, requirement package or document is either to, from or none 
+	"""
+	from requirements import RequirementTree
+
+	repo_dir = get_repo_dir()
+	rt = RequirementTree.RequirementTree()
+	rt.load_repository(repo_dir)
+	item_list = rt.get_tree_items()
+	matched_items = []
+
+	print 'item_name: %s' % item_name
+	print 'item_name abs path: %s' % os.path.join(repo_dir, item_name)
+	print 'dependency direction: %s' % dependency_direction
+
+	# Loop over and pick out the ones matchin the dependency criteria
+	for item in item_list:
+		print item
 
 def build_artifacts(repository_directory):
 	print repository_directory
-
-def run_report(report_name):
-	print report_name
-	req = Requirement.Requirement()

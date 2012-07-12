@@ -7,7 +7,7 @@ class TestRequirement():
 
 	def test_valid_req_config(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config.req')
+		req.load_config_from_file('test_data/requirement_config.req')
 
 		assert req.assigned_on == '2012-07-04'
 		assert len(req.assigned_to) == 1
@@ -27,14 +27,14 @@ class TestRequirement():
 
 	def test_valid_req_config_1(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_1.req')
+		req.load_config_from_file('test_data/requirement_config_1.req')
 
 		assert req.description == 'Nice requirement for testing with'
 		assert req.rationale == 'The why is paramount'
 
 	def test_valid_req_config_2(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_2.req')
+		req.load_config_from_file('test_data/requirement_config_2.req')
 
 		assert req.assigned_on == '2012-07-04'
 		assert len(req.assigned_to) == 1
@@ -47,7 +47,7 @@ class TestRequirement():
 
 	def test_valid_req_config_3(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_3.req')
+		req.load_config_from_file('test_data/requirement_config_3.req')
 
 		assert req.description == 'Nice requirement for testing with'
 		assert req.rationale == 'The why is paramount\nThe why is paramount2'
@@ -56,7 +56,7 @@ class TestRequirement():
 
 	def test_valid_req_config_4(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_4.req')
+		req.load_config_from_file('test_data/requirement_config_4.req')
 
 		assert req.assigned_on == '2012-07-04'
 		assert req.description == 'Nice requirement for testing with'
@@ -70,7 +70,7 @@ class TestRequirement():
 
 	def test_valid_req_config_5(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_5.req')
+		req.load_config_from_file('test_data/requirement_config_5.req')
 
 		assert req.description == 'This does not fail because status is rejected and there is a rejected by'
 		assert req.rationale == 'To test'
@@ -82,87 +82,87 @@ class TestRequirement():
 		""" all of these are just trying different things that should not cause exceptions """
 		for i in range(6, 10):
 			req = Requirement()
-			req.load_config_from_file('requirements/unittests/test_data/requirement_config_%s.req' % i)
+			req.load_config_from_file('test_data/requirement_config_%s.req' % i)
 
 	def test_valid_req_config_11(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_11.req')
+		req.load_config_from_file('test_data/requirement_config_11.req')
 
 		assert len(req.documents) == 2
 
 	def test_valid_req_config_12(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_12.req')
+		req.load_config_from_file('test_data/requirement_config_12.req')
 		assert len(req.documents) == 2
 		assert req.created_by[0].endswith('estuser.sth')
 
 	def test_valid_req_config_13(self):
 		req = Requirement()
-		req.load_config_from_file('requirements/unittests/test_data/requirement_config_13.req')
+		req.load_config_from_file('test_data/requirement_config_13.req')
 		assert req.status == 'approved'
 		assert req.approved_by[0].endswith('testuser.sth')
 
 	def test_file_missing_extension(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/file_missing_extension')
+			req.load_config_from_file('test_data/file_missing_extension')
 
 	def test_invalid_req_config(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config.req')
+			req.load_config_from_file('test_data/invalid_requirement_config.req')
 
 	def test_invalid_req_config_1(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_1.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_1.req')
 
 	def test_invalid_req_config_2(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_2.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_2.req')
 
 	def test_invalid_req_config_3(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_3.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_3.req')
 
 	def test_invalid_req_config_4(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_4.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_4.req')
 
 	def test_invalid_req_config_5(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_5.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_5.req')
 
 	def test_invalid_req_config_6(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_6.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_6.req')
 
 	def test_invalid_req_config_7(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_7.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_7.req')
 
 	def test_invalid_req_config_8(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_8.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_8.req')
 
 	def test_invalid_req_config_9(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_9.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_9.req')
 
 	def test_invalid_req_config_10(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_10.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_10.req')
 
 	def test_invalid_req_config_14(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
-			req.load_config_from_file('requirements/unittests/test_data/invalid_requirement_config_14.req')
+			req.load_config_from_file('test_data/invalid_requirement_config_14.req')
