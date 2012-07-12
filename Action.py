@@ -32,6 +32,13 @@ def new_item(item_type, item_path):
 	if item_path.startswith(os.sep):
 		report_error(1, 'Cannot specify absolute path to new item, must be relative to repository root directory')
 
+	if item_path.endswith(os.sep):
+		report_error(1, 'Cannot specify directory as new item (trailing "/"')
+
+	file_name = os.path.basename(item_path)
+	if file_name == '':
+		report_error(1, 'Cannot create %s with no name')
+
 	if item_path.startswith(item_settings[item_type]['directory']) == False:
 		item_path = os.path.join(item_settings[item_type]['directory'], item_path)
 
@@ -42,7 +49,6 @@ def new_item(item_type, item_path):
 	elif item_path.endswith(item_settings[item_type]['file_ext']) == False:
 		item_path += item_settings[item_type]['file_ext']
 
-	file_name = os.path.basename(item_path)
 	parent_directory = os.path.join(repo_dir, os.path.dirname(item_path))
 	abs_path = os.path.join(parent_directory, file_name)
 
