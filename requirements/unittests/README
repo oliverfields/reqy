@@ -1,0 +1,3 @@
+Unit tests must be run from unittests directory, ie:
+> cd unittests
+> py.test

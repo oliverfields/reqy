@@ -1,0 +1,8 @@
+Description: Test
+Rationale: Test
+Created by: testuser
+Documents:
+  design/erd.png,
+  class/apple.uml,
+Depends on:
+  1_pkg/1-1_pkg/1-1-1_req
