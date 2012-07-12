@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import Action
+from requirements.Utility import report_error
 import getopt
 import sys
 import os
@@ -25,12 +26,10 @@ def usage(mode='default'):
 	else:
 		print 'Usage: %s %s%s' % (executable_name, mode, usage_message[mode])
 
-	sys.exit(1)
-
 def new_mode():
 	if len(sys.argv) == 4:
 		actions = ['glossary', 'package', 'repository', 'requirement', 'stakeholder']
-		valid_action = False
+		is_valid_action = False
 		action = sys.argv[2]
 
 		if action == 'req':
@@ -38,16 +37,16 @@ def new_mode():
 
 		for valid_action in actions:
 			if action == valid_action:
-				valid_action = True
+				is_valid_action = True
 
-		if valid_action:
+		if is_valid_action:
 			Action.new_item(action, sys.argv[3])
 		else:
-			print 'Error: Action "%s" not recognized' % action 
 			usage('new')
+			report_error(1, 'Action "%s" not recognized' % action)
 	else:
-		print 'Error: Too few or too many arguments'
 		usage('new')
+		report_error(1, 'Wrong number of arguments')
 
 def dependency_mode():
 	valid_arguments = False
@@ -59,33 +58,35 @@ def dependency_mode():
 		if direction == 'to' or direction == 'from':
 			valid_arguments = True
 		else:
-			print 'Error: Unknown dependency direction "%s", must be either "to" or "from"' % direction
+			report_error(1, 'Unknown dependency direction "%s", must be either "to" or "from"' % direction)
 	else:
-		print 'Error: Too few or too many arguments'
+		report_error(1, 'Wrong number of arguments')
 
 	if valid_arguments:
 		Action.list_dependency(direction, item)
 	else:
 		usage('dependency')
+		sys.exit(1)
 
 def build_mode():
 	if len(sys.argv) == 3:
 		Action.build_artifacts(sys.argv[2])
 	else:
-		print 'Error: Too few or too many arguments'
 		usage('build')
+		report_error(1, 'Wrong number of arguments')
 
 def report_mode():
 	if len(sys.argv) == 3:
 		Action.run_report(sys.argv[2])
 	else:
-		print 'Error: Too few or too many arguments'
 		usage('report')
+		report_error(1, 'Wrong number of arguments')
 
 try:
 	mode = sys.argv[1]
 except Exception:
 	usage()
+	sys.exit(0)
 
 options, remainder = getopt.getopt(sys.argv[2:], 'o:v', ['output=', 'verbose', 'version=', ])
 
@@ -98,6 +99,5 @@ elif mode == "build":
 elif mode == "report":
 	report_mode()
 else:
-	if mode != '':
-		print 'Error: Unknown mode "%s"' % mode
 	usage()
+	report_error(1, 'Unknown mode "%s"' % mode)

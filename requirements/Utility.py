@@ -52,3 +52,6 @@ def report_error(code, message):
 
 def report_warning(message):
 	print 'Warning: %s' % message
+
+def report_notice(message):
+	print 'Notice: %s' % message
