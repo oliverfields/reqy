@@ -111,7 +111,9 @@ class ConfigFile:
 						continue
 					# Multi line settings
 					elif lines[i].strip().endswith(':'):
-						key = lines[i].rstrip(':\n')
+						key = lines[i]
+						key = key.strip()
+						key = key.rstrip(':')
 						n = i + 1
 						multi_line_value = ''
 						# Collect following lines that start with double space

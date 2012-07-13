@@ -106,7 +106,7 @@ class TestRequirement():
 		req = Requirement()
 		req.load_config_from_file('test_data/requirement_config_14.req')
 		assert req.status == 'approved'
-		assert req.approved_by[0].endswith('oliver.sth')
+		assert req.approved_by[0].endswith('testuser.sth')
 
 	def test_file_missing_extension(self):
 		req = Requirement()
