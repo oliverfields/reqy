@@ -44,7 +44,7 @@ def init_repo():
 	files = [
 		['templates', 'attributes.pkg', ''],
 		['templates', 'glossary.def', ''],
-		['templates', 'repository.req', ''],
+		['templates', 'requirement.req', ''],
 		['templates', 'stakeholder.sth', ''],
 		['', 'project.conf', 'Name: Requirements for project X'],
 	]

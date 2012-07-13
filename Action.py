@@ -36,8 +36,10 @@ def new_item(item_type, item_path):
 	if file_name == '':
 		report_error(1, 'Cannot create %s with no name')
 
-	if item_path.startswith(item_settings[item_type]['directory']) == False:
-		item_path = os.path.join(item_settings[item_type]['directory'], item_path)
+	# Chop off item type directory if user supplied it, gets added later
+	if item_path.startswith(item_settings[item_type]['directory']):
+		item_path = item_path[len(item_settings[item_type]['directory']):]
+		item_path = item_path.lstrip(os.sep)
 
 	# If package add package attribute.pkg
 	if item_type == 'package':
@@ -46,8 +48,8 @@ def new_item(item_type, item_path):
 	elif item_path.endswith(item_settings[item_type]['file_ext']) == False:
 		item_path += item_settings[item_type]['file_ext']
 
-	parent_directory = os.path.join(repo_dir, os.path.dirname(item_path))
-	abs_path = os.path.join(parent_directory, file_name)
+	parent_directory = os.path.join(repo_dir, item_settings[item_type]['directory'])
+	abs_path = os.path.join(parent_directory, item_path)
 
 	# Package is is a directory/attributes.pkg so check differently
 	if item_type == 'package':
@@ -83,6 +85,7 @@ def list_dependencies(dependency_direction, item_name):
 	"""
 
 	'''
+	Move this to ReqTree and have it return a list of nodes, could be usefull for other things that use the repo, not just the cli
 to:
 each req that has a dependency to item, in addition all dependencies to the req
 
@@ -111,5 +114,16 @@ Basically to and none are opposites and from is easy to do
 	for item in item_list:
 		print item
 
-def build_artifacts(repository_directory):
-	print repository_directory
+def build_artifacts(artifact_name):
+	from requirements.artifact import GenDotGraph
+
+	artifact_dir = os.path.join(get_repo_dir(), 'artifacts')
+
+	if artifact_name == 'graph':
+		graph = GenDotGraph.GenDotGraph()
+		graph.generate('test')
+		target_file = os.path.join(artifact_dir, 'requiremnts_graph.dot')
+		print target_file
+
+	print 'Generate %s' % artifact_name
+
