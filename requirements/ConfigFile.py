@@ -110,7 +110,7 @@ class ConfigFile:
 						i += 1
 						continue
 					# Multi line settings
-					elif lines[i].rstrip().endswith(':'):
+					elif lines[i].strip().endswith(':'):
 						key = lines[i].rstrip(':\n')
 						n = i + 1
 						multi_line_value = ''
