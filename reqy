@@ -7,11 +7,10 @@ def usage(mode='default'):
 	executable_name = os.path.basename(sys.argv[0])
 
 	usage_message = {
-		'build': ' <directory>',
+		'artifact': ' <name>|all',
 		'dependencies': '(dep) [to|from|none] <document|package|requirement>',
 		'init': ' ',
 		'new': ' [glossary|package|requirement(req)|stakeholder] <name>',
-		'report': ' <name>',
 	}
 
 	if mode == 'default':
@@ -71,18 +70,11 @@ def dependency_mode():
 		usage('dependency')
 		sys.exit(1)
 
-def build_mode():
+def artifact_mode():
 	if len(sys.argv) == 3:
 		Action.build_artifacts(sys.argv[2])
 	else:
-		usage('build')
-		report_error(1, 'Wrong number of arguments')
-
-def report_mode():
-	if len(sys.argv) == 3:
-		run_report(sys.argv[2])
-	else:
-		usage('report')
+		usage('artifact')
 		report_error(1, 'Wrong number of arguments')
 
 try:
@@ -109,10 +101,8 @@ if mode == "dependencies" or mode == "dep":
 	dependency_mode()
 elif mode == "new":
 	new_mode()
-elif mode == "build":
-	build_mode()
-elif mode == "report":
-	report_mode()
+elif mode == "artifact":
+	artifact_mode()
 else:
 	usage()
 	report_error(1, 'Unknown mode "%s"' % mode)
