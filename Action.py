@@ -120,10 +120,7 @@ def build_artifacts(artifact_name):
 	artifact_dir = os.path.join(get_repo_dir(), 'artifacts')
 
 	if artifact_name == 'graph':
+		target_file = os.path.join(artifact_dir, 'overview_graph.dot')
 		graph = GenDotGraph.GenDotGraph()
-		graph.generate('test')
-		target_file = os.path.join(artifact_dir, 'requiremnts_graph.dot')
-		print target_file
-
-	print 'Generate %s' % artifact_name
+		graph.generate(target_file)
 
