@@ -70,7 +70,7 @@ class ConfigFile:
 		if is_valid_key:
 			setattr(self, key, value)
 		else:
-			Utility.report_error(1, '%s: Key "%s" is not valid' % (self._file_name, key))
+			Utility.report_error(1, '%s: Key "%s" is not valid' % (self._file_path, key))
 
 	def load_config_from_file(self, file_name):
 		""" Read config file and pass key values on for assignment """
