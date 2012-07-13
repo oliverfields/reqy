@@ -213,9 +213,12 @@ class ConfigFile:
 		link_list = []
 		if link_list_string:
 			for link in link_list_string:
-				full_file_path = os.path.join(Utility.get_repo_dir(), os.path.join(root_directory, link)) + file_extension
+				full_file_path = os.path.join(Utility.get_repo_dir(), os.path.join(root_directory, link))
+				
+				if os.path.isdir(full_file_path) == False:
+					full_file_path += file_extension
 
-				if os.path.isfile(full_file_path) == False:
+				if os.path.isfile(full_file_path) == False and os.path.isdir(full_file_path) == False:
 					Utility.report_error(1, '%s: "%s" link "%s" is broken (%s)' % (self._file_path, nice_attribute_name, link, full_file_path))
 
 				link_list.append(full_file_path)

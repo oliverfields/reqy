@@ -5,4 +5,5 @@ Documents:
   design/erd.png,
   class/apple.uml,
 Depends on:
-  1_pkg/1-1_pkg/1-1-1_req
+  1_pkg/1-1_pkg/1-1-1_req,
+  1_pkg,
