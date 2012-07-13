@@ -4,6 +4,8 @@ from RequirementPackage import *
 from Stakeholder import *
 from Document import *
 from GlossaryTermDefinition import *
+from ProjectConfig import ProjectConfig
+from Utility import get_repo_dir
 
 #from pygraph.classes.digraph import digraph
 #from pygraph.algorithms.searching import breadth_first_search
@@ -12,9 +14,12 @@ class RequirementTree:
 	""" The requirements repository model """
 
 	def __init__(self):
+		project = ProjectConfig()
+		project.load_config_from_file(os.path.join(get_repo_dir(), 'project.conf'))
+
 		self._children = [] 
 		self._file_name = 'root'
-		self._pretty_name = 'Root'
+		self._pretty_name = project.name
 		self._file_path = None
 		self._dependencies_from_to = None
 		self._node_list = None
