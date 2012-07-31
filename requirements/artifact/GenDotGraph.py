@@ -4,6 +4,7 @@ from ..Requirement import Requirement
 from ..RequirementPackage import RequirementPackage
 from ..Document import Document
 from ..Utility import get_repo_dir
+from ..Utility import wrap_line
 import os
 
 class GenDotGraph(Artifact):
@@ -19,9 +20,11 @@ class GenDotGraph(Artifact):
 		repo_dir = get_repo_dir()
 		rt = RequirementTree()
 		rt.load_repository(repo_dir)
-		
+		word_wrap_length = 3
+
 		print 'digraph reqy {'
 		print 'root="%s"' % repo_dir
+		print 'aspect=2'
 		print 'graph [ fontname=Verdana, fontsize=8]'
 		print 'node [ fontname=Verdana, fontsize=8]'
 		print 'edge [ fontname=Verdana, fontsize=8, color="#707792"]'
@@ -31,9 +34,9 @@ class GenDotGraph(Artifact):
 			if isinstance(item, RequirementTree):
 				print '"%s" [ label="%s", shape="box", color="#716eb1", style="filled", fillcolor="#9e9bd1"]' % (item._file_path, item._pretty_name)
 			elif isinstance(item, RequirementPackage):
-				print '"%s" [ label="%s", color="#6ca59c", shape="box", style="rounded,filled", fillcolor="#99c8c2"]' % (item._file_path, item._pretty_name)
+				print '"%s" [ label="%s", color="#6ca59c", shape="box", style="rounded,filled", fillcolor="#99c8c2"]' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
 			elif isinstance(item, Requirement):
-				print '"%s" [ label="%s", color="#7dd396", style="filled", fillcolor="#a9e6bd"]' % (item._file_path, item._pretty_name)
+				print '"%s" [ label="%s", color="#7dd396", style="filled", fillcolor="#a9e6bd"]' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
 			elif isinstance(item, Document):
 				print '"%s" [ label="%s", color="#a9e6bd" ]' % (item._file_path, item._pretty_name)
 			else:
