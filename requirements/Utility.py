@@ -51,3 +51,26 @@ def report_warning(message):
 
 def report_notice(message):
 	print 'Notice: %s' % message
+
+def wrap_line(line, wrap_on_word=7, wrap_string='\n' ,wrap_first=False):
+	""" Replace every nth space with a newline, optoinally also wrap first space """
+	wrapped_lines = ''
+
+	if wrap_first:
+		n = wrap_on_word
+	else:
+		n = 0
+
+	words = line.split()
+	for word in words:
+		wrapped_lines += word
+		if n == wrap_on_word:
+			wrapped_lines += wrap_string
+			n = 1
+		else:
+			wrapped_lines += ' '
+			n += 1
+
+	wrapped_lines = wrapped_lines.strip()
+
+	return wrapped_lines
