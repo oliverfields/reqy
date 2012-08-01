@@ -32,9 +32,12 @@ class RequirementTree:
 		""" Check if the item file name exists in repository """
 		item_exists = False
 
+		# Add attributes.pkg if dir
+		if os.path.isdir(item_file_path):
+			item_file_path = os.path.join(item_file_path, 'attributes.pkg')
+
 		# Load dependencies and items
 		items = self.get_tree_items()
-
 		for item in items:
 			if item._file_path == item_file_path:
 				item_exists = True

@@ -78,7 +78,7 @@ def new_item(item_type, item_path):
 	except:
 		report_error(1, 'Unable to copy template "%s" to "%s"' % (template_file, abs_path))
 
-def list_traces(item_file_path):
+def list_direct_traces(item_file_path):
 	"""
 	For item, list direct traces to and from (i.e. indirect traces are not shown)
 	"""
@@ -92,10 +92,6 @@ def list_traces(item_file_path):
 	# If not absolute path, add repo dir
 	if item_file_path.startswith(os.sep) == False:
 		item_file_path = os.path.join(repo_dir, item_file_path)
-
-	# Append attributes file if a directory
-	if os.path.isdir(item_file_path):
-		item_file_path = os.path.join(item_file_path, 'attributes.pkg')
 
 	# Check item exists in tree
 	if rt.is_item(item_file_path) == False:

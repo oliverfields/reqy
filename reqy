@@ -57,7 +57,7 @@ def trace_mode():
 		report_error(1, 'Wrong number of arguments')
 
 	if valid_arguments:
-		Action.list_traces(item)
+		Action.list_direct_traces(item)
 	else:
 		usage('trace')
 		sys.exit(1)
