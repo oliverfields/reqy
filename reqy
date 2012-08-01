@@ -8,7 +8,7 @@ def usage(mode='default'):
 
 	usage_message = {
 		'artifact': ' <name>|all',
-		'dependencies': '(dep) [to|from|none] <document|package|requirement>',
+		'trace': ' <requirement|package|document>',
 		'init': ' ',
 		'new': ' [glossary|package|requirement(req)|stakeholder] <name>',
 	}
@@ -23,9 +23,6 @@ def usage(mode='default'):
 		print 'Usage: %s [%s] <actions>' % (executable_name, modes)
 	else:
 		print 'Usage: %s %s%s' % (executable_name, mode, usage_message[mode])
-
-def run_report(report_name):
-	print 'Implement!!'
 
 def new_mode():
 	if len(sys.argv) == 4:
@@ -49,25 +46,20 @@ def new_mode():
 		usage('new')
 		report_error(1, 'Wrong number of arguments')
 
-def dependency_mode():
+def trace_mode():
 	valid_arguments = False
 
-	if len(sys.argv) == 4:
-		direction = sys.argv[2]
-		item = sys.argv[3]
-
-		if direction == 'to' or direction == 'from' or direction == 'none':
-			valid_arguments = True
-		else:
-			report_error(1, 'Unknown dependency direction "%s", must be either "to", "from" or "none"' % direction)
+	if len(sys.argv) == 3:
+		item = sys.argv[2]
+		valid_arguments = True
 	else:
-		usage('dependencies')
+		usage('trace')
 		report_error(1, 'Wrong number of arguments')
 
 	if valid_arguments:
-		Action.list_dependencies(direction, item)
+		Action.list_traces(item)
 	else:
-		usage('dependency')
+		usage('trace')
 		sys.exit(1)
 
 def artifact_mode():
@@ -94,11 +86,8 @@ else:
 	import Action
 	from requirements.Utility import report_error
 
-
-options, remainder = getopt.getopt(sys.argv[2:], 'o:v', ['output=', 'verbose', 'version=', ])
-
-if mode == "dependencies" or mode == "dep":
-	dependency_mode()
+if mode == "trace":
+	trace_mode()
 elif mode == "new":
 	new_mode()
 elif mode == "artifact":

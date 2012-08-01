@@ -78,41 +78,38 @@ def new_item(item_type, item_path):
 	except:
 		report_error(1, 'Unable to copy template "%s" to "%s"' % (template_file, abs_path))
 
-def list_dependencies(dependency_direction, item_name):
+def list_traces(item_file_path):
 	"""
-	For each requirement or requirement package, check if dependency to target
-	requirement, requirement package or document is either to, from or none 
+	For item, list direct traces to and from (i.e. indirect traces are not shown)
 	"""
-
-	'''
-	Move this to ReqTree and have it return a list of nodes, could be usefull for other things that use the repo, not just the cli
-to:
-each req that has a dependency to item, in addition all dependencies to the req
-
-from:
-earch item that the item links to
-
-none:
-each item that does not link to item
-
-Basically to and none are opposites and from is easy to do
-'''
 
 	from requirements import RequirementTree
 
 	repo_dir = get_repo_dir()
 	rt = RequirementTree.RequirementTree()
 	rt.load_repository(repo_dir)
-	item_list = rt.get_tree_items()
-	matched_items = []
 
-	print 'item_name: %s' % item_name
-	print 'item_name abs path: %s' % os.path.join(repo_dir, item_name)
-	print 'dependency direction: %s' % dependency_direction
+	# If not absolute path, add repo dir
+	if item_file_path.startswith(os.sep) == False:
+		item_file_path = os.path.join(repo_dir, item_file_path)
 
-	# Loop over and pick out the ones matchin the dependency criteria
-	for item in item_list:
-		print item
+	# Append attributes file if a directory
+	if os.path.isdir(item_file_path):
+		item_file_path = os.path.join(item_file_path, 'attributes.pkg')
+
+	# Check item exists in tree
+	if rt.is_item(item_file_path) == False:
+		report_error(1, 'The item "%s" was not found in the repository' % item_file_path)
+	# List direct traces to the item
+	# Make function list_traces_from and list_traces_to in tree class and use them here
+
+	# List direct traces from the item
+#	print 'item_path: %s' % item_file_path
+#	print 'item_file_path abs path: %s' % os.path.join(repo_dir, item_file_path)
+
+	# Loop over and pick out the ones matching the dependency criteria
+	#for item in item_list:
+	#	print item
 
 def build_artifacts(artifact_name):
 	from requirements.artifact import GenDotGraph

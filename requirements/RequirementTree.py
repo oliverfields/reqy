@@ -23,6 +23,20 @@ class RequirementTree:
 		self._file_path = os.path.abspath(root_directory)
 		self.load_package(os.path.join(root_directory, 'requirements'), self)
 
+	def is_item(self, item_file_path):
+		""" Check if the item file name exists in repository """
+		item_exists = False
+
+		# Load dependencies and items
+		items = self.get_tree_items()
+
+		for item in items:
+			if item._file_path == item_file_path:
+				item_exists = True
+				break
+
+		return item_exists
+
 	def load_package(self, package_directory, parent_package):
 		""" Recursively read package directory and create and link objects """
 
