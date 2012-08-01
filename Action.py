@@ -93,19 +93,51 @@ def list_direct_traces(item_file_path):
 	if item_file_path.startswith(os.sep) == False:
 		item_file_path = os.path.join(repo_dir, item_file_path)
 
+	# If package, add attributes.pkg
+	if os.path.isdir(item_file_path):
+		item_file_path = os.path.join(item_file_path, 'attributes.pkg')
+
 	# Check item exists in tree
 	if rt.is_item(item_file_path) == False:
 		report_error(1, 'The item "%s" was not found in the repository' % item_file_path)
+
+	# Loop over dependencies and compile list of dependencies to and from item
 	# List direct traces to the item
-	# Make function list_traces_from and list_traces_to in tree class and use them here
+	from_list = []
+	to_list = []
+	for item in rt.get_dependencies():
+		if item[0]._file_path == item_file_path:
+			to_list.append(item[1])
+		elif item[1]._file_path == item_file_path:
+			from_list.append(item[0])
 
-	# List direct traces from the item
-#	print 'item_path: %s' % item_file_path
-#	print 'item_file_path abs path: %s' % os.path.join(repo_dir, item_file_path)
+	if from_list:
+		print '\n  Traces from "%s" (%s):' % (make_path_relative(item_file_path), len(from_list))
+		for item in from_list:
+			print '    %s' % make_path_relative(item._file_path)
+	else:
+		print '\n  No traces from "%s"' % make_path_relative(item_file_path)
 
-	# Loop over and pick out the ones matching the dependency criteria
-	#for item in item_list:
-	#	print item
+	if to_list:
+		print '\n  Traces to "%s" (%s):' % (make_path_relative(item_file_path), len(to_list))
+		for item in to_list:
+			print '    %s' % make_path_relative(item._file_path)
+	else:
+		print '\n  No traces to "%s"' % make_path_relative(item_file_path)
+
+
+def make_path_relative(path):
+	""" Strip repo directories from path """
+	repo_dir = get_repo_dir()
+
+	if path == repo_dir:
+		return 'root'
+	else:
+		path = path.replace(get_repo_dir()+'/', '')
+		if path.endswith('attributes.pkg'):
+			path = path.replace(os.sep+'attributes.pkg', '')
+		return path
+
 
 def build_artifacts(artifact_name):
 	from requirements.artifact import GenDotGraph

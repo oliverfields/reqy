@@ -45,6 +45,7 @@ class RequirementTree:
 
 		return item_exists
 
+
 	def load_package(self, package_directory, parent_package):
 		""" Recursively read package directory and create and link objects """
 
