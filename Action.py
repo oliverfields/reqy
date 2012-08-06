@@ -78,6 +78,7 @@ def new_item(item_type, item_path):
 	except:
 		report_error(1, 'Unable to copy template "%s" to "%s"' % (template_file, abs_path))
 
+
 def list_direct_traces(item_file_path):
 	"""
 	For item, list direct traces to and from (i.e. indirect traces are not shown)
@@ -141,11 +142,20 @@ def make_path_relative(path):
 
 def build_artifacts(artifact_name):
 	from requirements.artifact import GenDotGraph
+	from requirements.artifact import GenRequirementsTraceabilityMatrix
 
 	artifact_dir = os.path.join(get_repo_dir(), 'artifacts')
 
-	if artifact_name == 'graph':
+	if artifact_name == 'graph' or artifact_name == 'all':
 		target_file = os.path.join(artifact_dir, 'overview_graph.dot')
 		graph = GenDotGraph.GenDotGraph()
 		graph.generate(target_file)
 
+	if artifact_name == 'rtm' or artifact_name == 'all':
+		target_file = os.path.join(artifact_dir, 'requirements-traceability-matrix.csv')
+		rtm = GenRequirementsTraceabilityMatrix.GenRequirementsTraceabilityMatrix()
+		rtm.generate(target_file)
+
+	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm':
+		report_error(1, 'Unkown artifact type "%s"' % artifact_name)
+		

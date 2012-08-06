@@ -74,3 +74,14 @@ def wrap_line(line, wrap_on_word=7, wrap_string='\n' ,wrap_first=False):
 	wrapped_lines = wrapped_lines.strip()
 
 	return wrapped_lines
+
+
+def write_file(file_name, file_content):
+	try:
+		f = open(file_name, 'w')
+		try:
+			f.write(file_content)
+		finally:
+			f.close()
+	except IOError:
+		report_error(1, 'Unable to write file "%s"' % file_name)

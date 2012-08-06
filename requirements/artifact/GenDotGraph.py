@@ -21,29 +21,34 @@ class GenDotGraph(Artifact):
 		rt = RequirementTree()
 		rt.load_repository(repo_dir)
 		word_wrap_length = 3
+		contents = ''
 
-		print 'digraph reqy {'
-		print 'root="%s"' % repo_dir
-		print 'aspect=2'
-		print 'graph [ fontname=Verdana, fontsize=8]'
-		print 'node [ fontname=Verdana, fontsize=8]'
-		print 'edge [ fontname=Verdana, fontsize=8, color="#707792"]'
-		print ''
+		contents = '''digraph reqy {
+root="%s"
+aspect=2
+graph [fontname=Verdana, fontsize=8]
+node [fontname=Verdana, fontsize=8]
+edge [fontname=Verdana, fontsize=8, color="#707792"]
+
+''' % (repo_dir)
+
 		
 		for item in rt.get_tree_items():
 			if isinstance(item, RequirementTree):
-				print '"%s" [ label="%s", shape="box", color="#716eb1", style="filled", fillcolor="#9e9bd1"]' % (item._file_path, item._pretty_name)
+				contents += '"%s" [label="%s", shape="box", color="#716eb1", style="filled", fillcolor="#9e9bd1"]\n' % (item._file_path, item._pretty_name)
 			elif isinstance(item, RequirementPackage):
-				print '"%s" [ label="%s", color="#6ca59c", shape="box", style="rounded,filled", fillcolor="#99c8c2"]' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
+				contents += '"%s" [label="%s", color="#6ca59c", shape="box", style="rounded,filled", fillcolor="#99c8c2"]\n' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
 			elif isinstance(item, Requirement):
-				print '"%s" [ label="%s", color="#7dd396", style="filled", fillcolor="#a9e6bd"]' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
+				contents += '"%s" [label="%s", color="#7dd396", style="filled", fillcolor="#a9e6bd"]\n' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
 			elif isinstance(item, Document):
-				print '"%s" [ label="%s", color="#a9e6bd" ]' % (item._file_path, item._pretty_name)
+				contents += '"%s" [label="%s", color="#a9e6bd"]\n' % (item._file_path, item._pretty_name)
 			else:
 				report_error(1, 'Unknown item type "%s"' % item)
 		
-		print ''
+		contents += '\n'
 		
 		for item in rt.get_dependencies():
-			print '"%s"->"%s" [dir="back"]' % (item[0]._file_path, item[1]._file_path)
-		print '}'
+			contents += '"%s"->"%s" [dir="back"]\n' % (item[0]._file_path, item[1]._file_path)
+		contents += '}'
+
+		write_file(target_file, contents)

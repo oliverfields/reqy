@@ -1,3 +1,5 @@
+from ..Utility import write_file
+
 class Artifact:
 	""" Base class for all artifact generators """
 
