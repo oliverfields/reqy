@@ -34,19 +34,8 @@ class GenRequirementsTraceabilityMatrix(Artifact):
 		return file_list
 
 
-	def generate(self, target_file):
-		"""
-		List each requirement and it's deliverables. The deliverables are
-		are certain documents that are defined in the documents attribute.
-		"""
-
-		repo_dir = get_repo_dir()
-		rt = RequirementTree()
-		rt.load_repository(repo_dir)
-
-		csv = '"Name";"Status";"Use case";"Design";"Code ref";"Test case";"Acceptance test";"Complete"\n'
-
-		for item in rt.get_tree_items():
+	def get_children_rows(self, parent, csv):
+		for item in parent._children:
 			if isinstance(item, Requirement) or isinstance(item, RequirementPackage):
 				use_case = self.documents_by_type(item.documents, 'use-case')
 				test_case = self.documents_by_type(item.documents, 'test-case')
@@ -61,4 +50,24 @@ class GenRequirementsTraceabilityMatrix(Artifact):
 
 				csv += '"%s";"%s";"%s";"%s";"%s";"%s";"%s";"%s"\n' % (item._pretty_name,item.status, use_case, design, code, test_case, acceptance_test, complete)
 
-		write_file(target_file, csv)
+				if item._children:
+					csv = self.get_children_rows(item, csv)
+
+		return csv
+
+
+	def generate(self, target_file):
+		"""
+		List each requirement and it's deliverables. The deliverables are
+		are certain documents that are defined in the documents attribute.
+		"""
+
+		repo_dir = get_repo_dir()
+		rt = RequirementTree()
+		rt.load_repository(repo_dir)
+
+		csv = self.get_children_rows(rt, '')
+		
+		csv_header = '"Name";"Status";"Use case";"Design";"Code ref";"Test case";"Acceptance test";"Complete"\n'
+
+		write_file(target_file, csv_header + csv)

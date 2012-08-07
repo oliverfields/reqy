@@ -49,7 +49,9 @@ class RequirementTree:
 	def load_package(self, package_directory, parent_package):
 		""" Recursively read package directory and create and link objects """
 
-		for name in os.listdir(package_directory):
+		file_listing = os.listdir(package_directory)
+		file_listing.sort()
+		for name in file_listing:
 			package_path = os.path.join(package_directory, name)
 			if os.path.isdir(package_path):
 				package_attributes = os.path.join(os.path.join(package_directory, name), 'attributes.pkg')
