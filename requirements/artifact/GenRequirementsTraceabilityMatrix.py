@@ -43,12 +43,7 @@ class GenRequirementsTraceabilityMatrix(Artifact):
 				code = self.documents_by_type(item.documents, 'code')
 				acceptance_test = self.documents_by_type(item.documents, 'acceptance-test')
 
-				if len(use_case) > 0 and len(test_case) > 0 and len(design) > 0 and len(code) > 0 and len(acceptance_test) > 0:
-					complete = 'Yes'
-				else:
-					complete = 'No'
-
-				csv += '"%s";"%s";"%s";"%s";"%s";"%s";"%s";"%s"\n' % (item._pretty_name,item.status, use_case, design, code, test_case, acceptance_test, complete)
+				csv += '"%s";"%s";"%s";"%s";"%s";"%s";"%s"\n' % (item._pretty_name,item.status, use_case, design, code, test_case, acceptance_test)
 
 				if item._children:
 					csv = self.get_children_rows(item, csv)
@@ -68,6 +63,6 @@ class GenRequirementsTraceabilityMatrix(Artifact):
 
 		csv = self.get_children_rows(rt, '')
 		
-		csv_header = '"Name";"Status";"Use case";"Design";"Code ref";"Test case";"Acceptance test";"Complete"\n'
+		csv_header = '"Name";"Status";"Use case";"Design";"Code ref";"Test case";"Acceptance test"\n'
 
 		write_file(target_file, csv_header + csv)
