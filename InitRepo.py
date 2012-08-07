@@ -39,7 +39,7 @@ def init_repo():
 	if os.listdir(os.getcwd()) != []:
 		report_error(1, 'Current directory must be empty before initializing repository')
 
-	dirs = ['documents', 'glossary', 'requirements', 'stakeholders', 'templates']
+	dirs = ['documents', 'documents%sdesign' % os.sep, 'documents%suse-case' % os.sep, 'documents%stest-case' % os.sep, 'documents%sacceptance-test' % os.sep, 'glossary', 'requirements', 'stakeholders', 'templates']
 
 	files = [
 		['templates', 'attributes.pkg', ''],

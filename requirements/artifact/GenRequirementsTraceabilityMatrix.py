@@ -44,7 +44,7 @@ class GenRequirementsTraceabilityMatrix(Artifact):
 		rt = RequirementTree()
 		rt.load_repository(repo_dir)
 
-		csv = '"Name";"Use case";"Design";"Code ref";"Test case";"Acceptance validation";"Complete"\n'
+		csv = '"Name";"Status";"Use case";"Design";"Code ref";"Test case";"Acceptance test";"Complete"\n'
 
 		for item in rt.get_tree_items():
 			if isinstance(item, Requirement) or isinstance(item, RequirementPackage):
@@ -52,13 +52,13 @@ class GenRequirementsTraceabilityMatrix(Artifact):
 				test_case = self.documents_by_type(item.documents, 'test-case')
 				design = self.documents_by_type(item.documents, 'design')
 				code = self.documents_by_type(item.documents, 'code')
-				acceptance_validation = self.documents_by_type(item.documents, 'acceptance_validation')
+				acceptance_test = self.documents_by_type(item.documents, 'acceptance-test')
 
-				if len(use_case) > 0 and len(test_case) > 0 and len(design) > 0 and len(code) > 0 and len(acceptance_validation) > 0:
+				if len(use_case) > 0 and len(test_case) > 0 and len(design) > 0 and len(code) > 0 and len(acceptance_test) > 0:
 					complete = 'Yes'
 				else:
 					complete = 'No'
 
-				csv += '"%s";"%s";"%s";"%s";"%s";"%s";"%s"\n' % (item._pretty_name, use_case, design, code, test_case, acceptance_validation, complete)
+				csv += '"%s";"%s";"%s";"%s";"%s";"%s";"%s";"%s"\n' % (item._pretty_name,item.status, use_case, design, code, test_case, acceptance_test, complete)
 
 		write_file(target_file, csv)
