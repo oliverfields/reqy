@@ -24,9 +24,11 @@ class RequirementTree:
 		self._dependencies_from_to = None
 		self._node_list = None
 
+
 	def load_repository(self, root_directory):
 		self._file_path = os.path.abspath(root_directory)
 		self.load_package(os.path.join(root_directory, 'requirements'), self)
+
 
 	def is_item(self, item_file_path):
 		""" Check if the item file name exists in repository """
@@ -177,9 +179,41 @@ class RequirementTree:
 
 		return self._node_list	
 
+
 	def dump_attributes(self):
 		""" Print all attribute values """
 		print "Attribute values:"
 		for setting in vars(self).keys():
 			if hasattr(self, setting):
 				print '"%s": "%s"' % (setting, getattr(self, setting))
+
+
+	def list_direct_traces(self, item_file_path):
+		"""
+		For item, return direct traces to and from (i.e. indirect traces are not shown)
+		"""
+		repo_dir = get_repo_dir()
+		traces = None
+
+		# If not absolute path, add repo dir
+		if item_file_path.startswith(os.sep) == False:
+			item_file_path = os.path.join(repo_dir, item_file_path)
+
+		# If package, add attributes.pkg
+		if os.path.isdir(item_file_path):
+			item_file_path = os.path.join(item_file_path, 'attributes.pkg')
+
+		# Check item exists in tree
+		if self.is_item(item_file_path) == False:
+			report_error(1, 'The item "%s" was not found in the repository' % item_file_path)
+
+		# Loop over dependencies and compile list of dependencies to and from item
+		# List direct traces to the item
+		traces = { 'to': [], 'from': [] }
+		for item in self.get_dependencies():
+			if item[0]._file_path == item_file_path:
+				traces['to'].append(item[1])
+			elif item[1]._file_path == item_file_path:
+				traces['from'].append(item[0])
+
+		return traces

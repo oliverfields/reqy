@@ -4,6 +4,7 @@ from ..Requirement import Requirement
 from ..RequirementPackage import RequirementPackage
 from ..Document import Document
 from ..Utility import get_repo_dir
+from ..Utility import documents_by_type
 import os
 
 class GenRequirementsTraceabilityMatrix(Artifact):
@@ -16,32 +17,14 @@ class GenRequirementsTraceabilityMatrix(Artifact):
 		self.description = 'Generate csv file format describing the requirements and their deliverables'
 
 
-	def documents_by_type(self, link_list, document_type):
-		""" Returns all items from list that match the filter type """
-
-		file_list = ''
-
-		if link_list == None:
-			return file_list 
-
-		for document in link_list:
-			if document._pretty_name.startswith(document_type):
-				file_list += document._pretty_name + ','
-
-		if file_list.endswith(','):
-			file_list.rstrip(',')
-
-		return file_list
-
-
 	def get_children_rows(self, parent, csv):
 		for item in parent._children:
 			if isinstance(item, Requirement) or isinstance(item, RequirementPackage):
-				use_case = self.documents_by_type(item.documents, 'use-case')
-				test_case = self.documents_by_type(item.documents, 'test-case')
-				design = self.documents_by_type(item.documents, 'design')
-				code = self.documents_by_type(item.documents, 'code')
-				acceptance_test = self.documents_by_type(item.documents, 'acceptance-test')
+				use_case = documents_by_type(item.documents, 'use-case')
+				test_case = documents_by_type(item.documents, 'test-case')
+				design = documents_by_type(item.documents, 'design')
+				code = documents_by_type(item.documents, 'code')
+				acceptance_test = documents_by_type(item.documents, 'acceptance-test')
 
 				csv += '"%s";"%s";"%s";"%s";"%s";"%s";"%s"\n' % (item._pretty_name,item.status, use_case, design, code, test_case, acceptance_test)
 

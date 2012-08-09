@@ -2,6 +2,7 @@ from requirements import Requirement
 from requirements.Utility import get_repo_dir
 from requirements.Utility import report_error
 from requirements.Utility import report_notice
+from requirements.Utility import make_path_relative
 from shutil import copyfile
 import os
 
@@ -127,22 +128,10 @@ def list_direct_traces(item_file_path):
 		print '\n  No traces to "%s"' % make_path_relative(item_file_path)
 
 
-def make_path_relative(path):
-	""" Strip repo directories from path """
-	repo_dir = get_repo_dir()
-
-	if path == repo_dir:
-		return 'root'
-	else:
-		path = path.replace(get_repo_dir()+'/', '')
-		if path.endswith('attributes.pkg'):
-			path = path.replace(os.sep+'attributes.pkg', '')
-		return path
-
-
 def build_artifacts(artifact_name):
 	from requirements.artifact import GenDotGraph
 	from requirements.artifact import GenRequirementsTraceabilityMatrix
+	from requirements.artifact import GenRequirementList
 
 	artifact_dir = os.path.join(get_repo_dir(), 'artifacts')
 
@@ -156,6 +145,12 @@ def build_artifacts(artifact_name):
 		rtm = GenRequirementsTraceabilityMatrix.GenRequirementsTraceabilityMatrix()
 		rtm.generate(target_file)
 
-	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm':
+	if artifact_name == 'list' or artifact_name == 'all':
+		target_file = os.path.join(artifact_dir, 'requirement-list.odt')
+		list_report = GenRequirementList.GenRequirementList()
+		list_report.generate(target_file)
+
+
+	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list':
 		report_error(1, 'Unkown artifact type "%s"' % artifact_name)
 		

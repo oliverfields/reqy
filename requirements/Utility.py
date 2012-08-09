@@ -85,3 +85,42 @@ def write_file(file_name, file_content):
 			f.close()
 	except IOError:
 		report_error(1, 'Unable to write file "%s"' % file_name)
+
+
+def documents_by_type(link_list, document_type):
+	""" Returns all items from list that match the filter type """
+
+	file_list = ''
+
+	if link_list == None:
+		return file_list 
+
+	for document in link_list:
+		if document._pretty_name.startswith(document_type):
+			file_list += document._pretty_name + ','
+
+	if file_list.endswith(','):
+		file_list.rstrip(',')
+
+	return file_list
+
+
+def make_path_relative(path):
+	""" Strip repo directories from path """
+	repo_dir = get_repo_dir()
+
+	if path == repo_dir:
+		return 'root'
+	else:
+		path = path.replace(get_repo_dir()+'/', '')
+		if path.endswith('attributes.pkg'):
+			path = path.replace(os.sep+'attributes.pkg', '')
+		return path
+
+def xstr(s):
+	""" Retrurn None as empty string """
+	if s is None:
+		return ''
+	else:
+		return str(s)
+
