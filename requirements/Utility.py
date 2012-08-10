@@ -99,8 +99,7 @@ def documents_by_type(link_list, document_type):
 		if document._pretty_name.startswith(document_type):
 			file_list += document._pretty_name + ','
 
-	if file_list.endswith(','):
-		file_list.rstrip(',')
+	file_list = file_list.rstrip(',')
 
 	return file_list
 
