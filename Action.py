@@ -146,7 +146,7 @@ def build_artifacts(artifact_name):
 		rtm.generate(target_file)
 
 	if artifact_name == 'list' or artifact_name == 'all':
-		target_file = os.path.join(artifact_dir, 'requirement-list.odt')
+		target_file = os.path.join(artifact_dir, 'requirement-list')
 		list_report = GenRequirementList.GenRequirementList()
 		list_report.generate(target_file)
 

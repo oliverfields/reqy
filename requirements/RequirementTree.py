@@ -95,7 +95,7 @@ class RequirementTree:
 				doc = Document()
 				doc.load_document(link)
 				list_objects.append(doc)
-		elif link_list_type == 'assigned_to' or link_list_type == 'created_by' or link_list_type == 'rejected_by':
+		elif link_list_type == 'stakeholder':
 			for link in link_list:
 				sth = Stakeholder()
 				sth.load_config_from_file(link)
