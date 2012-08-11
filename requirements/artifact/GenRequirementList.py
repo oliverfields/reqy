@@ -5,7 +5,7 @@ from ..RequirementPackage import RequirementPackage
 from ..Document import Document
 from ..Utility import get_repo_dir, documents_by_type, make_path_relative, xstr, report_error
 from odf.opendocument import OpenDocumentText
-from odf.style import Style, TextProperties, TableColumnProperties
+from odf.style import Style, TextProperties, TableColumnProperties, ParagraphProperties
 from odf.text import H, P, List, ListItem
 from odf.table import Table, TableCell, TableRow, TableColumn
 import os
@@ -113,13 +113,8 @@ class GenRequirementList(Artifact):
 				odt.text.addElement(heading)
 
 				# Attribute table
-#				s = Style(name="attributenamecolumn", family="table-column")
-#				s.addElement(TableColumnProperties(columnwidth="2cm"))
-#				odt.automaticstyles.addElement(s)
 
 				tbl = Table()
-#				tbl.addElement(TableColumn(numbercolumnsrepeated='1', stylename=s))
-#				tbl.addElement(TableColumn(numbercolumnsrepeated='1'))
 				tbl.addElement(TableColumn(numbercolumnsrepeated='2'))
 				odt.text.addElement(tbl)
 
