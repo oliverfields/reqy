@@ -6,7 +6,7 @@ from ..Document import Document
 from ..Utility import get_repo_dir, documents_by_type, make_path_relative, xstr, report_error
 from odf.opendocument import OpenDocumentText
 from odf.style import Style, TextProperties, TableColumnProperties, ParagraphProperties
-from odf.text import H, P, List, ListItem
+from odf.text import H, P, List, ListItem, Span, TableOfContent, TableOfContentSource
 from odf.table import Table, TableCell, TableRow, TableColumn
 import os
 
@@ -48,9 +48,16 @@ class GenRequirementList(Artifact):
 
 	def add_attribute_row(self, table, key, value):
 		""" Add a two cell row to the table """
+		boldstyle = Style(name="Bold",family="text")
+		boldstyle.addElement(TextProperties(attributes={'fontweight':"bold"}))
+
+		title_span = Span(stylename=boldstyle, text=key)
+		pt = P(text='')
+		pt.addElement(title_span)
+
 		tr = TableRow()
 		tc = TableCell(valuetype='string')
-		tc.addElement(P(text=key))
+		tc.addElement(pt)
 		tr.addElement(tc)
 		tc = TableCell(valuetype='string')
 		tc.addElement(P(text=value))
@@ -59,9 +66,17 @@ class GenRequirementList(Artifact):
 
 	def add_attribute_traces_row(self, table, key, list_items):
 		""" Add a two cell row to the table """
+
+		boldstyle = Style(name="Bold",family="text")
+		boldstyle.addElement(TextProperties(attributes={'fontweight':"bold"}))
+
+		title_span = Span(stylename=boldstyle, text=key)
+		pt = P(text='')
+		pt.addElement(title_span)
+
 		tr = TableRow()
 		tc = TableCell(valuetype='string')
-		tc.addElement(P(text=key))
+		tc.addElement(pt)
 		tr.addElement(tc)
 		tc = TableCell(valuetype='string')
 		tc.addElement(self.build_list(list_items))
@@ -109,23 +124,73 @@ class GenRequirementList(Artifact):
 				print '%s - %s' % (level, item._pretty_name)
 
 				# Heading
-				heading = H(text=item._pretty_name, outlinelevel=level)
+#				if item.status == 'rejected':
+#					strikestyle = Style(name="Strike",family="text")
+#					strikestyle.addElement(TextProperties(attributes={'strikethrough-position':2}))
+#					odt.automaticstyles.addElement(strikestyle)
+#					heading_span = Span(stylename=strikestyle, text=item._pretty_name)
+#					odt.automaticstyles.addElement(strikestyle)
+#					heading = H(text='', outlinelevel=level)
+#					heading.addElement(heading_span)
+#				else:
+#					heading = H(text=item._pretty_name, outlinelevel=level)
+				# Create a style for the paragraph with page-break
+#				withbreak = Style(name="WithBreak", parentstylename="Standard", family="paragraph")
+#				withbreak.addElement(ParagraphProperties(breakbefore="page"))
+#				odt.automaticstyles.addElement(withbreak)
+#				if level == 1:
+#					heading = H(text='%s [%s]' % (item._pretty_name, item.status.capitalize()), outlinelevel=level, stylename=withbreak)
+#				else:
+				heading = H(text='%s [%s]' % (item._pretty_name, item.status.capitalize()), outlinelevel=level)
+
+
 				odt.text.addElement(heading)
+
+				tablecontents = Style(name="Table Contents", family="paragraph")
+				tablecontents.addElement(ParagraphProperties(numberlines="false", linenumber="0"))
+				odt.styles.addElement(tablecontents)
+
+				# Create automatic styles for the column widths.
+				# We want two different widths, one in inches, the other one in metric.
+				# ODF Standard section 15.9.1
+				widthshort = Style(name="Wshort", family="table-column")
+				widthshort.addElement(TableColumnProperties(columnwidth="2cm"))
+				odt.automaticstyles.addElement(widthshort)
+
+				widthwide = Style(name="Wwide", family="table-column")
+				widthwide.addElement(TableColumnProperties(columnwidth="7cm"))
+				odt.automaticstyles.addElement(widthwide)
 
 				# Attribute table
 
 				tbl = Table()
-				tbl.addElement(TableColumn(numbercolumnsrepeated='2'))
+				tbl.addElement(TableColumn(numbercolumnsrepeated='1',stylename=widthshort))
+				tbl.addElement(TableColumn(numbercolumnsrepeated='1',stylename=widthwide))
 				odt.text.addElement(tbl)
 
 				# Status
+				boldstyle = Style(name="Bold",family="text")
+				boldstyle.addElement(TextProperties(attributes={'fontweight':"bold"}))
+				odt.automaticstyles.addElement(boldstyle)
+				p = P(text='')
 				status = item.status
 				status = status.capitalize()
+				status_span = Span(stylename=boldstyle, text=status)
+				p.addElement(status_span)
 				if item.status_reason:
-					status_string = '%s - %s' % (status, item.status_reason)
-				else:
-					status_string = '%s' % (status)
-				self.add_attribute_row(tbl, 'Status', status_string)
+					p.addText(' - %s' % item.status_reason)
+
+				title_span = Span(stylename=boldstyle, text='Status')
+				pt = P(text='')
+				pt.addElement(title_span)
+				tr = TableRow()
+				tc = TableCell(valuetype='string')
+				tc.addElement(pt)
+				tr.addElement(tc)
+				tc = TableCell(valuetype='string')
+				tc.addElement(p)
+				tr.addElement(tc)
+				tbl.addElement(tr)
 
 				# Description, rationale and notes
 				self.add_attribute_row(tbl, 'Description', item.description)
@@ -160,6 +225,32 @@ class GenRequirementList(Artifact):
 					self.write_child_details(tree, level+1, item, odt)
 
 
+	def add_toc(self, odt):
+		# TOC
+		tc = TableOfContent(name="Table of contents")
+		tcs = TableOfContentSource()
+		tc.addElement(tcs)
+		odt.text.addElement(tc)
+
+
+	def add_title_page(self, odt, title):
+		# Requirements for <project name>
+		# <project description>
+		#
+		# Author: <stakeholder name>
+		# <date>
+		#
+		# <document description>
+		# Title
+		titlestyle = Style(name="TitleStyle",family="text")
+		titlestyle.addElement(TextProperties(attributes={'fontweight':"bold", 'fontsize':'36pt'}))
+		odt.automaticstyles.addElement(titlestyle)
+		titlespan = Span(stylename=titlestyle, text='Requirements for "%s"' % title)
+		p = P(text='')
+		p.addElement(titlespan)
+		odt.text.addElement(p)
+
+
 	def generate(self, target_file):
 		""" List each requirement and it's details """
 
@@ -168,6 +259,8 @@ class GenRequirementList(Artifact):
 		rt.load_repository(repo_dir)
 		odt = OpenDocumentText()
 
+		self.add_title_page(odt, rt._pretty_name)
+		self.add_toc(odt)
 		self.write_child_details(rt, 1, rt, odt)
 
 		odt.save(target_file, True)
