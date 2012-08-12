@@ -9,6 +9,7 @@ def usage(mode='default'):
 	usage_message = {
 		'artifact': ' all|graph|list|rtm',
 		'trace': ' <requirement|package|document>',
+		'filter': ' status <approved|elaboration|implementation|rejected|postponed>',
 		'init': ' ',
 		'new': ' [glossary|package|requirement(req)|stakeholder] <name>',
 	}
@@ -69,6 +70,17 @@ def artifact_mode():
 		usage('artifact')
 		report_error(1, 'Wrong number of arguments')
 
+def filter_mode():
+	if len(sys.argv) == 4:
+		if sys.argv[2] == 'status':
+			Action.filter_requirements_by_status(sys.argv[3])
+		else:
+			usage('filter')
+			report_error(1, 'Unknown filter mode "%s"' % sys.argv[2])
+	else:
+		usage('filter')
+		report_error(1, 'Wrong number of arguments')
+
 try:
 	mode = sys.argv[1]
 except Exception:
@@ -92,6 +104,8 @@ elif mode == "new":
 	new_mode()
 elif mode == "artifact":
 	artifact_mode()
+elif mode == "filter":
+	filter_mode()
 else:
 	usage()
 	report_error(1, 'Unknown mode "%s"' % mode)

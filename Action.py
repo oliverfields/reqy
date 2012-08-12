@@ -154,3 +154,29 @@ def build_artifacts(artifact_name):
 	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list':
 		report_error(1, 'Unkown artifact type "%s"' % artifact_name)
 		
+
+
+def filter_requirements_by_status(status):
+	valid_status = ['approved', 'elaboration', 'implementation', 'postponed', 'rejected']
+	is_valid_status = False
+
+	# Check status is valid
+	for vs in valid_status:
+		if vs == status:
+			is_valid_status = True
+
+	if is_valid_status == False:
+		report_error(1, 'Unknown status "%s", must be either approved, elaboration, implementation, rejected or postponed' % status)
+
+	from requirements import RequirementTree
+
+	repo_dir = get_repo_dir()
+	rt = RequirementTree.RequirementTree()
+	rt.load_repository(repo_dir)
+
+	item_list = rt.get_tree_items()
+
+	for item in item_list:
+		if item.status == status:
+			print item._pretty_name
+

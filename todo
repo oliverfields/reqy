@@ -1,1 +1,2 @@
 - If assigned on is set, then need assigned to set as well
+- New mode assumes creation from repo root, must also be able to handle creation from e.g. requirements/1_cli/

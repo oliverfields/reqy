@@ -113,9 +113,11 @@ class RequirementTree:
 
 		return list_objects
 
+
 	def print_tree(self):
 		print self._pretty_name
 		self.print_package(self, indent='  ')
+
 
 	def print_package(self, parent_package, indent):
 		for package in parent_package._children:
@@ -126,6 +128,7 @@ class RequirementTree:
 				indent += indent
 				self.print_package(package, indent)
 			print '%s----- /%s -----' % (indent, package._pretty_name)
+
 
 	def get_dependencies(self):
 		"""
@@ -161,21 +164,24 @@ class RequirementTree:
 
 		return self._dependencies_from_to
 
+
+	def get_package_items(self, parent_package):
+		for package in parent_package._children:
+			self._node_list.append(package)
+			if package._children:
+				self.get_package_items(package)
+
+
 	def get_tree_items(self):
 		""" Get list of each item in tree """
-		# Make sure dependencies are loaded
-		tree_items = self.get_dependencies()
 
 		if self._node_list == None:
 			self._node_list = []
 		# Make a list of all items 
-			for item in tree_items:
-				self._node_list.append(item[0])
-				self._node_list.append(item[1])
-
-		# Make a set of the list and then make the result a list and all duplicates
-		# are bye bye
-			self._node_list = list(set(self._node_list))
+			for item in self._children:
+				self._node_list.append(item)
+				if item._children:
+					self.get_package_items(item)
 
 		return self._node_list	
 
