@@ -23,15 +23,18 @@ def new_item(item_type, item_path):
 	if valid_item_type == False:
 		report_error(1, 'Unknown type "%s"' % item_type)
 
-	# Set target path. Path must be relative (i.e. not starting with '/').
-	# If not starts with type directory (e.g. requierments or documents) this
-	# will be added to the item path. Item name will be suffixed with
-	# appropriate file extension is none present.
-	if item_path.startswith(os.sep):
-		report_error(1, 'Cannot specify absolute path to new item, must be relative to repository root directory')
-
 	if item_path.endswith(os.sep):
-		report_error(1, 'Cannot specify directory as new item (trailing "/"')
+		report_error(1, 'Cannot specify directory as new item (trailing "/")')
+
+	# Make path absolute if not
+	cwd = os.getcwd()
+	# If not a absolute path, then make it one based on cwd
+	if item_path.startswith(os.sep) == False:
+		item_path = os.path.join(cwd, item_path)
+
+	# Check item is in repo/requirement dir
+	if item_path.startswith(repo_dir) == False:
+		report_error(1, 'Item must be created in "%s"' % repo_dir)
 
 	file_name = os.path.basename(item_path)
 	if file_name == '':
