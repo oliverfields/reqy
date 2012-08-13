@@ -83,3 +83,7 @@ class Requirement(ConfigFile):
 		# If status is approved a approved_by user must be specified
 		if self.status == 'approved' and (self.approved_by == None or self.approved_by == ''):
 			Utility.report_error(1, '%s: "Approved by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+
+		# If assigned on, then must have assigned to
+		if self.assigned_on and self.assigned_to == None:
+			Utility.report_error(1, '%s: Item has "Assigned on" date, but missing "Assigned to" attribute' % self._file_path)
