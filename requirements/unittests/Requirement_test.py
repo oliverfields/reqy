@@ -172,3 +172,8 @@ class TestRequirement():
 		req = Requirement()
 		with pytest.raises(SystemExit):
 			req.load_config_from_file('test_data/invalid_requirement_config_14.req')
+
+	def test_invalid_req_config_11(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('test_data/invalid_requirement_config_11.req')
