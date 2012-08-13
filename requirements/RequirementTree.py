@@ -83,6 +83,8 @@ class RequirementTree:
 				package.created_by = self.get_link_list_objects(package, 'stakeholder', package.created_by)
 				package.documents = self.get_link_list_objects(package, 'documents', package.documents)
 				package.rejected_by = self.get_link_list_objects(package, 'stakeholder', package.rejected_by)
+				package.approved_by = self.get_link_list_objects(package, 'stakeholder', package.approved_by)
+				package.postponed_by = self.get_link_list_objects(package, 'stakeholder', package.postponed_by)
 				package.depends_on = self.get_link_list_objects(package, 'requirement', package.depends_on)
 			elif os.path.isfile(package_path):
 				if package_path.endswith('.req'):
@@ -92,6 +94,8 @@ class RequirementTree:
 					requirement.created_by = self.get_link_list_objects(requirement, 'stakeholder', requirement.created_by)
 					requirement.documents = self.get_link_list_objects(requirement, 'documents', requirement.documents)
 					requirement.rejected_by = self.get_link_list_objects(requirement, 'stakeholder', requirement.rejected_by)
+					requirement.approved_by = self.get_link_list_objects(requirement, 'stakeholder', requirement.approved_by)
+					requirement.postponed_by = self.get_link_list_objects(requirement, 'stakeholder', requirement.postponed_by)
 					requirement.depends_on = self.get_link_list_objects(requirement, 'requirement', requirement.depends_on)
 
 					parent_package._children.append(requirement) 
@@ -185,6 +189,11 @@ class RequirementTree:
 	def get_package_items(self, parent_package):
 		for package in parent_package._children:
 			self._node_list.append(package)
+		
+			if package.documents:
+				for doc in package.documents:
+					self._node_list.append(doc)
+
 			if package._children:
 				self.get_package_items(package)
 
@@ -197,6 +206,9 @@ class RequirementTree:
 		# Make a list of all items 
 			for item in self._children:
 				self._node_list.append(item)
+				if item.documents:
+					for doc in item.documents:
+						self._node_list.append(doc)
 				if item._children:
 					self.get_package_items(item)
 

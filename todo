@@ -2,3 +2,4 @@
 - Should graph show all items, or only those that are approved, implementation and elaboration?
 - On approved, should status reason be required in order to describe how requirement is met?
 - What happens if a attribute field is specified multiple times in a config file?
+- Need to record who decided what status and when for all status types? Ie rejected by and rejected on are vital, but is postponed on and postponed by? Perhaps better to change status field to accept <status> by <stakeholder> on <date> type syntax? 

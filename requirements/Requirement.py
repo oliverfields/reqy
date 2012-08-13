@@ -22,6 +22,8 @@ class Requirement(ConfigFile):
 	def __init__(self):
 		""" Public attributes (those not starting with underscore) are also the valid config file settings """
 		ConfigFile.__init__(self)
+		self.approved_on = None
+		self.approved_by = None
 		self.assigned_on = None
 		self.assigned_to = None
 		self.created_by = None
@@ -32,10 +34,11 @@ class Requirement(ConfigFile):
 		self.estimated_effort = None
 		self.estimated_cost = None
 		self.note = None
+		self.postponed_by = None
+		self.postponed_on = None
 		self.rationale = None
 		self.rejected_by = None
 		self.rejected_on = None
-		self.approved_by = None
 		self.status = 'elaboration'
 		self.status_reason = None
 		self.todo = None
@@ -77,6 +80,12 @@ class Requirement(ConfigFile):
 		if self.is_string_date(self.rejected_on) == False:
 			Utility.report_error(1, '%s: Rejected on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.rejected_on))
 
+		if self.is_string_date(self.postponed_on) == False:
+			Utility.report_error(1, '%s: Postponed on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.postponed_on))
+
+		if self.is_string_date(self.approved_on) == False:
+			Utility.report_error(1, '%s: Approved on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.approved_on))
+
 		if self.is_string_date(self.assigned_on) == False:
 			Utility.report_error(1, '%s: Assigned on field has value "%s", but it must be date in YYYY-MM-DD format' % (self._file_path, self.assigned_on))
 
@@ -86,6 +95,7 @@ class Requirement(ConfigFile):
 		self.assigned_to = self.make_link_list('stakeholders', 'Assigned to', self.assigned_to, False)
 		self.created_by = self.make_link_list('stakeholders', 'Created by', self.created_by, False)
 		self.rejected_by = self.make_link_list('stakeholders', 'Rejected by', self.rejected_by, False)
+		self.postponed_by = self.make_link_list('stakeholders', 'Postponed by', self.postponed_by, False)
 		self.documents = self.make_link_list('documents', 'Documents', self.documents)
 		self.depends_on = self.make_link_list('requirements', 'Depends on', self.depends_on)
 
@@ -101,6 +111,23 @@ class Requirement(ConfigFile):
 		if self.status == 'approved' and (self.approved_by == None or self.approved_by == ''):
 			Utility.report_error(1, '%s: "Approved by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
 
+		# If status is postponed a postponed_by user must be specified
+		if self.status == 'postponed' and (self.postponed_by == None or self.postponed_by == ''):
+			Utility.report_error(1, '%s: "Postponed by" is missing, this is not allowed when status is "%s"' % (self._file_path, self.status))
+
 		# If assigned on, then must have assigned to
 		if self.assigned_on and self.assigned_to == None:
 			Utility.report_error(1, '%s: Item has "Assigned on" date, but missing "Assigned to" attribute' % self._file_path)
+
+		# Check appropriate by and on attributes for the status
+		self.check_appropriate_by_and_on_attributes(self.status, 'approved', self.approved_by, 'Approved by', self.approved_on, 'Approved on')
+		self.check_appropriate_by_and_on_attributes(self.status, 'rejected', self.rejected_by, 'Rejected by', self.rejected_on, 'Rejected on')
+		self.check_appropriate_by_and_on_attributes(self.status, 'postponed', self.postponed_by, 'Postponed by', self.postponed_on, 'Postponed on')
+
+
+	def check_appropriate_by_and_on_attributes(self, actual_status_string, status_string, by_value_string, by_lable_string, on_value_string, on_lable_string):
+		if (status_string != actual_status_string) and (by_value_string != None):
+			Utility.report_error(1, '%s: Item has attribute %s, but status is not %s' % (self._file_path, by_lable_string, status_string))
+
+		if status_string != actual_status_string and on_value_string != None:
+			Utility.report_error(1, '%s: Item has attribute %s, but status is not %s' % (self._file_path, on_lable_string, status_string))
