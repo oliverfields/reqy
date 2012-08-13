@@ -1,0 +1,5 @@
+# Full config file, fails because postponed but rejected by is set
+Description: Nice requirement for testing with
+Rationale: The why is paramount
+Status: postponed
+Rejected by: testuser
