@@ -121,7 +121,6 @@ class GenRequirementList(Artifact):
 				acceptance_test = documents_by_type(item.documents, 'acceptance-test')
 
 				traces = tree.list_direct_traces(item._file_path)
-				print '%s - %s' % (level, item._pretty_name)
 
 				# Heading
 #				if item.status == 'rejected':
@@ -142,7 +141,6 @@ class GenRequirementList(Artifact):
 #					heading = H(text='%s [%s]' % (item._pretty_name, item.status.capitalize()), outlinelevel=level, stylename=withbreak)
 #				else:
 				heading = H(text='%s [%s]' % (item._pretty_name, item.status.capitalize()), outlinelevel=level)
-
 
 				odt.text.addElement(heading)
 

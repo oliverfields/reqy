@@ -6,6 +6,10 @@ from requirements.Utility import make_path_relative
 from shutil import copyfile
 import os
 
+def get_parent_dir(item_path):
+	parent_dir = item_path.rsplit(os.sep, 1)
+	return parent_dir[0]
+
 def new_item(item_type, item_path):
 	repo_dir = get_repo_dir()
 	item_settings = {
@@ -52,12 +56,13 @@ def new_item(item_type, item_path):
 	elif item_path.endswith(item_settings[item_type]['file_ext']) == False:
 		item_path += item_settings[item_type]['file_ext']
 
-	parent_directory = os.path.join(repo_dir, item_settings[item_type]['directory'])
+	parent_directory = get_parent_dir(item_path)
+
 	abs_path = os.path.join(parent_directory, item_path)
 
 	# Package is is a directory/attributes.pkg so check differently
 	if item_type == 'package':
-		if os.path.isdir(parent_directory):
+		if os.path.isdir(item_path):
 			report_error(1, 'The package "%s" already exists' % parent_directory)
 		else:
 			try:
