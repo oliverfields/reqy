@@ -193,6 +193,8 @@ def filter_requirements_by_status(status):
 		report_error(1, 'Unknown status "%s", must be either approved, elaboration, implementation, rejected or postponed' % status)
 
 	from requirements import RequirementTree
+	from requirements import Requirement
+	from requirements import RequirementPackage
 
 	repo_dir = get_repo_dir()
 	rt = RequirementTree.RequirementTree()
@@ -201,6 +203,7 @@ def filter_requirements_by_status(status):
 	item_list = rt.get_tree_items()
 
 	for item in item_list:
-		if item.status == status:
-			print item._pretty_name
+		if isinstance(item, Requirement.Requirement) or isinstance(item, RequirementPackage.RequirementPackage):
+			if item.status == status:
+				print item._pretty_name
 
