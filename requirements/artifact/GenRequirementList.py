@@ -83,21 +83,26 @@ class GenRequirementList(Artifact):
 		tr.addElement(tc)
 		table.addElement(tr)
 
-	def build_list(self, list_items):
-		l = List()
-		for item in list_items:
-			name = ''
+
+	def get_dependency_to_items(self, item_list):
+		""" Returns list of requirement and requirement package names """
+		l = []
+		for item in item_list:
 			if isinstance(item, Requirement) or isinstance(item, RequirementPackage):
-				name = item._pretty_name
+				l.append(item._pretty_name)
 			elif isinstance(item, RequirementTree):
-				name = 'Root' 
+				l.append('Root')
 			elif isinstance(item, Document):
-				#name = item._pretty_name
 				continue
 			else:
-				name = item
+				continue
+		return l
 
-			p = P(text=name)
+
+	def build_list(self, list_items):
+		l = List() 
+		for item in self.get_dependency_to_items(list_items):
+			p = P(text=item)
 			i = ListItem()
 			i.addElement(p)
 			l.addElement(i)
@@ -202,7 +207,8 @@ class GenRequirementList(Artifact):
 				self.stakeholder_trace(tbl, 'Rejected', 'by', item.rejected_by, item.rejected_on)
 
 				# Traces
-				if len(traces['to']) > 0:
+				traces_to = self.get_dependency_to_items(traces['to'])
+				if len(traces_to) > 0:
 					self.add_attribute_traces_row(tbl, 'Dependency to', traces['to'])
 				
 				# Will always be a parent, which is enforced by file system, so just show
@@ -262,4 +268,7 @@ class GenRequirementList(Artifact):
 		self.add_toc(odt)
 		self.write_child_details(rt, 1, rt, odt)
 
-		odt.save(target_file, True)
+		try:
+			odt.save(target_file, True)
+		except:
+			report_error(1, 'Unable to write to "%s", is file open?' % target_file)
