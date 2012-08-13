@@ -64,6 +64,7 @@ class GenRequirementList(Artifact):
 		tr.addElement(tc)
 		table.addElement(tr)
 
+
 	def add_attribute_traces_row(self, table, key, list_items):
 		""" Add a two cell row to the table """
 
@@ -80,6 +81,26 @@ class GenRequirementList(Artifact):
 		tr.addElement(tc)
 		tc = TableCell(valuetype='string')
 		tc.addElement(self.build_list(list_items))
+		tr.addElement(tc)
+		table.addElement(tr)
+
+
+	def add_attribute_document_list_row(self, table, key, list_items):
+		""" Add a two cell row to the table """
+
+		boldstyle = Style(name="Bold",family="text")
+		boldstyle.addElement(TextProperties(attributes={'fontweight':"bold"}))
+
+		title_span = Span(stylename=boldstyle, text=key)
+		pt = P(text='')
+		pt.addElement(title_span)
+
+		tr = TableRow()
+		tc = TableCell(valuetype='string')
+		tc.addElement(pt)
+		tr.addElement(tc)
+		tc = TableCell(valuetype='string')
+		tc.addElement(self.build_document_list(list_items))
 		tr.addElement(tc)
 		table.addElement(tr)
 
@@ -102,6 +123,17 @@ class GenRequirementList(Artifact):
 	def build_list(self, list_items):
 		l = List() 
 		for item in self.get_dependency_to_items(list_items):
+			p = P(text=item)
+			i = ListItem()
+			i.addElement(p)
+			l.addElement(i)
+
+		return l
+
+
+	def build_document_list(self, list_items):
+		l = List() 
+		for item in list_items:
 			p = P(text=item)
 			i = ListItem()
 			i.addElement(p)
@@ -215,13 +247,13 @@ class GenRequirementList(Artifact):
 				self.add_attribute_traces_row(tbl, 'Dependency from', traces['from'])
 
 				if use_case:
-					self.add_attribute_traces_row(tbl, 'Use case', use_case.split(','))
+					self.add_attribute_document_list_row(tbl, 'Use case', use_case.split(','))
 				if design:
-					self.add_attribute_traces_row(tbl, 'Design', design.split(','))
+					self.add_attribute_document_list_row(tbl, 'Design', design.split(','))
 				if test_case:
-					self.add_attribute_traces_row(tbl, 'Test case', test_case.split(','))
+					self.add_attribute_document_list_row(tbl, 'Test case', test_case.split(','))
 				if acceptance_test:
-					self.add_attribute_traces_row(tbl, 'Acceptance test', acceptance_test.split(','))
+					self.add_attribute_document_list_row(tbl, 'Acceptance test', acceptance_test.split(','))
 				
 				if item.todo:
 					self.add_attribute_row(tbl, 'Todo', item.todo)

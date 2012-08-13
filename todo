@@ -1,4 +1,3 @@
-- If assigned on is set, then need assigned to set as well
 - Need a merged status, and if so then also a merged with attribute? Should also have a Split status and Split into: attribute?
 - Should graph show all items, or only those that are approved, implementation and elaboration?
 - On approved, should status reason be required in order to describe how requirement is met?
