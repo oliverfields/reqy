@@ -202,10 +202,11 @@ class GenRequirementList(Artifact):
 				self.stakeholder_trace(tbl, 'Rejected', 'by', item.rejected_by, item.rejected_on)
 
 				# Traces
-				if traces['to']:
+				if len(traces['to']) > 0:
 					self.add_attribute_traces_row(tbl, 'Dependency to', traces['to'])
-				if traces['from']:
-					self.add_attribute_traces_row(tbl, 'Dependency from', traces['from'])
+				
+				# Will always be a parent, which is enforced by file system, so just show
+				self.add_attribute_traces_row(tbl, 'Dependency from', traces['from'])
 
 				if use_case:
 					self.add_attribute_traces_row(tbl, 'Use case', use_case.split(','))
