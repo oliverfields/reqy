@@ -1,0 +1,3 @@
+Command line requirements management tool for maintaining a requirements repository, including traces, stakeholders and project documentation. The repository can be visualized via generated artifacts, such as Requirements Traceability Matrix or Dependency graph.
+
+For further documentation and help getting started, please see http://reqy.phnd.net

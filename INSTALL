@@ -1,0 +1,36 @@
+Installation on Linux/Unix/Mac:
+-------------------------------
+
+Prerequisites:
+- Python
+- Git
+
+Optional (for viewing artifacts):
+- dot, for viewing .dot files
+- Word processor supporting Open Document Format Text files (.odt)
+- Spreadsheet for viewing .csv files
+
+The following assumes all commands run from home directory, amend as necassary).
+1. Run "git clone git://github.com/oliverfields/reqy.git" to download
+2. Add "reqy" directory to PATH (e.g. if bash add "PATH=$PATH:$HOME/reqy" .bashrc or .bash_profile)
+3. Reload environment (e.g. if bash run ". $HOME/.bashrc" or restart terminal)
+
+
+Installation on Windows:
+------------------------
+
+Reqy will only run on Windows in a Cygwin shell.
+
+Prerequisites:
+- Cygwin with Python and Git packages installed
+
+Optional (for viewing artifacts):
+- dot, for viewing .dot files
+- Word processor supporting Open Document Format Text files (.odt)
+- Spreadsheet for viewing .csv files
+
+The following assumes all commands run from Cygwins home directory, amend as necassary).
+1. Start Cygwin terminal
+2. Run "git clone git://github.com/oliverfields/reqy.git" to download
+3. Add "reqy" directory to PATH, add "PATH=$PATH:$HOME/reqy" to .bash_profile
+4. Restart Cygwin terminal or source (reload) environment (run ". $HOME/.bash_profile")
