@@ -75,6 +75,7 @@ class ConfigFile:
 			self._id = file_strings[0]
 			self._pretty_name = '%s %s' % (self._id, self._name.replace('-', ' ').capitalize())
 
+
 	def assign_attribute(self, key, value):
 		""" Check valid key and is so assign to object attribute """
 		is_valid_key = False

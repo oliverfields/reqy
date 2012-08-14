@@ -229,8 +229,29 @@ class GenRequirementList(Artifact):
 				status = status.capitalize()
 				status_span = Span(stylename=boldstyle, text=status)
 				p.addElement(status_span)
+
+				status_text = ''
+
+				if item.status == 'rejected':
+					status_text += ' by ' + item.rejected_by[0]._pretty_name
+					if item.rejected_on:
+						status_text += ' on ' + item.rejected_on
+
+				if item.status == 'approved':
+					status_text += ' by ' + item.approved_by[0]._pretty_name
+					if item.approved_on:
+						status_text += ' on ' + item.approved_on
+
+				if item.status == 'postponed':
+					status_text += ' by ' + item.postponed_by[0]._pretty_name
+					if item.postponed_on:
+						status_text += ' on ' + item.postponed_on
+
 				if item.status_reason:
-					p.addText(' - %s' % item.status_reason)
+					status_text += ' - %s' % item.status_reason
+
+				if status_text != '':
+					p.addText(status_text)
 
 				title_span = Span(stylename=boldstyle, text='Status')
 				pt = P(text='')
@@ -253,7 +274,6 @@ class GenRequirementList(Artifact):
 
 				self.stakeholder_trace(tbl, 'Created', 'by', item.created_by, item.created_on)
 				self.stakeholder_trace(tbl, 'Assigned', 'to', item.assigned_to, item.assigned_on)
-				self.stakeholder_trace(tbl, 'Rejected', 'by', item.rejected_by, item.rejected_on)
 
 				# Traces
 				traces_to = self.get_dependency_to_items(traces['to'])

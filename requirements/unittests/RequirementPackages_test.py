@@ -26,7 +26,7 @@ class TestRequirement():
 		assert pkg.note == 'A quick note'
 		assert pkg.rationale == 'The why is paramount'
 		assert len(pkg.rejected_by) == 1
-		assert pkg.status == 'implementation'
+		assert pkg.status == 'rejected'
 		assert pkg.status_reason == 'Not really'
 		assert pkg.todo == '- Write tests'
 		assert pkg._name == 'test-package'

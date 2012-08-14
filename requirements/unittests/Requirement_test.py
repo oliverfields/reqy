@@ -21,7 +21,7 @@ class TestRequirement():
 		assert req.note == 'A quick note'
 		assert req.rationale == 'The why is paramount'
 		assert len(req.rejected_by) == 1
-		assert req.status == 'implementation'
+		assert req.status == 'rejected'
 		assert req.status_reason == 'Not really'
 		assert req.todo == '- Write tests'
 
@@ -172,6 +172,16 @@ class TestRequirement():
 		req = Requirement()
 		with pytest.raises(SystemExit):
 			req.load_config_from_file('test_data/invalid_requirement_config_14.req')
+
+	def test_invalid_req_config_12(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('test_data/invalid_requirement_config_12.req')
+
+	def test_invalid_req_config_15(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('test_data/invalid_requirement_config_15.req')
 
 	def test_invalid_req_config_11(self):
 		req = Requirement()
