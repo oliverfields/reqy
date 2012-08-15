@@ -36,6 +36,7 @@ class Requirement(ConfigFile):
 		self.note = None
 		self.postponed_by = None
 		self.postponed_on = None
+		self.priority = 'must'
 		self.rationale = None
 		self.rejected_by = None
 		self.rejected_on = None
@@ -44,11 +45,20 @@ class Requirement(ConfigFile):
 		self.todo = None
 		self._valid_file_extension = 'req'
 
+
 	def is_valid_status(self, status):
 		if status == 'elaboration' or status == 'rejected' or status == 'implementation' or status == 'postponed' or status == 'approved':
 			return True
 		else:
 			return False
+
+
+	def is_valid_priority(self, priority):
+		if priority == 'must' or priority == 'should' or priority == 'could':
+			return True
+		else:
+			return False
+
 
 	def validate_settings(self):
 		""" All checks to ensure the settings obey the business rules (syntax checks handled by parent class) """
@@ -61,6 +71,9 @@ class Requirement(ConfigFile):
 		# Check mandatory attributes
 		if self.is_valid_status(self.status) == False:
 			Utility.report_error(1, '%s: Status "%s" is not valid' % (self._file_path, self.status))
+
+		if self.is_valid_priority(self.priority) == False:
+			Utility.report_error(1, '%s: Priority "%s" is not valid' % (self._file_path, self.priority))
 
 		if self.description == '' or self.rationale == None:
 			Utility.report_error(1, '%s: Description field is empty or missing' % (self._file_path))

@@ -1,0 +1,4 @@
+# Full config file, fails because priority not right
+Description: Nice requirement for testing with
+Rationale: The why is paramount
+Priority: nope

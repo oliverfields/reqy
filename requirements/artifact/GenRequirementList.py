@@ -180,30 +180,13 @@ class GenRequirementList(Artifact):
 				traces = tree.list_direct_traces(item._file_path)
 
 				# Heading
-#				if item.status == 'rejected':
-#					strikestyle = Style(name="Strike",family="text")
-#					strikestyle.addElement(TextProperties(attributes={'strikethrough-position':2}))
-#					odt.automaticstyles.addElement(strikestyle)
-#					heading_span = Span(stylename=strikestyle, text=item._pretty_name)
-#					odt.automaticstyles.addElement(strikestyle)
-#					heading = H(text='', outlinelevel=level)
-#					heading.addElement(heading_span)
-#				else:
-#					heading = H(text=item._pretty_name, outlinelevel=level)
-				# Create a style for the paragraph with page-break
-#				withbreak = Style(name="WithBreak", parentstylename="Standard", family="paragraph")
-#				withbreak.addElement(ParagraphProperties(breakbefore="page"))
-#				odt.automaticstyles.addElement(withbreak)
-#				if level == 1:
-#					heading = H(text='%s [%s]' % (item._pretty_name, item.status.capitalize()), outlinelevel=level, stylename=withbreak)
-#				else:
 				heading = H(text='%s [%s]' % (item._pretty_name, item.status.capitalize()), outlinelevel=level)
 
 				odt.text.addElement(heading)
 
-				tablecontents = Style(name="Table Contents", family="paragraph")
-				tablecontents.addElement(ParagraphProperties(numberlines="false", linenumber="0"))
-				odt.styles.addElement(tablecontents)
+				#tablecontents = Style(name="Table Contents", family="paragraph")
+				#tablecontents.addElement(ParagraphProperties(numberlines="false", linenumber="0"))
+				#odt.styles.addElement(tablecontents)
 
 				# Create automatic styles for the column widths.
 				# We want two different widths, one in inches, the other one in metric.
@@ -267,6 +250,10 @@ class GenRequirementList(Artifact):
 				tc.addElement(p)
 				tr.addElement(tc)
 				tbl.addElement(tr)
+
+				# Priority
+				if item.priority:
+					self.add_attribute_row(tbl, 'Priority', item.priority.capitalize())
 
 				# Description, rationale and notes
 				self.add_attribute_row(tbl, 'Description', item.description)
