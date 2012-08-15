@@ -16,12 +16,15 @@
 # along with Reqy.  If not, see <http://www.gnu.org/licenses/>.
 
 from Artifact import *
+from ..ProjectConfig import ProjectConfig
 from ..RequirementTree import RequirementTree
 from ..Requirement import Requirement
 from ..RequirementPackage import RequirementPackage
 from ..Document import Document
 from ..Utility import get_repo_dir, documents_by_type, make_path_relative, xstr, report_error
-from odf.opendocument import OpenDocumentText
+import odf.opendocument
+import odf.meta
+import odf.dc
 from odf.style import Style, TextProperties, TableColumnProperties, ParagraphProperties
 from odf.text import H, P, List, ListItem, Span, TableOfContent, TableOfContentSource
 from odf.table import Table, TableCell, TableRow, TableColumn
@@ -329,12 +332,39 @@ class GenRequirementList(Artifact):
 		""" List each requirement and it's details """
 
 		repo_dir = get_repo_dir()
+
+		project = ProjectConfig()
+		project.load_config_from_file(os.path.join(repo_dir, 'project.conf'))
+
 		rt = RequirementTree()
 		rt.load_repository(repo_dir)
-		odt = OpenDocumentText()
+		template_file = 'requirement-list-template.odt'
 
-		self.add_title_page(odt, rt._pretty_name)
-		self.add_toc(odt)
+		# If no template found, then create new file
+		try:
+			template_file_path = os.path.join('templates', template_file)
+			template_file_path = os.path.join(repo_dir, template_file_path)
+			odt = odf.opendocument.load(template_file_path)
+		except Exception as e:
+			odt = odf.opendocument.OpenDocumentText()
+
+		#self.add_title_page(odt, rt._pretty_name)
+		#self.add_toc(odt)
+		#odt.meta.AutoReload(boolean=True)
+		if project.name:
+			odt.meta.addElement(odf.dc.Title(text=project.name))
+		else:
+			odt.meta.addElement(odf.dc.Title(text='[Set name in project.conf]'))
+
+		if project.description:
+			odt.meta.addElement(odf.dc.Description(text=project.description))
+		#try:
+		#	odt.meta.addElement(odf.dc.Creator(text=project.project_manager[0].name))
+		#except:
+		#	pass
+		#odt.meta.addElement(odf.dc.Description(text="DESCRIPTION"))
+		#odt.meta.addElement(odf.dc.Date(text="1979-05-11"))
+
 		self.write_child_details(rt, 1, rt, odt)
 
 		try:

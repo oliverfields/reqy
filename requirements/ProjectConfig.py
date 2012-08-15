@@ -23,6 +23,7 @@ class ProjectConfig(ConfigFile):
 		""" Public attributes (those not starting with underscore) are also the valid config file settings """
 		ConfigFile.__init__(self)
 		self.name = None
+		self.description = None
 		self._valid_file_extension = 'conf'
 
 	def validate_settings(self):
