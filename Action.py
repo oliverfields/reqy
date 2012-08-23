@@ -156,8 +156,14 @@ def build_artifacts(artifact_name):
 	from requirements.artifact import GenDotGraph
 	from requirements.artifact import GenRequirementsTraceabilityMatrix
 	from requirements.artifact import GenRequirementList
+	from requirements.artifact import GenEstimation
 
 	artifact_dir = os.path.join(get_repo_dir(), 'artifacts')
+
+	if artifact_name == 'estimate' or artifact_name == 'all':
+		target_file = os.path.join(artifact_dir, 'project-estimation')
+		report = GenEstimation.GenEstimation()
+		report.generate(target_file)
 
 	if artifact_name == 'graph' or artifact_name == 'all':
 		target_file = os.path.join(artifact_dir, 'overview_graph.dot')
@@ -174,9 +180,8 @@ def build_artifacts(artifact_name):
 		list_report = GenRequirementList.GenRequirementList()
 		list_report.generate(target_file)
 
-
-	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list':
-		report_error(1, 'Unkown artifact type "%s"' % artifact_name)
+	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate':
+		report_error(1, 'Unknown artifact type "%s"' % artifact_name)
 		
 
 

@@ -7,7 +7,7 @@ def usage(mode='default'):
 	executable_name = os.path.basename(sys.argv[0])
 
 	usage_message = {
-		'artifact': ' all|graph|list|rtm',
+		'artifact': ' all|estimate|graph|list|rtm',
 		'trace': ' <requirement|package|document>',
 		'filter': ' status <approved|elaboration|implementation|rejected|postponed>',
 		'init': ' ',
