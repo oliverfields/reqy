@@ -57,18 +57,6 @@ class GenEstimation(Artifact):
 		return tr
 
 
-	def make_formula_row(self, text, formula):
-		tr = TableRow()
-		tc = TableCell()
-		txt = P(text=text)
-		tc.addElement(txt)
-		tr.addElement(tc)
-		tc = TableCell(formula=formula)
-		tr.addElement(tc)
-
-		return tr
-
-
 	def generate(self, target_file):
 		""" List each requirement and it's details """
 
@@ -76,19 +64,22 @@ class GenEstimation(Artifact):
 
 		rt = RequirementTree()
 		rt.load_repository(repo_dir)
+
 		template_file = 'project-estimation-template.ods'
 
-		ods = odf.opendocument.OpenDocumentSpreadsheet()
+		try:
+			template_file_path = os.path.join('templates', template_file)
+			template_file_path = os.path.join(repo_dir, template_file_path)
+			ods = odf.opendocument.load(template_file_path)
+		except Exception as e:
+			report_error(1, 'Unable to open template "%s"' % template_file_path)
 
 		if rt._pretty_name:
 			ods.meta.addElement(odf.dc.Title(text=rt._pretty_name))
 		else:
 			ods.meta.addElement(odf.dc.Title(text='[Set name in project.conf]'))
 
-		# Add sheet with formulas
-		formula_tbl = Table(name="Estimation")
-
-		# Add sheet with data
+		# Add data sheet
 		data_tbl = Table(name="Data")
 
 		# Data header row
@@ -100,18 +91,12 @@ class GenEstimation(Artifact):
 				items += 1
 				data_tbl.addElement(self.make_row([item._pretty_name, item.estimated_effort, item.estimated_cost]))
 
-		# Formulas
-		formula_tbl.addElement(self.make_row(['Settings']))
-		formula_tbl.addElement(self.make_formula_row('Hourly rate', '1000'))
-		formula_tbl.addElement(self.make_formula_row('Effective hours per day', '5'))
-		formula_tbl.addElement(TableRow())
-		formula_tbl.addElement(self.make_row(['Calculations']))
-		formula_tbl.addElement(self.make_formula_row('Total estimated hours', '=SUM(Data.B2:Data.B%s' % items))
-		formula_tbl.addElement(self.make_formula_row('Total estimated cost', '=SUM(Data.C2:Data.C%s' % items))
-		formula_tbl.addElement(self.make_formula_row('Calculated cost', '=SUM(B7*B2)'))
-		formula_tbl.addElement(self.make_formula_row('Estimated work weeks', '=SUM((B3*B7)/5)'))
+		calc_tbl = ods.spreadsheet.firstChild
+		calc_2nd_row = calc_tbl.childNodes[3]
 
-		ods.spreadsheet.addElement(formula_tbl)
+		calc_tbl.insertBefore(self.make_row(['Total estimated hours', '=SUM(Data.B2:Data.B%s' % items]), calc_2nd_row)
+		calc_tbl.insertBefore(self.make_row(['Total estimated cost', '=SUM(Data.C2:Data.C%s' % items]), calc_2nd_row)
+
 		ods.spreadsheet.addElement(data_tbl)
 
 		try:

@@ -153,6 +153,7 @@ def list_direct_traces(item_file_path):
 
 
 def build_artifacts(artifact_name):
+	from requirements import ProjectConfig 
 	from requirements.artifact import GenDotGraph
 	from requirements.artifact import GenRequirementsTraceabilityMatrix
 	from requirements.artifact import GenRequirementList
@@ -160,29 +161,36 @@ def build_artifacts(artifact_name):
 
 	artifact_dir = os.path.join(get_repo_dir(), 'artifacts')
 
+	project = ProjectConfig()
+	project.load_config_from_file(os.path.join(get_repo_dir(), 'project.conf'))
+
+	if project.short_name:
+		short_name = '%s_' % project.short_name
+	else:
+		short_name = ''
+
 	if artifact_name == 'estimate' or artifact_name == 'all':
-		target_file = os.path.join(artifact_dir, 'project-estimation')
+		target_file = os.path.join(artifact_dir, '%sproject-estimation' % short_name)
 		report = GenEstimation.GenEstimation()
 		report.generate(target_file)
 
 	if artifact_name == 'graph' or artifact_name == 'all':
-		target_file = os.path.join(artifact_dir, 'overview_graph.dot')
+		target_file = os.path.join(artifact_dir, '%soverview_graph.dot' % short_name)
 		graph = GenDotGraph.GenDotGraph()
 		graph.generate(target_file)
 
 	if artifact_name == 'rtm' or artifact_name == 'all':
-		target_file = os.path.join(artifact_dir, 'requirements-traceability-matrix.csv')
+		target_file = os.path.join(artifact_dir, '%srequirements-traceability-matrix.csv' % short_name)
 		rtm = GenRequirementsTraceabilityMatrix.GenRequirementsTraceabilityMatrix()
 		rtm.generate(target_file)
 
 	if artifact_name == 'list' or artifact_name == 'all':
-		target_file = os.path.join(artifact_dir, 'requirement-list')
+		target_file = os.path.join(artifact_dir, '%srequirement-list' % short_name)
 		list_report = GenRequirementList.GenRequirementList()
 		list_report.generate(target_file)
 
 	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate':
 		report_error(1, 'Unknown artifact type "%s"' % artifact_name)
-		
 
 
 def filter_requirements_by_status(status):

@@ -37,6 +37,7 @@ class RequirementTree:
 		self._children = [] 
 		self._file_name = 'root'
 		self._pretty_name = project.name
+		self._short_name = project.short_name
 		self._file_path = None
 		self._dependencies_from_to = None
 		self._node_list = None
