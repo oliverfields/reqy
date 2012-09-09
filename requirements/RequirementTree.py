@@ -23,6 +23,7 @@ from Document import *
 from GlossaryTermDefinition import *
 from ProjectConfig import ProjectConfig
 from Utility import get_repo_dir
+from distutils.version import LooseVersion
 
 #from pygraph.classes.digraph import digraph
 #from pygraph.algorithms.searching import breadth_first_search
@@ -70,7 +71,7 @@ class RequirementTree:
 		""" Recursively read package directory and create and link objects """
 
 		file_listing = os.listdir(package_directory)
-		file_listing.sort()
+		file_listing.sort(key=LooseVersion)
 		for name in file_listing:
 			package_path = os.path.join(package_directory, name)
 			if os.path.isdir(package_path):
