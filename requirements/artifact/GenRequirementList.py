@@ -180,7 +180,15 @@ class GenRequirementList(Artifact):
 				traces = tree.list_direct_traces(item._file_path)
 
 				# Heading
-				heading = H(text='%s [%s]' % (item._pretty_name, item.status.capitalize()), outlinelevel=level)
+
+				heading_text='%s [%s]' % (item._pretty_name, item.status.capitalize())
+				if item.status == 'rejected':
+					s = Span(text=heading_text, stylename="Rejected")
+				else:
+					s = Span(text=heading_text, stylename="Not rejected")
+
+				heading = H(outlinelevel=level)
+				heading.addElement(s)
 
 				odt.text.addElement(heading)
 
@@ -351,6 +359,13 @@ class GenRequirementList(Artifact):
 		#	pass
 		#odt.meta.addElement(odf.dc.Description(text="DESCRIPTION"))
 		#odt.meta.addElement(odf.dc.Date(text="1979-05-11"))
+
+		# Add styles
+		rejected = Style(name="Rejected", family="text")
+		rejected.addElement(TextProperties(color="#666666", textlinethroughstyle="solid"))
+		odt.automaticstyles.addElement(rejected)
+		notrejected = Style(name="Not rejected", family="text")
+		odt.automaticstyles.addElement(notrejected)
 
 		self.write_child_details(rt, 1, rt, odt)
 
