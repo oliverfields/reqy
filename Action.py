@@ -199,10 +199,9 @@ def build_artifacts(artifact_name):
 		report_error(1, 'Unknown artifact type "%s"' % artifact_name)
 
 
-def filter_requirements_by_status(status):
+def filter_requirements_by_status(not_equals, status):
 	valid_status = ['approved', 'elaboration', 'implementation', 'postponed', 'rejected']
 	is_valid_status = False
-
 	# Check status is valid
 	for vs in valid_status:
 		if vs == status:
@@ -223,6 +222,10 @@ def filter_requirements_by_status(status):
 
 	for item in item_list:
 		if isinstance(item, Requirement.Requirement) or isinstance(item, RequirementPackage.RequirementPackage):
-			if item.status == status:
-				print item._pretty_name
+			if not_equals == False:
+				if item.status != status:
+					print "%s (%s)" % (item._pretty_name, item.status.capitalize())
+			else:
+				if item.status == status:
+					print item._pretty_name
 
