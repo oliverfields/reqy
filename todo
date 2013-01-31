@@ -4,3 +4,5 @@
 - What happens if a attribute field is specified multiple times in a config file?
 - Need to record who decided what status and when for all status types? Ie rejected by and rejected on are vital, but is postponed on and postponed by? Perhaps better to change status field to accept <status> by <stakeholder> on <date> type syntax? 
 - Add report template to templates file and ensure it gets copied on init
+- Ensure artifact dir gets created if not already exists
+- Is it an error to not have a stakeholder registerd?
