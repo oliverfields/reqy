@@ -40,6 +40,7 @@ class Requirement(ConfigFile):
 		self.rationale = None
 		self.rejected_by = None
 		self.rejected_on = None
+		self.scope = None
 		self.status = 'elaboration'
 		self.status_reason = None
 		self.todo = None
@@ -76,10 +77,13 @@ class Requirement(ConfigFile):
 			Utility.report_error(1, '%s: Priority "%s" is not valid' % (self._file_path, self.priority))
 
 		if self.description == '' or self.rationale == None:
-			Utility.report_error(1, '%s: Description field is empty or missing' % (self._file_path))
+			Utility.report_error(1, '%s: Description attribute is empty or missing' % (self._file_path))
 
 		if self.rationale == '' or self.rationale == None:
-			Utility.report_error(1, '%s: Rationale field is empty or missing' % (self._file_path))
+			Utility.report_error(1, '%s: Rationale attribute is empty or missing' % (self._file_path))
+
+		if self.scope == '' or self.scope == None:
+			Utility.report_error(1, '%s: Scope attribute is empty or missing' % (self._file_path))
 
 		if self.is_integer(self.estimated_effort) == False:
 			Utility.report_error(1, '%s: Estimated effort field has value "%s", but it must be an integer' % (self._file_path, self.estimated_effort))
