@@ -263,15 +263,22 @@ class GenRequirementList(Artifact):
 				if item.priority:
 					self.add_attribute_row(tbl, 'Priority', item.priority.capitalize())
 
-				# Description, rationale and notes
+				# Description, rationale, scope and notes
 				self.add_attribute_row(tbl, 'Description', item.description)
 				self.add_attribute_row(tbl, 'Rationale', item.rationale)
+				self.add_attribute_row(tbl, 'Scope', item.scope)
 
 				if item.note:
 					self.add_attribute_row(tbl, 'Note', item.note)
 
 				self.stakeholder_trace(tbl, 'Created', 'by', item.created_by, item.created_on)
 				self.stakeholder_trace(tbl, 'Assigned', 'to', item.assigned_to, item.assigned_on)
+
+
+				if item.estimated_effort:
+					self.add_attribute_row(tbl, 'Estimated effort', item.estimated_effort)
+				if item.estimated_cost:
+					self.add_attribute_row(tbl, 'Estimated cost', item.estimated_cost)
 
 				# Traces
 				traces_to = self.get_dependency_to_items(traces['to'])
