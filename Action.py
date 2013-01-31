@@ -229,3 +229,11 @@ def filter_requirements_by_status(not_equals, status):
 				if item.status == status:
 					print item._pretty_name
 
+
+def check_repo():
+	""" Simply load repository to check it works """
+
+	from requirements import RequirementTree
+	repo_dir = get_repo_dir()
+	rt = RequirementTree.RequirementTree()
+	rt.load_repository(repo_dir)
