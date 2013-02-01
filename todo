@@ -7,3 +7,4 @@
 - Ensure artifact dir gets created if not already exists
 - Is it an error to not have a stakeholder registerd?
 - Add command line option 'check' which just loads repo and checks it is ok
+- Add unittest for check command line arg

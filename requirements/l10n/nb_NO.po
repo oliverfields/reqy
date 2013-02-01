@@ -1,0 +1,121 @@
+# Norwegian Bokmal translations for PACKAGE package.
+# Copyright (C) 2013 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Oliver Fields <oliver@oliver-hp-elitebook-2560p>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Reqy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-01 16:31+0100\n"
+"PO-Revision-Date: 2013-02-01 16:41+0100\n"
+"Last-Translator: Oliver Fields <oliver@phnd.net>\n"
+"Language-Team: Norwegian Bokmal\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Norwegian Bokmal\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../artifact/GenRequirementList.py:63
+#: ../artifact/GenRequirementList.py:232
+#: ../artifact/GenRequirementList.py:237
+#: ../artifact/GenRequirementList.py:242
+msgid " on "
+msgstr " "
+
+#: ../artifact/GenRequirementList.py:230
+#: ../artifact/GenRequirementList.py:235
+#: ../artifact/GenRequirementList.py:240
+msgid " by "
+msgstr " av "
+
+#: ../artifact/GenRequirementList.py:250
+msgid "Status"
+msgstr "Status"
+
+#: ../artifact/GenRequirementList.py:264
+msgid "Priority"
+msgstr "Prioritet"
+
+#: ../artifact/GenRequirementList.py:267
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: ../artifact/GenRequirementList.py:268
+msgid "Rationale"
+msgstr "Begrunnelse"
+
+#: ../artifact/GenRequirementList.py:269
+msgid "Scope"
+msgstr "Omfang"
+
+#: ../artifact/GenRequirementList.py:272
+msgid "Note"
+msgstr "Notat"
+
+#: ../artifact/GenRequirementList.py:274
+msgid "Created"
+msgstr "Opprettet"
+
+#: ../artifact/GenRequirementList.py:274
+msgid "by"
+msgstr "av"
+
+#: ../artifact/GenRequirementList.py:275
+msgid "Assigned"
+msgstr "Tildelt"
+
+#: ../artifact/GenRequirementList.py:275
+msgid "to"
+msgstr "til"
+
+#: ../artifact/GenRequirementList.py:279
+msgid "Estimated effort"
+msgstr "Estimert tid"
+
+#: ../artifact/GenRequirementList.py:281
+msgid "Estimated cost"
+msgstr "Estimert kost"
+
+#: ../artifact/GenRequirementList.py:286
+msgid "Dependency to"
+msgstr "Avhengihet til"
+
+#: ../artifact/GenRequirementList.py:289
+msgid "Dependency from"
+msgstr "Avhengihet fra"
+
+#: ../artifact/GenRequirementList.py:292
+msgid "Use case"
+msgstr "Usecase"
+
+#: ../artifact/GenRequirementList.py:294
+msgid "Design"
+msgstr "Design"
+
+#: ../artifact/GenRequirementList.py:296
+msgid "Test case"
+msgstr "Testcase"
+
+#: ../artifact/GenRequirementList.py:298
+msgid "Acceptance test"
+msgstr "Akseptansetest"
+
+#: ../artifact/GenRequirementList.py:301
+msgid "Todo"
+msgstr "Oppgave"
+
+#: ../artifact/GenRequirementList.py:309
+msgid "Table of contents"
+msgstr "Innhold"
+
+#: ../artifact/GenRequirementList.py:327
+#, python-format
+msgid "Requirements for \"%s\""
+msgstr "Krav for \"%s\""
+
+#~ msgid "test"
+#~ msgstr "test på norsk mann"

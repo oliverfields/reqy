@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-01 16:31+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../artifact/GenRequirementList.py:63 ../artifact/GenRequirementList.py:232
+#: ../artifact/GenRequirementList.py:237 ../artifact/GenRequirementList.py:242
+msgid " on "
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:230 ../artifact/GenRequirementList.py:235
+#: ../artifact/GenRequirementList.py:240
+msgid " by "
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:250
+msgid "Status"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:264
+msgid "Priority"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:267
+msgid "Description"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:268
+msgid "Rationale"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:269
+msgid "Scope"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:272
+msgid "Note"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:274
+msgid "Created"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:274
+msgid "by"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:275
+msgid "Assigned"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:275
+msgid "to"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:279
+msgid "Estimated effort"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:281
+msgid "Estimated cost"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:286
+msgid "Dependency to"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:289
+msgid "Dependency from"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:292
+msgid "Use case"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:294
+msgid "Design"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:296
+msgid "Test case"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:298
+msgid "Acceptance test"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:301
+msgid "Todo"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:309
+msgid "Table of contents"
+msgstr ""
+
+#: ../artifact/GenRequirementList.py:327
+#, python-format
+msgid "Requirements for \"%s\""
+msgstr ""

@@ -18,6 +18,24 @@
 import Utility
 from ProjectConfig import *
 import os
+import gettext
+import locale
+import sys
+
+def init_localization():
+	'''prepare l10n'''
+	l10n_file = "%s/requirements/l10n/%s.mo" % (sys.path[0], locale.getdefaultlocale()[0])
+
+	try:
+		trans = gettext.GNUTranslations(open( l10n_file, "rb" ) )
+	except IOError:
+		trans = gettext.NullTranslations()
+
+	trans.install()
+
+init_localization()
 
 project = ProjectConfig()
 project.load_config_from_file(os.path.join(Utility.get_repo_dir(), 'project.conf'))
+
+

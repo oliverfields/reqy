@@ -60,7 +60,7 @@ class GenRequirementList(Artifact):
 				if s == '':
 					s = date
 				else:
-					s += ' on ' + date
+					s += _(' on ') + date
 
 		if s != '':
 			self.add_attribute_row(table, key, s)
@@ -227,19 +227,19 @@ class GenRequirementList(Artifact):
 				status_text = ''
 
 				if item.status == 'rejected':
-					status_text += ' by ' + item.rejected_by[0]._pretty_name
+					status_text += _(' by ') + item.rejected_by[0]._pretty_name
 					if item.rejected_on:
-						status_text += ' on ' + item.rejected_on
+						status_text += _(' on ') + item.rejected_on
 
 				if item.status == 'approved':
-					status_text += ' by ' + item.approved_by[0]._pretty_name
+					status_text += _(' by ') + item.approved_by[0]._pretty_name
 					if item.approved_on:
-						status_text += ' on ' + item.approved_on
+						status_text += _(' on ') + item.approved_on
 
 				if item.status == 'postponed':
-					status_text += ' by ' + item.postponed_by[0]._pretty_name
+					status_text += _(' by ') + item.postponed_by[0]._pretty_name
 					if item.postponed_on:
-						status_text += ' on ' + item.postponed_on
+						status_text += _(' on ') + item.postponed_on
 
 				if item.status_reason:
 					status_text += ' - %s' % item.status_reason
@@ -247,7 +247,7 @@ class GenRequirementList(Artifact):
 				if status_text != '':
 					p.addText(status_text)
 
-				title_span = Span(stylename=boldstyle, text='Status')
+				title_span = Span(stylename=boldstyle, text=_('Status'))
 				pt = P(text='')
 				pt.addElement(title_span)
 				tr = TableRow()
@@ -261,44 +261,44 @@ class GenRequirementList(Artifact):
 
 				# Priority
 				if item.priority:
-					self.add_attribute_row(tbl, 'Priority', item.priority.capitalize())
+					self.add_attribute_row(tbl, _('Priority'), item.priority.capitalize())
 
 				# Description, rationale, scope and notes
-				self.add_attribute_row(tbl, 'Description', item.description)
-				self.add_attribute_row(tbl, 'Rationale', item.rationale)
-				self.add_attribute_row(tbl, 'Scope', item.scope)
+				self.add_attribute_row(tbl, _('Description'), item.description)
+				self.add_attribute_row(tbl, _('Rationale'), item.rationale)
+				self.add_attribute_row(tbl, _('Scope'), item.scope)
 
 				if item.note:
-					self.add_attribute_row(tbl, 'Note', item.note)
+					self.add_attribute_row(tbl, _('Note'), item.note)
 
-				self.stakeholder_trace(tbl, 'Created', 'by', item.created_by, item.created_on)
-				self.stakeholder_trace(tbl, 'Assigned', 'to', item.assigned_to, item.assigned_on)
+				self.stakeholder_trace(tbl, _('Created'), _('by'), item.created_by, item.created_on)
+				self.stakeholder_trace(tbl, _('Assigned'), _('to'), item.assigned_to, item.assigned_on)
 
 
 				if item.estimated_effort:
-					self.add_attribute_row(tbl, 'Estimated effort', item.estimated_effort)
+					self.add_attribute_row(tbl, _('Estimated effort'), item.estimated_effort)
 				if item.estimated_cost:
-					self.add_attribute_row(tbl, 'Estimated cost', item.estimated_cost)
+					self.add_attribute_row(tbl, _('Estimated cost'), item.estimated_cost)
 
 				# Traces
 				traces_to = self.get_dependency_to_items(traces['to'])
 				if len(traces_to) > 0:
-					self.add_attribute_traces_row(tbl, 'Dependency to', traces['to'])
+					self.add_attribute_traces_row(tbl, _('Dependency to'), traces['to'])
 				
 				# Will always be a parent, which is enforced by file system, so just show
-				self.add_attribute_traces_row(tbl, 'Dependency from', traces['from'])
+				self.add_attribute_traces_row(tbl, _('Dependency from'), traces['from'])
 
 				if use_case:
-					self.add_attribute_document_list_row(tbl, 'Use case', use_case.split(','))
+					self.add_attribute_document_list_row(tbl, _('Use case'), use_case.split(','))
 				if design:
-					self.add_attribute_document_list_row(tbl, 'Design', design.split(','))
+					self.add_attribute_document_list_row(tbl, _('Design'), design.split(','))
 				if test_case:
-					self.add_attribute_document_list_row(tbl, 'Test case', test_case.split(','))
+					self.add_attribute_document_list_row(tbl, _('Test case'), test_case.split(','))
 				if acceptance_test:
-					self.add_attribute_document_list_row(tbl, 'Acceptance test', acceptance_test.split(','))
+					self.add_attribute_document_list_row(tbl, _('Acceptance test'), acceptance_test.split(','))
 				
 				if item.todo:
-					self.add_attribute_row(tbl, 'Todo', item.todo)
+					self.add_attribute_row(tbl, _('Todo'), item.todo)
 
 				if item._children:
 					self.write_child_details(tree, level+1, item, odt)
@@ -306,7 +306,7 @@ class GenRequirementList(Artifact):
 
 	def add_toc(self, odt):
 		# TOC
-		tc = TableOfContent(name="Table of contents")
+		tc = TableOfContent(name=_("Table of contents"))
 		tcs = TableOfContentSource()
 		tc.addElement(tcs)
 		odt.text.addElement(tc)
@@ -324,7 +324,7 @@ class GenRequirementList(Artifact):
 		titlestyle = Style(name="TitleStyle",family="text")
 		titlestyle.addElement(TextProperties(attributes={'fontweight':"bold", 'fontsize':'36pt'}))
 		odt.automaticstyles.addElement(titlestyle)
-		titlespan = Span(stylename=titlestyle, text='Requirements for "%s"' % title)
+		titlespan = Span(stylename=titlestyle, text=_('Requirements for "%s"') % title)
 		p = P(text='')
 		p.addElement(titlespan)
 		odt.text.addElement(p)
