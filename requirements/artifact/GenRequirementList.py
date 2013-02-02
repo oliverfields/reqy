@@ -41,7 +41,7 @@ class GenRequirementList(Artifact):
 
 
 	def format_list(self, alist):
-		the_list = '' 
+		the_list = ''
 		for item in alist:
 			the_list += make_path_relative(item._file_path)
 
@@ -60,7 +60,7 @@ class GenRequirementList(Artifact):
 				if s == '':
 					s = date
 				else:
-					s += _(' on ') + date
+					s += ' ' + _('on') + ' ' + date
 
 		if s != '':
 			self.add_attribute_row(table, key, s)
@@ -227,19 +227,19 @@ class GenRequirementList(Artifact):
 				status_text = ''
 
 				if item.status == 'rejected':
-					status_text += _(' by ') + item.rejected_by[0]._pretty_name
+					status_text += ' ' + _('by') + ' ' + item.rejected_by[0]._pretty_name
 					if item.rejected_on:
-						status_text += _(' on ') + item.rejected_on
+						status_text += ' ' + _('on') + ' ' + item.rejected_on
 
 				if item.status == 'approved':
-					status_text += _(' by ') + item.approved_by[0]._pretty_name
+					status_text += ' ' + _('by') + ' ' + item.approved_by[0]._pretty_name
 					if item.approved_on:
-						status_text += _(' on ') + item.approved_on
+						status_text += ' ' + _('on') + ' ' + item.approved_on
 
 				if item.status == 'postponed':
-					status_text += _(' by ') + item.postponed_by[0]._pretty_name
+					status_text += ' ' + _('by') + ' ' + item.postponed_by[0]._pretty_name
 					if item.postponed_on:
-						status_text += _(' on ') + item.postponed_on
+						status_text += ' ' + _('on') + ' ' + item.postponed_on
 
 				if item.status_reason:
 					status_text += ' - %s' % item.status_reason

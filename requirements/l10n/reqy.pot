@@ -1,113 +1,109 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Reqy requirements manager l10n
+# Copyright (C) Oliver Fields
+# This file is distributed under the same license as the reqy package
+# Oliver Fields <oliver@phnd.net>
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-01 16:31+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Report-Msgid-Bugs-To: oliver@phnd.net\n"
+"Last-Translator: Oliver Fields <oliver@phnd.net>\n"
+"Language-Team: Reqy l10n\n"
+"Language: Python\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../artifact/GenRequirementList.py:63 ../artifact/GenRequirementList.py:232
-#: ../artifact/GenRequirementList.py:237 ../artifact/GenRequirementList.py:242
-msgid " on "
+"POT-Creation-Date: 2013-02-02 18:30:57+01:00\n"
+"PO-Revision-Date: 2013-02-02 18:30:57+01:00\n"
+# File: ../artifact/GenRequirementList.py, line: 63
+# File: ../artifact/GenRequirementList.py, line: 232
+# File: ../artifact/GenRequirementList.py, line: 237
+# File: ../artifact/GenRequirementList.py, line: 242
+msgid "on"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:230 ../artifact/GenRequirementList.py:235
-#: ../artifact/GenRequirementList.py:240
-msgid " by "
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:250
-msgid "Status"
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:264
-msgid "Priority"
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:267
-msgid "Description"
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:268
-msgid "Rationale"
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:269
-msgid "Scope"
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:272
-msgid "Note"
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:274
-msgid "Created"
-msgstr ""
-
-#: ../artifact/GenRequirementList.py:274
+#
+# File: ../artifact/GenRequirementList.py, line: 230
+# File: ../artifact/GenRequirementList.py, line: 235
+# File: ../artifact/GenRequirementList.py, line: 240
+# File: ../artifact/GenRequirementList.py, line: 274
 msgid "by"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:275
+#
+# File: ../artifact/GenRequirementList.py, line: 250
+msgid "Status"
+msgstr ""
+#
+# File: ../artifact/GenRequirementList.py, line: 264
+msgid "Priority"
+msgstr ""
+#
+# File: ../artifact/GenRequirementList.py, line: 267
+msgid "Description"
+msgstr ""
+#
+# File: ../artifact/GenRequirementList.py, line: 268
+msgid "Rationale"
+msgstr ""
+#
+# File: ../artifact/GenRequirementList.py, line: 269
+msgid "Scope"
+msgstr ""
+#
+# File: ../artifact/GenRequirementList.py, line: 272
+msgid "Note"
+msgstr ""
+#
+# File: ../artifact/GenRequirementList.py, line: 274
+msgid "Created"
+msgstr ""
+#
+# File: ../artifact/GenRequirementList.py, line: 275
 msgid "Assigned"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:275
+#
+# File: ../artifact/GenRequirementList.py, line: 275
 msgid "to"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:279
+#
+# File: ../artifact/GenRequirementList.py, line: 279
 msgid "Estimated effort"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:281
+#
+# File: ../artifact/GenRequirementList.py, line: 281
 msgid "Estimated cost"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:286
+#
+# File: ../artifact/GenRequirementList.py, line: 286
 msgid "Dependency to"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:289
+#
+# File: ../artifact/GenRequirementList.py, line: 289
 msgid "Dependency from"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:292
+#
+# File: ../artifact/GenRequirementList.py, line: 292
 msgid "Use case"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:294
+#
+# File: ../artifact/GenRequirementList.py, line: 294
 msgid "Design"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:296
+#
+# File: ../artifact/GenRequirementList.py, line: 296
 msgid "Test case"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:298
+#
+# File: ../artifact/GenRequirementList.py, line: 298
 msgid "Acceptance test"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:301
+#
+# File: ../artifact/GenRequirementList.py, line: 301
 msgid "Todo"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:309
+#
+# File: ../artifact/GenRequirementList.py, line: 309
 msgid "Table of contents"
 msgstr ""
-
-#: ../artifact/GenRequirementList.py:327
+#
+# File: ../artifact/GenRequirementList.py, line: 327
 #, python-format
 msgid "Requirements for \"%s\""
 msgstr ""
