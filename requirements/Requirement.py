@@ -148,3 +148,33 @@ class Requirement(ConfigFile):
 
 		if status_string != actual_status_string and on_value_string != None:
 			Utility.report_error(1, '%s: Item has attribute %s, but status is not %s' % (self._file_path, on_lable_string, status_string))
+
+
+	def display_priority(self):
+		""" Get translated priority string """
+
+		if self.priority == 'must':
+			string = _('must')
+		elif self.priority == 'should':
+			string = _('should')
+		elif self.priority == 'could':
+			string = _('could')
+
+		return string
+
+
+	def display_status(self):
+		""" Get translated status string """
+
+		if self.status == 'elaboration':
+			string = _('elaboration')
+		elif self.status == 'implementation':
+			string = _('implementation')
+		elif self.status == 'rejected':
+			string = _('rejected')
+		elif self.status == 'approved':
+			string = _('approved')
+		elif self.status == 'postponed':
+			string = _('postponed')
+
+		return string

@@ -36,11 +36,13 @@ msgstr ""
 "Language-Team: Reqy l10n\n"
 "Language: Python\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"' > "$pot_file"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"'
+# > "$pot_file"
 
 echo "\"POT-Creation-Date: $timestamp\n\"
-\"PO-Revision-Date: $timestamp\n\"" >> "$pot_file"
+\"PO-Revision-Date: $timestamp\n\""
+# >> "$pot_file"
 
 
 xgettext --language=Python \
@@ -48,7 +50,8 @@ xgettext --language=Python \
   --output=- \
   --omit-header \
   --strict \
-  ../artifact/*.py >> "$pot_file"
+  ../artifact/*.py \
+  ../*.py > "$pot_file"
 
 
 # Portable object (.po)

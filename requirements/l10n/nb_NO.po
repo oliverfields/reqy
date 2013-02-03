@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Reqy\n"
 "Report-Msgid-Bugs-To: oliver@phnd.net\n"
-"POT-Creation-Date: 2013-02-02 18:30:57+01:00\n"
-"PO-Revision-Date: 2013-02-02 18:24+0100\n"
+"POT-Creation-Date: 2013-02-02 23:39:35+01:00\n"
+"PO-Revision-Date: 2013-02-02 23:57+0100\n"
 "Last-Translator: Oliver Fields <oliver@phnd.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb\n"
@@ -19,9 +19,8 @@ msgstr ""
 "X-Poedit-Language: Norwegian Bokmal\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#, fuzzy
 msgid "on"
-msgstr " "
+msgstr "på"
 
 msgid "by"
 msgstr "av"
@@ -86,6 +85,46 @@ msgstr "Innhold"
 #, python-format
 msgid "Requirements for \"%s\""
 msgstr "Krav for \"%s\""
+
+#
+# File: ../Requirement.py, line: 157
+msgid "must"
+msgstr "skal"
+
+#
+# File: ../Requirement.py, line: 159
+msgid "should"
+msgstr "bør"
+
+#
+# File: ../Requirement.py, line: 161
+msgid "could"
+msgstr "kan"
+
+#
+# File: ../Requirement.py, line: 170
+msgid "elaboration"
+msgstr "kartlegging"
+
+#
+# File: ../Requirement.py, line: 172
+msgid "implementation"
+msgstr "implementering"
+
+#
+# File: ../Requirement.py, line: 174
+msgid "rejected"
+msgstr "avvist"
+
+#
+# File: ../Requirement.py, line: 176
+msgid "approved"
+msgstr "godkjent"
+
+#
+# File: ../Requirement.py, line: 178
+msgid "postponed"
+msgstr "utsatt"
 
 #~ msgid " by "
 #~ msgstr " av "

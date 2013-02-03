@@ -180,8 +180,8 @@ class GenRequirementList(Artifact):
 				traces = tree.list_direct_traces(item._file_path)
 
 				# Heading
-
-				heading_text='%s [%s]' % (item._pretty_name, item.status.capitalize())
+				status_text = item.display_status()
+				heading_text='%s [%s]' % (item._pretty_name, status_text.capitalize())
 				if item.status == 'rejected':
 					s = Span(text=heading_text, stylename="Rejected")
 				else:
@@ -219,9 +219,9 @@ class GenRequirementList(Artifact):
 				boldstyle.addElement(TextProperties(attributes={'fontweight':"bold"}))
 				odt.automaticstyles.addElement(boldstyle)
 				p = P(text='')
-				status = item.status
-				status = status.capitalize()
-				status_span = Span(stylename=boldstyle, text=status)
+				status_text = item.display_status()
+				status_text = status_text.capitalize()
+				status_span = Span(stylename=boldstyle, text=status_text)
 				p.addElement(status_span)
 
 				status_text = ''
@@ -261,7 +261,7 @@ class GenRequirementList(Artifact):
 
 				# Priority
 				if item.priority:
-					self.add_attribute_row(tbl, _('Priority'), item.priority.capitalize())
+					self.add_attribute_row(tbl, _('Priority'), item.display_priority().capitalize())
 
 				# Description, rationale, scope and notes
 				self.add_attribute_row(tbl, _('Description'), item.description)
