@@ -29,6 +29,7 @@ from odf.style import Style, TextProperties, TableColumnProperties, ParagraphPro
 from odf.text import H, P, List, ListItem, Span, TableOfContent, TableOfContentSource
 from odf.table import Table, TableCell, TableRow, TableColumn
 import os
+import sys
 
 class GenRequirementList(Artifact):
 	"""
@@ -38,6 +39,9 @@ class GenRequirementList(Artifact):
 	def __init__(self):
 		self.name = 'overview'
 		self.description = 'Generate odt file with detailed listing of the requirements'
+		# Set utf-8 as default encoding
+		reload(sys)
+		sys.setdefaultencoding('utf-8')
 
 
 	def format_list(self, alist):
