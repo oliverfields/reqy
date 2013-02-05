@@ -17,6 +17,7 @@
 
 import sys
 import os
+import shutil
 
 def report_error(code, message):
 	sys.stderr.write('Error: %s\n' % message)
@@ -46,7 +47,7 @@ def get_repo_dir():
 
 	# Didn't find any repository so failing
 	return False
-
+ 
 def init_repo():
 	# Check if already a repo here
 	existing_repo_dir = get_repo_dir()
@@ -56,13 +57,9 @@ def init_repo():
 	if os.listdir(os.getcwd()) != []:
 		report_error(1, 'Current directory must be empty before initializing repository')
 
-	dirs = ['documents', 'documents%sdesign' % os.sep, 'documents%suse-case' % os.sep, 'documents%stest-case' % os.sep, 'documents%sacceptance-test' % os.sep, 'glossary', 'requirements', 'stakeholders', 'templates']
+	dirs = ['artifacts', 'documents', 'documents%sdesign' % os.sep, 'documents%suse-case' % os.sep, 'documents%stest-case' % os.sep, 'documents%sacceptance-test' % os.sep, 'glossary', 'requirements', 'stakeholders']
 
 	files = [
-		['templates', 'attributes.pkg', ''],
-		['templates', 'glossary.def', ''],
-		['templates', 'requirement.req', ''],
-		['templates', 'stakeholder.sth', ''],
 		['', 'project.conf', 'Name: Requirements for project X'],
 	]
 
@@ -75,7 +72,14 @@ def init_repo():
 		for a_file in files:
 			with open(os.path.join(a_file[0], a_file[1]), 'w') as f:
 				f.writelines(a_file[2])
-
 	except Exception:
 		cwd = os.getcwd()
 		report_error(1, 'Failed to create files and directories in "%s"' % cwd)
+
+	# Copy templates
+	source_template_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+	target_template_dir=os.path.join(os.getcwd(), 'templates')
+	try:
+		shutil.copytree(source_template_dir, target_template_dir)
+	except Exception:
+		report_error(1, 'Failed to copy templates from "%s" to "%s"' % (source_template_dir, target_template_dir))
