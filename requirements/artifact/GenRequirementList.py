@@ -181,7 +181,7 @@ class GenRequirementList(Artifact):
 
 				# Heading
 				status_text = item.display_status()
-				heading_text='%s [%s]' % (item._pretty_name, status_text.capitalize())
+				heading_text='%s [%s]' % (item.title, status_text.capitalize())
 				if item.status == 'rejected':
 					s = Span(text=heading_text, stylename="Rejected")
 				else:

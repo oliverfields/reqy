@@ -43,6 +43,7 @@ class Requirement(ConfigFile):
 		self.scope = None
 		self.status = 'elaboration'
 		self.status_reason = None
+		self.title = None
 		self.todo = None
 		self._valid_file_extension = 'req'
 
@@ -140,6 +141,10 @@ class Requirement(ConfigFile):
 		self.check_appropriate_by_and_on_attributes(self.status, 'approved', self.approved_by, 'Approved by', self.approved_on, 'Approved on')
 		self.check_appropriate_by_and_on_attributes(self.status, 'rejected', self.rejected_by, 'Rejected by', self.rejected_on, 'Rejected on')
 		self.check_appropriate_by_and_on_attributes(self.status, 'postponed', self.postponed_by, 'Postponed by', self.postponed_on, 'Postponed on')
+
+		# If title attribute not set, set to same as pretty name
+		if self.title == None:
+			self.title = self._pretty_name
 
 
 	def check_appropriate_by_and_on_attributes(self, actual_status_string, status_string, by_value_string, by_lable_string, on_value_string, on_lable_string):
