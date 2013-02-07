@@ -33,12 +33,18 @@ import sys
 
 class GenRequirementList(Artifact):
 	"""
-	Generate odt file with detailed listing of the requirements
+	Generate odt file with either detailed listing of the requirements or a simple listing
 	"""
 
-	def __init__(self):
+	def __init__(self, mode):
 		self.name = 'overview'
 		self.description = 'Generate odt file with detailed listing of the requirements'
+
+		if mode == "basiclist":
+			self._verbose = False
+		else:
+			self._verbose = True 
+
 		# Set utf-8 as default encoding
 		reload(sys)
 		sys.setdefaultencoding('utf-8')
@@ -185,7 +191,10 @@ class GenRequirementList(Artifact):
 
 				# Heading
 				status_text = item.display_status()
-				heading_text='%s [%s]' % (item.title, status_text.capitalize())
+				if self._verbose:
+					heading_text='%s [%s]' % (item.title, status_text.capitalize())
+				else:
+					heading_text='%s' % (item.title)
 				if item.status == 'rejected':
 					s = Span(text=heading_text, stylename="Rejected")
 				else:
@@ -218,54 +227,56 @@ class GenRequirementList(Artifact):
 				tbl.addElement(TableColumn(numbercolumnsrepeated='1',stylename=widthwide))
 				odt.text.addElement(tbl)
 
-				# Status
 				boldstyle = Style(name="Bold",family="text")
 				boldstyle.addElement(TextProperties(attributes={'fontweight':"bold"}))
 				odt.automaticstyles.addElement(boldstyle)
-				p = P(text='')
-				status_text = item.display_status()
-				status_text = status_text.capitalize()
-				status_span = Span(stylename=boldstyle, text=status_text)
-				p.addElement(status_span)
 
-				status_text = ''
+				# Status
+				if self._verbose:
+					p = P(text='')
+					status_text = item.display_status()
+					status_text = status_text.capitalize()
+					status_span = Span(stylename=boldstyle, text=status_text)
+					p.addElement(status_span)
 
-				if item.status == 'rejected':
-					status_text += ' ' + _('by') + ' ' + item.rejected_by[0]._pretty_name
-					if item.rejected_on:
-						status_text += ' ' + _('on') + ' ' + item.rejected_on
+					status_text = ''
 
-				if item.status == 'approved':
-					status_text += ' ' + _('by') + ' ' + item.approved_by[0]._pretty_name
-					if item.approved_on:
-						status_text += ' ' + _('on') + ' ' + item.approved_on
+					if item.status == 'rejected':
+						status_text += ' ' + _('by') + ' ' + item.rejected_by[0]._pretty_name
+						if item.rejected_on:
+							status_text += ' ' + _('on') + ' ' + item.rejected_on
 
-				if item.status == 'postponed':
-					status_text += ' ' + _('by') + ' ' + item.postponed_by[0]._pretty_name
-					if item.postponed_on:
-						status_text += ' ' + _('on') + ' ' + item.postponed_on
+					if item.status == 'approved':
+						status_text += ' ' + _('by') + ' ' + item.approved_by[0]._pretty_name
+						if item.approved_on:
+							status_text += ' ' + _('on') + ' ' + item.approved_on
 
-				if item.status_reason:
-					status_text += ' - %s' % item.status_reason
+					if item.status == 'postponed':
+						status_text += ' ' + _('by') + ' ' + item.postponed_by[0]._pretty_name
+						if item.postponed_on:
+							status_text += ' ' + _('on') + ' ' + item.postponed_on
 
-				if status_text != '':
-					p.addText(status_text)
+					if item.status_reason:
+						status_text += ' - %s' % item.status_reason
 
-				title_span = Span(stylename=boldstyle, text=_('Status'))
-				pt = P(text='')
-				pt.addElement(title_span)
-				tr = TableRow()
-				tc = TableCell(valuetype='string')
-				tc.addElement(pt)
-				tr.addElement(tc)
-				tc = TableCell(valuetype='string')
-				tc.addElement(p)
-				tr.addElement(tc)
-				tbl.addElement(tr)
+					if status_text != '':
+						p.addText(status_text)
 
-				# Priority
-				if item.priority:
-					self.add_attribute_row(tbl, _('Priority'), item.display_priority().capitalize())
+					title_span = Span(stylename=boldstyle, text=_('Status'))
+					pt = P(text='')
+					pt.addElement(title_span)
+					tr = TableRow()
+					tc = TableCell(valuetype='string')
+					tc.addElement(pt)
+					tr.addElement(tc)
+					tc = TableCell(valuetype='string')
+					tc.addElement(p)
+					tr.addElement(tc)
+					tbl.addElement(tr)
+
+					# Priority
+					if item.priority:
+						self.add_attribute_row(tbl, _('Priority'), item.display_priority().capitalize())
 
 				# Description, rationale, scope and notes
 				self.add_attribute_row(tbl, _('Description'), item.description)
@@ -285,27 +296,28 @@ class GenRequirementList(Artifact):
 					self.add_attribute_row(tbl, _('Estimated cost'), item.estimated_cost)
 
 				# Traces
-				traces_to = self.get_dependency_to_items(traces['to'])
-				if len(traces_to) > 0:
-					self.add_attribute_traces_row(tbl, _('Dependency to'), traces['to'])
-				
-				# Will always be a parent, which is enforced by file system, so just show
-				self.add_attribute_traces_row(tbl, _('Dependency from'), traces['from'])
+				if self._verbose:
+					traces_to = self.get_dependency_to_items(traces['to'])
+					if len(traces_to) > 0:
+						self.add_attribute_traces_row(tbl, _('Dependency to'), traces['to'])
+					
+					# Will always be a parent, which is enforced by file system, so just show
+					self.add_attribute_traces_row(tbl, _('Dependency from'), traces['from'])
 
-				if use_case:
-					self.add_attribute_document_list_row(tbl, _('Use case'), use_case.split(','))
-				if design:
-					self.add_attribute_document_list_row(tbl, _('Design'), design.split(','))
-				if test_case:
-					self.add_attribute_document_list_row(tbl, _('Test case'), test_case.split(','))
-				if acceptance_test:
-					self.add_attribute_document_list_row(tbl, _('Acceptance test'), acceptance_test.split(','))
-				
-				if item.todo:
-					self.add_attribute_row(tbl, _('Todo'), item.todo)
+					if use_case:
+						self.add_attribute_document_list_row(tbl, _('Use case'), use_case.split(','))
+					if design:
+						self.add_attribute_document_list_row(tbl, _('Design'), design.split(','))
+					if test_case:
+						self.add_attribute_document_list_row(tbl, _('Test case'), test_case.split(','))
+					if acceptance_test:
+						self.add_attribute_document_list_row(tbl, _('Acceptance test'), acceptance_test.split(','))
 
 				if item._children:
 					self.write_child_details(tree, level+1, item, odt)
+
+				if item.todo:
+					self.add_attribute_row(tbl, _('Todo'), item.todo)
 
 
 	def add_toc(self, odt):
@@ -354,9 +366,6 @@ class GenRequirementList(Artifact):
 		except Exception as e:
 			odt = odf.opendocument.OpenDocumentText()
 
-		#self.add_title_page(odt, rt._pretty_name)
-		#self.add_toc(odt)
-		#odt.meta.AutoReload(boolean=True)
 		if project.name:
 			odt.meta.addElement(odf.dc.Title(text=project.name))
 		else:
@@ -364,12 +373,6 @@ class GenRequirementList(Artifact):
 
 		if project.description:
 			odt.meta.addElement(odf.dc.Description(text=project.description))
-		#try:
-		#	odt.meta.addElement(odf.dc.Creator(text=project.project_manager[0].name))
-		#except:
-		#	pass
-		#odt.meta.addElement(odf.dc.Description(text="DESCRIPTION"))
-		#odt.meta.addElement(odf.dc.Date(text="1979-05-11"))
 
 		# Add styles
 		rejected = Style(name="Rejected", family="text")

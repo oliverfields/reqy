@@ -187,15 +187,21 @@ def build_artifacts(artifact_name):
 
 	if artifact_name == 'list' or artifact_name == 'all':
 		target_file = os.path.join(artifact_dir, '%srequirement-list' % short_name)
-		list_report = GenRequirementList.GenRequirementList()
+		list_report = GenRequirementList.GenRequirementList("list")
 		list_report.generate(target_file)
+
+	if artifact_name == 'basiclist' or artifact_name == 'all':
+		target_file = os.path.join(artifact_dir, '%srequirement-basic-list' % short_name)
+		list_report = GenRequirementList.GenRequirementList("basiclist")
+		list_report.generate(target_file)
+
 
 	if artifact_name == 'planner' or artifact_name == 'all':
 		target_file = os.path.join(artifact_dir, '%sexport.planner' % short_name)
 		export = GenPlannerExport.GenPlannerExport()
 		export.generate(target_file)
 
-	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate' and artifact_name != 'planner':
+	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate' and artifact_name != 'planner' and artifact_name != 'basiclist':
 		report_error(1, 'Unknown artifact type "%s"' % artifact_name)
 
 
