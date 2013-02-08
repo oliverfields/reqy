@@ -1,4 +1,5 @@
 # Ensure Created by attrbute gets value test user
+Scope: none
 Description: Check both document links load
 Rationale: to test
 Documents:

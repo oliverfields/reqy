@@ -1,4 +1,5 @@
 Approved by: testuser
+Scope: none
 Description: Must enforce that obligatory key-values pairs exist and check valid values.
 Rationale: Halt on errors and require user to fix them
 Status: approved

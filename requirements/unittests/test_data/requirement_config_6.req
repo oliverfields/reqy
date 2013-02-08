@@ -1,4 +1,5 @@
 Description: Test for single link list that the link is on one line 
+Scope: none
 Rationale: To test
 Status: rejected
 Status reason: Some reason
