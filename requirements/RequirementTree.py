@@ -25,9 +25,6 @@ from ProjectConfig import ProjectConfig
 from Utility import get_repo_dir
 from distutils.version import LooseVersion
 
-#from pygraph.classes.digraph import digraph
-#from pygraph.algorithms.searching import breadth_first_search
-
 class RequirementTree:
 	""" The requirements repository model """
 
