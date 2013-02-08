@@ -100,8 +100,13 @@ class RequirementTree:
 					parent_package._children.append(requirement) 
 					requirement._parent = parent_package
 
+				else:
+					# File extension is not .req (see if above) or file name not attribute.pkg, warn
+					if not package_path.endswith('attributes.pkg'):
+						Utility.report_error(1, 'Illegal repository file "%s" found' % package_path)
+
 			else:
-				report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
+				Utility.report_error(1,'Unidentified file system object "%s", could be a symbolic link?' % name)
 
 	def get_link_list_objects(self, parent, link_list_type, link_list):
 		""" Return list of objects based on passed link list """
