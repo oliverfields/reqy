@@ -16,6 +16,7 @@
 # along with Reqy.  If not, see <http://www.gnu.org/licenses/>.
 
 from ConfigFile import *
+import re
 
 class Requirement(ConfigFile):
 
@@ -142,9 +143,13 @@ class Requirement(ConfigFile):
 		self.check_appropriate_by_and_on_attributes(self.status, 'rejected', self.rejected_by, 'Rejected by', self.rejected_on, 'Rejected on')
 		self.check_appropriate_by_and_on_attributes(self.status, 'postponed', self.postponed_by, 'Postponed by', self.postponed_on, 'Postponed on')
 
-		# If title attribute not set, set to same as pretty name
+		# If title attribute not set then set to same as pretty name
 		if self.title == None:
 			self.title = self._pretty_name
+
+		# Prefix the title if it does not start with numbers and dots, ie _id
+		if not re.match('^[0-9.]*\ ', self.title):
+			self.title = self._id + ' ' + self.title
 
 
 	def check_appropriate_by_and_on_attributes(self, actual_status_string, status_string, by_value_string, by_lable_string, on_value_string, on_lable_string):
