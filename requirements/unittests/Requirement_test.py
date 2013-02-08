@@ -113,6 +113,11 @@ class TestRequirement():
 		req.load_config_from_file('test_data/requirement_config_15.req')
 		assert req.priority == 'must'
 
+	def test_title_attribute(self):
+		req = Requirement()
+		req.load_config_from_file('test_data/1.1.2_requirement_title.req')
+		assert req.title == '1.1.2 The title'
+
 	def test_file_missing_extension(self):
 		req = Requirement()
 		with pytest.raises(SystemExit):
