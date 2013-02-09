@@ -1,6 +1,6 @@
 # Copyright (c) 2012 - Oliver Fields, oliver@phnd.net
 #
-# This file is part of Reqy.
+# This file is part of Relay.
 #
 # Reqy is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -230,10 +230,10 @@ def filter_requirements_by_status(not_equals, status):
 		if isinstance(item, Requirement.Requirement) or isinstance(item, RequirementPackage.RequirementPackage):
 			if not_equals == False:
 				if item.status != status:
-					print "%s (%s)" % (item._pretty_name, item.status.capitalize())
+					print "%s [%s] - %s" % (item._pretty_name, item.status.capitalize(), item._relative_file_path)
 			else:
 				if item.status == status:
-					print item._pretty_name
+					print "%s - %s" % (item._pretty_name, item._relative_file_path)
 
 
 def check_repo():

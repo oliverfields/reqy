@@ -128,7 +128,7 @@ def make_path_relative(path):
 	if path == repo_dir:
 		return 'root'
 	else:
-		path = path.replace(get_repo_dir()+'/', '')
+		path = path.replace(os.path.join(get_repo_dir(),'requirements'+os.sep), '')
 		if path.endswith('attributes.pkg'):
 			path = path.replace(os.sep+'attributes.pkg', '')
 		return path

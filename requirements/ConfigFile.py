@@ -29,6 +29,7 @@ class ConfigFile:
 		self._valid_file_extension = ''
 		self._file_name = None
 		self._file_path = None
+		self._relative_file_path = None
 		self._id = None
 		self._name = None
 		self._pretty_name = None
@@ -94,6 +95,7 @@ class ConfigFile:
 		""" Read config file and pass key values on for assignment """
 		self._file_name = os.path.basename(file_name)
 		self._file_path = os.path.abspath(file_name)
+		self._relative_file_path = self._file_path.replace(os.path.join(Utility.get_repo_dir(), 'requirements' + os.sep), '')
 
 		if file_name.endswith(self._valid_file_extension) == False:
 			Utility.report_error(1, '%s: Invalid file extension, must be ".%s"' % (self._file_path, self._valid_file_extension))
