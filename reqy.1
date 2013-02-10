@@ -1,0 +1,43 @@
+.TH reqy 1  "March 1, 2013" "version 0.5" "USER COMMANDS"
+.SH NAME
+reqy \- project requirements manager
+.SH SYNOPSIS
+.B reqy
+[check|new|init|filter|artifact|trace] <actions>
+.SH DESCRIPTION
+Requirements management tool for maintaining a requirements
+repository, including traces(links between items), stakeholders
+and project documentation. The repository can be visualized via
+generated artifacts, such as reports, Requirements Traceability
+Matrix or Dependency graphs.
+.PP
+Requirements describe what done looks like. Requirements management
+is ensuring everyone on the project is working towards the same
+done. Reqy allows project requirements to be managed and communicated.
+.SH MODES 
+.TP
+check
+Verify repository is valid.
+.TP
+new [glossary|package|requirement(req)|stakeholder] <name>
+Create new repository item based on template.
+.TP
+\-s
+set the speed. The argument is a integer. Zero means restore maximum
+speed.
+.SH EXAMPLES
+.TP
+Set the maximum speed to 8 speed cdrom:
+.B cdspeed
+\-s 8
+.PP
+.TP
+Restore maximum speed:
+.B cdspeed
+\-s 0
+.PP
+.SH EXIT STATUS
+cdspeed returns a zero exist status if it succeeds to change to set the
+maximum speed of the cdrom drive. Non zero is returned in case of failure.
+.SH AUTHOR
+Guido Socher (guido (at) linuxfocus.org)
