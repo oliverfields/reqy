@@ -1,0 +1,85 @@
+# Requirement and requirement package configuration
+# Requirement: Change template by editing [repository]/templates/requirement.req
+# Requirement package: Change template by editing [repository]/templates/attributes.pkg
+
+# Mandatory attributes
+# ====================
+
+#Describe what is required, but not intended for describing how the requirement will be met. Mandatory.
+Description:
+
+# Reason for requirement. Mandatory.
+Rationale:
+
+# Describe how the requirement is deliniated/limited. Mandatory.
+Scope:
+
+# Requirement status, see below for list of status codes. Mandatory, unless status is elaboration.
+# Status codes: elaboration, implementation, rejected, approved or postponed
+#Status: [status code]
+
+# Explanation why requirement has a given status. Mandatory, except if status approved or elaboration
+#Status reason:
+
+
+# Conditionally mandatory attributes
+# ==================================
+
+# The person that approved the requirement as met. Mandatory, if status is approved. 
+#Approved by: [link list - stakeholder]
+
+# Stakeholder that authorized postponement. Mandatory, if status is posponed.
+#Postponed by: [link list - stakeholder]
+
+
+# Optional attributes
+# ===================
+
+# Date of approval. Optional, can only be set if status is approved.
+#Approved on: yyyy-mm-dd
+
+# Date assigned, optional.
+#Assigned on: yyyy-mm-dd
+
+# The person that is responsible for the requirement, optional.
+#Assigned to: [link list - stakeholder]
+
+# The person that created the requirement, optional.
+#Created by: [link list - stakeholder]
+
+# Date requirement created, optional.
+#Created on: yyyy-mm-dd
+
+# Link list of dependencies, optional.
+#Depends on: [link list - requirement] or none
+
+# Link list of traces to supporting documents, optional.
+#Documents: [link list - document]
+
+# Estimated duration of work for one person to complete, optional.
+#Estimated effort: integer
+
+# Estimated cost to complete requirement, optional.
+#Estimated cost: integer
+
+#Supplemental information, optional.
+#Note: string
+
+# Can only be set if status is postponed. Person who decided to postpone requirement.
+#Postponed on: yyyy-mm-dd
+
+# Indicate how important the requirement is, optional.
+# Priority codes: must, should or could
+#Priority: [priority code]
+
+# Can only be set if status is rejected. Person that rejected requirement, must be valid stakeholder defined in the configuration, optional.
+#Rejected by: [link list - stakeholder]
+
+# Can only be set if status is rejected. The date format is not configurable, optional.
+#Rejected on: yyyy-mm-dd
+
+# Optional title for requirement, if set will be used instead of generated titl
+#Title: String
+
+# List of items that need doing, optional.
+#Todo: String

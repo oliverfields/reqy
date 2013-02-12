@@ -1,0 +1,27 @@
+# Stakeholder configuration
+# Change template by editing [repository]/templates/stakeholder.sth
+
+# Mandatory attributes
+# ====================
+
+# The persons name
+Name:
+
+# The persons role in respect to the project
+Role:
+
+
+# Optional attributes
+# ===================
+
+# Email address, optional.
+#Email: string
+
+# Supplemental information, optional.
+#Note: string
+
+# Member organization/employer, optional.
+#Organization:
+
+# Contact number, optional.
+#Phone:

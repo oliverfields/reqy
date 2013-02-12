@@ -1,0 +1,47 @@
+# Glossary configuration
+# Change template by editing [repository]/templates/glossary.def
+
+# Mandatory attributes
+# ====================
+
+# Explanation of term. Mandatory.
+Definition:
+
+# Status of term, mandatory only if status code is replaced.
+# Status codes: elaboration, rejected, approved or replaced
+#Status: [status code]
+
+# Explanation why requirement has a given status. Mandatory, except if status code approved or elaboration
+#Status reason: string
+
+# The term. Mandatory
+Term:
+
+
+# Conditionally mandatory attributes
+# ==================================
+
+# User that rejected the term, must be valid user defined in the configuration, mandatory if status is rejected.
+#Rejected by: [link list - stakeholder]
+
+# If status is replaced, then replaced by indicates which term or terms have replaced it, optional.
+#Replaced by: [ link list - term]
+
+
+# Optional attributes
+# ===================
+
+# The person that created the term, must be a valid stakeholder defined in the configuration, optional.
+#Created by: [link list - stakeholder]
+
+# Date terme defined in glossary, optional.
+#Created on: yyyy-mm-dd
+
+# Supplemental information, optional.
+#Note: string
+
+# Date terme was rejected from glossary, optional.
+#Rejected on: yyyy-mm-dd
+
+# List of items that need doing, optional.
+#Todo: string
