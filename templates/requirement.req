@@ -1,2 +1,108 @@
-Description:
-Rationale:
+# Requirement configuration
+# Change template by editing [repository]/templates/requirement.req
+
+
+# Mandatory attributes
+# ====================
+
+#Describe what is required, but not intended for describing how the requirement will be met. Mandatory.
+Description: String
+
+
+# Conditionally mandatory attributes
+# ==================================
+
+# The person that approved the requirement as met. Mandatory, if status is approved. 
+#Approved by: [link list stakeholder]
+
+# Stakeholder that authorized postponement. Mandatory, if status is posponed.
+#Postponed by: [link list stakeholder]
+
+
+
+# Optional attributes
+# ===================
+
+# Date of approval. Optional, can only be set if status is approved.
+#Approved on: yyyy-mm-dd
+
+# Date assigned, optional.
+#Assigned on: yyyy-mm-dd
+
+# The person that is responsible for the requirement, optional.
+#Assigned to: [link list stakeholder]
+
+# The person that created the requirement, optional.
+#Created by: [link list stakeholder]
+
+# Date requirement created, optional.
+#Created on: yyyy-mm-dd
+
+# Link list of dependencies, optional.
+#Depends on: [link list requirement] or none
+
+# Link list of traces to supporting documents, optional.
+#Documents: [link list document]
+
+# Estimated duration of work for one person to complete, optional.
+#Estimated effort: integer
+
+# Estimated cost to complete requirement, optional.
+#Estimated cost: integer
+
+#Supplemental information, optional.
+#Note: string
+
+
+Can only be set if status is postponed. Person who decided to postpone requirement
+Postponed on
+Date (yyyy-mm-dd)
+No
+
+Can only be set if status is postponed
+Priority
+[priority code]
+No
+Must
+Indicate how important the requirement is
+Rationale
+String
+Yes
+
+Reason for requirement
+Rejected by
+[link list stakeholder]
+Only if status is rejected
+
+Can only be set if status is rejected. Person that rejected requirement, must be valid stakeholder defined in the configuration
+Rejected on
+Date (yyyy-mm-dd)
+No
+
+Can only be set if status is rejected. The date format is not configurable
+Scope
+String
+Yes
+
+Describe how the requirement is deliniated/limited
+Status
+[status code]
+No
+elaboration
+See below for list of status codes
+Status reason
+String
+Yes, except if status approved or elaboration
+
+Explanation why requirement has a given status
+Title
+String
+No
+
+Optional title for requirement, if set will be used instead of generated title
+Todo
+String
+No
+
+List of items that need doing
+

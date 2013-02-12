@@ -57,6 +57,10 @@ Multi line key values (note that the value lines have double space at start of l
   |   [value line 3]
 
 
+Files are named as[id]_[short name].[extension], where [id]_ is an optional reference and [short name] is best thought of as a terse description of the requirement. The file name may contain letters (upper- or lowercase), numbers, underscores(_), hyphens(-) and periods(.).
+
+The prefix [id]_ is optional, but can be handy for reference purposes and describing what package the requirement belongs to, e.g. 1.1 or 2.4.21.
+
 
 Project
 =======
