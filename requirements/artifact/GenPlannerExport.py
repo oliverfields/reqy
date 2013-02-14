@@ -23,6 +23,7 @@ from ..Stakeholder import Stakeholder
 from ..RequirementPackage import RequirementPackage
 from ..Document import Document
 from ..Utility import get_repo_dir, documents_by_type, make_path_relative, xstr, report_error
+from xml.sax import saxutils
 import os
 import time
 
@@ -65,7 +66,8 @@ class GenPlannerExport(Artifact):
 					effort=0
 				name=item._name.replace('-', ' ')
 				name=name.capitalize()
-				tasks+='<task id="%s" name="%s" note="Reqy requirement ref: %s&#10;&#10;%s&#10;&#10;%s" work="%s" start="%s" end="%s" />\n' % (counter, name, item._id, item.description, item.rationale, effort, timestamp, timestamp)
+				planner_note = saxutils.quoteattr("Reqy requirement ref: " + item._id + "\n\n" + item.description + "\n\n" + item.rationale + "\n\n" + item.scope)
+				tasks+='<task id="%s" name="%s" note=%s work="%s" start="%s" end="%s" />\n' % (counter, name, planner_note, effort, timestamp, timestamp)
 				counter+=1
 		tasks+='</tasks>'
 
