@@ -124,13 +124,13 @@ def documents_by_type(link_list, document_type):
 def make_path_relative(path):
 	""" Strip repo directories from path """
 	repo_dir = get_repo_dir()
-
 	if path == repo_dir:
 		return 'root'
 	else:
-		path = path.replace(os.path.join(get_repo_dir(),'requirements'+os.sep), '')
+		path = path.replace(repo_dir,'')
 		if path.endswith('attributes.pkg'):
 			path = path.replace(os.sep+'attributes.pkg', '')
+		path = path.lstrip(os.sep)
 		return path
 
 def xstr(s):
