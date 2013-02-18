@@ -47,13 +47,13 @@ graph [fontname=Verdana, fontsize=8]
 node [fontname=Verdana, fontsize=8]
 edge [fontname=Verdana, fontsize=8, color="#707792"]
 
-''' % (repo_dir)
+"%s" [label="%s", shape="box", color="#716eb1", style="filled", fillcolor="#9e9bd1"]
+
+''' % (repo_dir, rt._file_path, rt._pretty_name)
 
 		
 		for item in rt.get_tree_items():
-			if isinstance(item, RequirementTree):
-				contents += '"%s" [label="%s", shape="box", color="#716eb1", style="filled", fillcolor="#9e9bd1"]\n' % (item._file_path, item._pretty_name)
-			elif isinstance(item, RequirementPackage):
+			if isinstance(item, RequirementPackage):
 				contents += '"%s" [label="%s", color="#6ca59c", shape="box", style="rounded,filled", fillcolor="#99c8c2"]\n' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
 			elif isinstance(item, Requirement):
 				contents += '"%s" [label="%s", color="#7dd396", style="filled", fillcolor="#a9e6bd"]\n' % (item._file_path, wrap_line(item._pretty_name, word_wrap_length, r'\n', True))
