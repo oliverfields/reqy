@@ -50,10 +50,6 @@ Modes
 
   Create new repository in current directory.
 
-*filter status* <not> [approved|elaboration|implementation|rejected|postponed]
-
-  Filter requirements by status. Use 'not' to invert filter.
-
 *artifact* [all|estimate|graph|list|basiclist|planner|rtm]
 
   Generate specified artifact in 'artifacts' directory. Option 'all' generates all artifacts.

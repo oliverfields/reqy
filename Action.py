@@ -205,37 +205,6 @@ def build_artifacts(artifact_name):
 		report_error(1, 'Unknown artifact type "%s"' % artifact_name)
 
 
-def filter_requirements_by_status(not_equals, status):
-	valid_status = ['approved', 'elaboration', 'implementation', 'postponed', 'rejected']
-	is_valid_status = False
-	# Check status is valid
-	for vs in valid_status:
-		if vs == status:
-			is_valid_status = True
-
-	if is_valid_status == False:
-		report_error(1, 'Unknown status "%s", must be either approved, elaboration, implementation, rejected or postponed' % status)
-
-	from requirements import RequirementTree
-	from requirements import Requirement
-	from requirements import RequirementPackage
-
-	repo_dir = get_repo_dir()
-	rt = RequirementTree.RequirementTree()
-	rt.load_repository(repo_dir)
-
-	item_list = rt.get_tree_items()
-
-	for item in item_list:
-		if isinstance(item, Requirement.Requirement) or isinstance(item, RequirementPackage.RequirementPackage):
-			if not_equals == False:
-				if item.status != status:
-					print "%s [%s] - %s" % (item._pretty_name, item.status.capitalize(), item._relative_file_path)
-			else:
-				if item.status == status:
-					print "%s - %s" % (item._pretty_name, item._relative_file_path)
-
-
 def check_repo():
 	""" Simply load repository to check it works """
 

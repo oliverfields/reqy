@@ -280,8 +280,10 @@ class GenRequirementList(Artifact):
 
 				# Description, rationale, scope and notes
 				self.add_attribute_row(tbl, _('Description'), item.description)
-				self.add_attribute_row(tbl, _('Rationale'), item.rationale)
-				self.add_attribute_row(tbl, _('Scope'), item.scope)
+				if item.rationale != 'none':
+					self.add_attribute_row(tbl, _('Rationale'), item.rationale)
+				if item.scope != 'none':
+					self.add_attribute_row(tbl, _('Scope'), item.scope)
 
 				if item.note:
 					self.add_attribute_row(tbl, _('Note'), item.note)
