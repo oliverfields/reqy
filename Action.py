@@ -157,6 +157,7 @@ def build_artifacts(artifact_name):
 	from requirements.artifact import GenDotGraph
 	from requirements.artifact import GenRequirementsTraceabilityMatrix
 	from requirements.artifact import GenRequirementList
+	from requirements.artifact import GenRequirementListRst
 	from requirements.artifact import GenEstimation
 	from requirements.artifact import GenPlannerExport
 
@@ -195,13 +196,22 @@ def build_artifacts(artifact_name):
 		list_report = GenRequirementList.GenRequirementList("basiclist")
 		list_report.generate(target_file)
 
+	if artifact_name == 'listrst' or artifact_name == 'all':
+		target_file = os.path.join(artifact_dir, '%srequirement-list' % short_name)
+		list_report = GenRequirementListRst.GenRequirementListRst("list")
+		list_report.generate(target_file)
+
+	if artifact_name == 'basiclistrst' or artifact_name == 'all':
+		target_file = os.path.join(artifact_dir, '%srequirement-basic-list' % short_name)
+		list_report = GenRequirementListRst.GenRequirementListRst("basiclist")
+		list_report.generate(target_file)
 
 	if artifact_name == 'planner' or artifact_name == 'all':
 		target_file = os.path.join(artifact_dir, '%sexport.planner' % short_name)
 		export = GenPlannerExport.GenPlannerExport()
 		export.generate(target_file)
 
-	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate' and artifact_name != 'planner' and artifact_name != 'basiclist':
+	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate' and artifact_name != 'planner' and artifact_name != 'basiclist' and artifact_name != 'basiclistrst' and artifact_name != 'listrst':
 		report_error(1, 'Unknown artifact type "%s"' % artifact_name)
 
 

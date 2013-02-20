@@ -7,7 +7,7 @@ def usage(mode='default'):
 	executable_name = os.path.basename(sys.argv[0])
 
 	usage_message = {
-		'artifact': ' [all|estimate|graph|list|basiclist|planner|rtm]',
+		'artifact': ' [all|estimate|graph|list|basiclist|listrst|rstbasiclist|planner|rtm]',
 		'trace': ' [requirement|package|document]',
 		'init': ' ',
 		'new': ' [glossary|package|requirement(req)|stakeholder] [name]',
