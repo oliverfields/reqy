@@ -50,7 +50,7 @@ Modes
 
   Create new repository in current directory.
 
-*artifact* [all|estimate|graph|list|basiclist|planner|rtm]
+*artifact* [all|estimate|graph|list|basiclist|listrst|basiclistrst|planner|rtm]
 
   Generate specified artifact in 'artifacts' directory. Option 'all' generates all artifacts.
 
