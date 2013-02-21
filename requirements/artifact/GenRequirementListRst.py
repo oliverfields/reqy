@@ -20,6 +20,7 @@ from ..ProjectConfig import ProjectConfig
 from ..RequirementTree import RequirementTree
 from ..Requirement import Requirement
 from ..RequirementPackage import RequirementPackage
+from ..Stakeholder import Stakeholder
 from ..Document import Document
 from ..Utility import get_repo_dir, documents_by_type, make_path_relative, xstr, report_error
 import os
@@ -43,6 +44,25 @@ class GenRequirementListRst(Artifact):
 		# Set utf-8 as default encoding
 		reload(sys)
 		sys.setdefaultencoding('utf-8')
+
+
+	def write_change_logs(self, reqtree):
+		""" Get all change log items, sort them by date and output table """
+
+		change_log = []
+
+		for item in reqtree.get_tree_items():
+			if isinstance(item, RequirementPackage) or isinstance(item, Requirement):
+				if item.change_log:
+					for msg in item.change_log:
+						change_log.append('* %s %s - %s\n    %s' % (msg['date'], msg['stakeholder'].capitalize(), msg['pretty_name'], msg['message']))
+
+		self.contents += self.basic_heading_markup(1, _('Change log'))
+
+		for msg in sorted(change_log):
+			self.contents += '\n' + msg
+
+		self.contents += '\n\n'
 
 
 	def stakeholder_trace(self, key, trace_string, stakeholder, date):
@@ -108,8 +128,7 @@ class GenRequirementListRst(Artifact):
 
 
 	def heading(self, verbose, level, item):
-		""" Appen markuped heading """
-		heading_underline = ''	
+		""" Append markuped heading """
 	
 		status_text = item.display_status()
 		if verbose:
@@ -120,6 +139,14 @@ class GenRequirementListRst(Artifact):
 #			heading_text += "Rejected"
 #		else:
 #			heading_text += "Not Rejected"
+
+		return self.basic_heading_markup(level, heading_text)
+
+
+	def basic_heading_markup(self, level, heading_text):
+		""" Basic rst heading """
+
+		heading_underline = ''
 
 		if level == 1:
 			heading_markup = '#'
@@ -234,8 +261,19 @@ class GenRequirementListRst(Artifact):
 				if item._children:
 					self.write_child_details(tree, level+1, item)
 
+				if item.change_log:
+					rst_text = ''
+					for logmsg in item.change_log:
+						rst_text += '\n    * %s %s - %s' % (logmsg['date'], logmsg['stakeholder'].capitalize(), logmsg['message'])
+
+					self.contents += self.attribute_line(_('Change log'), rst_text)
+
 				if item.todo:
 					self.contents += self.attribute_line(_('Todo') + ' ' + item.todo)
+
+
+	def add_pagebreak(self):
+		self.contents += '\n.. raw:: pdf\n\n    PageBreak\n\n'
 
 
 	def generate(self, target_file):
@@ -263,7 +301,15 @@ class GenRequirementListRst(Artifact):
 		if project.description:
 			self.contents += project.description
 
-		self.contents += '\n\n.. header::\n\n    ###Title###\n\n.. footer::\n\n    ###Page###/###Total###\n\n.. contents:: ' + _('Table of contents') + '\n\n'
+		self.contents += '\n\n.. header::\n\n    ###Title###\n\n.. footer::\n\n    ###Page###/###Total###'
+
+		self.add_pagebreak()
+
+		self.write_change_logs(rt)
+
+		self.add_pagebreak()
+
+		self.contents += '\n\n.. contents:: ' + _('Table of contents') + '\n\n'
 
 		self.write_child_details(rt, 1, rt)
 

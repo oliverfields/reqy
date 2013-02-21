@@ -206,6 +206,40 @@ class ConfigFile:
 		else:
 			return None
 
+
+	def is_valid_log_list_line(self, line):
+		""" Ensure line matches syntax 'yyyy-mm-dd <stakeholder>: msg' """
+
+		if re.match('^[0-9]{4}-[0-9]{2}-[0-9]{2}\ [A-Za-z0-9-]*:', line):
+			return True
+		else:
+			Utility.report_error(1, '%s: Field "Change log" incorecctly specified "%s"' % (self._file_path, line))
+
+
+	def make_change_log_list(self, item):
+		""" Returns list(array) of change logs by parsing the string and checks that each log entry is valid (date, stakeholder exists and contains a log message """
+		log_lines = None
+
+		if item.change_log:
+			log_lines = []
+
+			for line in item.change_log.splitlines():
+				if self.is_valid_log_list_line(line):
+					tmp = line.split(':',)
+					tmp2 = tmp[0].split(' ')
+
+					message = tmp[1].strip()
+
+					# Check stakeholder exists
+					#stakeholder_file = os.path.join(Utility.get_repo_dir(), 'stakeholders', tmp2[1] + '.sth')
+					#if os.path.isfile(stakeholder_file) == False and os.path.isdir(stakeholder_file) == False:
+						#Utility.report_error(1, '%s: "Change log" attribute stakeholder "%s" is broken (%s)' % (self._file_path, tmp2[1], stakeholder_file))
+
+					log_lines.append({'message': message, 'date': tmp2[0], 'stakeholder': tmp2[1], 'pretty_name': item._pretty_name})
+
+		return log_lines
+
+
 	def make_link_list(self, root_directory, nice_attribute_name, link_list_string, multiple_allowed = True):
 		""" Returns list(array) of link list string and checks that each link exists as a file on disk """
 

@@ -27,6 +27,7 @@ class Requirement(ConfigFile):
 		self.approved_by = None
 		self.assigned_on = None
 		self.assigned_to = None
+		self.change_log = None
 		self.created_by = None
 		self.created_on = None
 		self.description = None
@@ -117,6 +118,9 @@ class Requirement(ConfigFile):
 		self.postponed_by = self.make_link_list('stakeholders', 'Postponed by', self.postponed_by, False)
 		self.documents = self.make_link_list('documents', 'Documents', self.documents)
 		self.depends_on = self.make_link_list('requirements', 'Depends on', self.depends_on)
+
+		# Make change log list array
+		self.change_log = self.make_change_log_list(self)
 
 		# If status is neither implementation or elaboration status reason must be stated
 		if (self.status == 'rejected' or self.status == 'postponed') and (self.status_reason == '' or self.status_reason == None):
