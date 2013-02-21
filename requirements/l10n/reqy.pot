@@ -1,126 +1,153 @@
-# File: ../artifact/GenRequirementList.py, line: 63
-# File: ../artifact/GenRequirementList.py, line: 232
-# File: ../artifact/GenRequirementList.py, line: 237
-# File: ../artifact/GenRequirementList.py, line: 242
+# File: ../artifact/GenRequirementList.py, line: 73
+# File: ../artifact/GenRequirementList.py, line: 247
+# File: ../artifact/GenRequirementList.py, line: 252
+# File: ../artifact/GenRequirementList.py, line: 257
+# File: ../artifact/GenRequirementListRst.py, line: 58
+# File: ../artifact/GenRequirementListRst.py, line: 176
+# File: ../artifact/GenRequirementListRst.py, line: 181
+# File: ../artifact/GenRequirementListRst.py, line: 186
 msgid "on"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 230
-# File: ../artifact/GenRequirementList.py, line: 235
-# File: ../artifact/GenRequirementList.py, line: 240
-# File: ../artifact/GenRequirementList.py, line: 274
+# File: ../artifact/GenRequirementList.py, line: 245
+# File: ../artifact/GenRequirementList.py, line: 250
+# File: ../artifact/GenRequirementList.py, line: 255
+# File: ../artifact/GenRequirementList.py, line: 291
+# File: ../artifact/GenRequirementListRst.py, line: 174
+# File: ../artifact/GenRequirementListRst.py, line: 179
+# File: ../artifact/GenRequirementListRst.py, line: 184
+# File: ../artifact/GenRequirementListRst.py, line: 208
 msgid "by"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 250
+# File: ../artifact/GenRequirementList.py, line: 265
+# File: ../artifact/GenRequirementListRst.py, line: 192
 msgid "Status"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 264
+# File: ../artifact/GenRequirementList.py, line: 279
+# File: ../artifact/GenRequirementListRst.py, line: 196
 msgid "Priority"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 267
+# File: ../artifact/GenRequirementList.py, line: 282
+# File: ../artifact/GenRequirementListRst.py, line: 199
 msgid "Description"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 268
+# File: ../artifact/GenRequirementList.py, line: 284
+# File: ../artifact/GenRequirementListRst.py, line: 201
 msgid "Rationale"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 269
+# File: ../artifact/GenRequirementList.py, line: 286
+# File: ../artifact/GenRequirementListRst.py, line: 203
 msgid "Scope"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 272
+# File: ../artifact/GenRequirementList.py, line: 289
+# File: ../artifact/GenRequirementListRst.py, line: 206
 msgid "Note"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 274
+# File: ../artifact/GenRequirementList.py, line: 291
+# File: ../artifact/GenRequirementListRst.py, line: 208
 msgid "Created"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 275
+# File: ../artifact/GenRequirementList.py, line: 292
+# File: ../artifact/GenRequirementListRst.py, line: 209
 msgid "Assigned"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 275
+# File: ../artifact/GenRequirementList.py, line: 292
+# File: ../artifact/GenRequirementListRst.py, line: 209
 msgid "to"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 279
+# File: ../artifact/GenRequirementList.py, line: 296
+# File: ../artifact/GenRequirementListRst.py, line: 212
 msgid "Estimated effort"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 281
+# File: ../artifact/GenRequirementList.py, line: 298
+# File: ../artifact/GenRequirementListRst.py, line: 214
 msgid "Estimated cost"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 286
+# File: ../artifact/GenRequirementList.py, line: 304
+# File: ../artifact/GenRequirementListRst.py, line: 220
 msgid "Dependency to"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 289
+# File: ../artifact/GenRequirementList.py, line: 307
+# File: ../artifact/GenRequirementListRst.py, line: 223
 msgid "Dependency from"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 292
+# File: ../artifact/GenRequirementList.py, line: 310
+# File: ../artifact/GenRequirementListRst.py, line: 226
 msgid "Use case"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 294
+# File: ../artifact/GenRequirementList.py, line: 312
+# File: ../artifact/GenRequirementListRst.py, line: 228
 msgid "Design"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 296
+# File: ../artifact/GenRequirementList.py, line: 314
+# File: ../artifact/GenRequirementListRst.py, line: 230
 msgid "Test case"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 298
+# File: ../artifact/GenRequirementList.py, line: 316
+# File: ../artifact/GenRequirementListRst.py, line: 232
 msgid "Acceptance test"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 301
+# File: ../artifact/GenRequirementList.py, line: 322
+# File: ../artifact/GenRequirementListRst.py, line: 238
 msgid "Todo"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 309
+# File: ../artifact/GenRequirementList.py, line: 327
+# File: ../artifact/GenRequirementListRst.py, line: 266
 msgid "Table of contents"
 msgstr ""
 #
-# File: ../artifact/GenRequirementList.py, line: 327
+# File: ../artifact/GenRequirementList.py, line: 345
 #, python-format
 msgid "Requirements for \"%s\""
 msgstr ""
 #
-# File: ../Requirement.py, line: 157
+# File: ../Requirement.py, line: 167
 msgid "must"
 msgstr ""
 #
-# File: ../Requirement.py, line: 159
+# File: ../Requirement.py, line: 169
 msgid "should"
 msgstr ""
 #
-# File: ../Requirement.py, line: 161
+# File: ../Requirement.py, line: 171
 msgid "could"
 msgstr ""
 #
-# File: ../Requirement.py, line: 170
+# File: ../Requirement.py, line: 180
 msgid "elaboration"
 msgstr ""
 #
-# File: ../Requirement.py, line: 172
+# File: ../Requirement.py, line: 182
 msgid "implementation"
 msgstr ""
 #
-# File: ../Requirement.py, line: 174
+# File: ../Requirement.py, line: 184
 msgid "rejected"
 msgstr ""
 #
-# File: ../Requirement.py, line: 176
+# File: ../Requirement.py, line: 186
 msgid "approved"
 msgstr ""
 #
-# File: ../Requirement.py, line: 178
+# File: ../Requirement.py, line: 188
 msgid "postponed"
 msgstr ""
