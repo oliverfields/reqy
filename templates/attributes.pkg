@@ -44,6 +44,10 @@ Scope:
 # The person that is responsible for the requirement, optional.
 #Assigned to: [link list - stakeholder]
 
+# Change log messages, multiline in format '  yyyy-mm-dd [stakeholder]: [message string]'
+#Change log:
+#  2012-05-11 [stakeholder]: [Message string]
+
 # The person that created the requirement, optional.
 #Created by: [link list - stakeholder]
 

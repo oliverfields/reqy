@@ -96,6 +96,8 @@ Assigned on
   The date format is not configurable
 Assigned to
   The person that is responsible for the requirement, must be a valid stakeholder defined in the configuration
+Change log
+  Multiline in format '  yyyy-mm-dd [stakeholder]: [message string]'
 Created by
   The person that created the requirement, must be a valid stakeholder  defined in the configuration
 Created on
