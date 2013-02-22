@@ -113,6 +113,18 @@ class TestRequirement():
 		req.load_config_from_file('test_data/requirement_config_15.req')
 		assert req.priority == 'must'
 
+	def test_valid_req_config_16(self):
+		req = Requirement()
+		req.load_config_from_file('test_data/requirement_config_16.req')
+		assert req.change_log[0]['date'] == '2012-05-11'
+		assert req.change_log[0]['pretty_name'] == 'requirement Config_16'
+		assert req.change_log[0]['message'] == 'afe'
+		assert req.change_log[0]['stakeholder'] == 'oliver'
+		assert req.change_log[1]['date'] == '2012-05-10'
+		assert req.change_log[1]['pretty_name'] == 'requirement Config_16'
+		assert req.change_log[1]['message'] == 'afe'
+		assert req.change_log[1]['stakeholder'] == 'oliver'
+
 	def test_title_attribute(self):
 		req = Requirement()
 		req.load_config_from_file('test_data/1.1.2_requirement_title.req')
@@ -202,3 +214,8 @@ class TestRequirement():
 		req = Requirement()
 		with pytest.raises(SystemExit):
 			req.load_config_from_file('test_data/invalid_requirement_config_16.req')
+	
+	def test_invalid_req_config_17(self):
+		req = Requirement()
+		with pytest.raises(SystemExit):
+			req.load_config_from_file('test_data/invalid_requirement_config_17.req')

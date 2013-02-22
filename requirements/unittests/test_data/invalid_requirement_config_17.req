@@ -1,0 +1,6 @@
+Description: Fail on bad formatting of Change log
+Scope: nope
+Rationale: To test
+Created by: testuser
+Change log:
+  2012-0511 oliver afe 
