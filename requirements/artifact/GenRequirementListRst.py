@@ -57,12 +57,16 @@ class GenRequirementListRst(Artifact):
 					for msg in item.change_log:
 						change_log.append('* %s %s - %s\n    %s' % (msg['date'], msg['stakeholder'].capitalize(), msg['pretty_name'], msg['message']))
 
-		self.contents += self.basic_heading_markup(1, _('Change log'))
+		if len(change_log) > 0:
 
-		for msg in sorted(change_log):
-			self.contents += '\n' + msg
+			self.add_pagebreak()
+			self.contents += self.basic_heading_markup(1, _('Change log'))
 
-		self.contents += '\n\n'
+			for msg in sorted(change_log):
+				self.contents += '\n' + msg
+
+			self.contents += '\n\n'
+			self.add_pagebreak()
 
 
 	def stakeholder_trace(self, key, trace_string, stakeholder, date):
@@ -306,8 +310,6 @@ class GenRequirementListRst(Artifact):
 		self.add_pagebreak()
 
 		self.write_change_logs(rt)
-
-		self.add_pagebreak()
 
 		self.contents += '\n\n.. contents:: ' + _('Table of contents') + '\n\n'
 
