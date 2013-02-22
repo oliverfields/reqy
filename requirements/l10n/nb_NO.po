@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Reqy\n"
 "Report-Msgid-Bugs-To: oliver@phnd.net\n"
 "POT-Creation-Date: 2013-02-02 23:39:35+01:00\n"
-"PO-Revision-Date: 2013-02-02 23:57+0100\n"
+"PO-Revision-Date: 2013-02-22 15:35+0100\n"
 "Last-Translator: Oliver Fields <oliver@phnd.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb\n"
@@ -85,6 +85,12 @@ msgstr "Innhold"
 #, python-format
 msgid "Requirements for \"%s\""
 msgstr "Krav for \"%s\""
+
+#
+# File: ../artifact/GenRequirementListRst.py, line: 63
+# File: ../artifact/GenRequirementListRst.py, line: 273
+msgid "Change log"
+msgstr "Endringshistorikk"
 
 #
 # File: ../Requirement.py, line: 157
