@@ -264,9 +264,6 @@ class GenRequirementListRst(Artifact):
 					if acceptance_test:
 						self.contents += self.attribute_documents(_('Acceptance test'), acceptance_test.split(','))
 
-				if item._children:
-					self.write_child_details(tree, level+1, item)
-
 				if item.change_log:
 					rst_text = ''
 					for logmsg in item.change_log:
@@ -276,6 +273,9 @@ class GenRequirementListRst(Artifact):
 
 				if item.todo:
 					self.contents += self.attribute_line(_('Todo') + ' ' + item.todo)
+
+				if item._children:
+					self.write_child_details(tree, level+1, item)
 
 
 	def add_pagebreak(self):
