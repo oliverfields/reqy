@@ -54,6 +54,19 @@ class ConfigFile:
 			else:
 				return False
 
+
+	def is_triple_point_estimate(self, string):
+		""" Check if string is triple point estimate, or None """
+		if string == None:
+			return True 
+		else:
+			match = re.search(r'^[0-9]*/[0-9]*/[0-9]*$', string)
+			if match:
+				return True
+			else:
+				return False
+
+
 	def validate_settings(self):
 		""" Stub function, needs to be implemented by sub class """
 		pass

@@ -60,8 +60,8 @@ Scope:
 # Link list of traces to supporting documents, optional.
 #Documents: [link list - document]
 
-# Estimated duration of work for one person to complete, optional.
-#Estimated effort: integer
+# Estimated duration of work to complete, either as integer or triple point (worst case/likely/best case), optional.
+#Estimated effort: integer or triple point (worst case/likely/best case)
 
 # Estimated cost to complete requirement, optional.
 #Estimated cost: integer
@@ -82,7 +82,7 @@ Scope:
 # Can only be set if status is rejected. The date format is not configurable, optional.
 #Rejected on: yyyy-mm-dd
 
-# Optional title for requirement, if set will be used instead of generated titl
+# Optional title for requirement, if set will be used instead of generated title
 #Title: String
 
 # List of items that need doing, optional.

@@ -88,8 +88,8 @@ class Requirement(ConfigFile):
 		if self.scope == '' or self.scope == None:
 			Utility.report_error(1, '%s: Scope attribute is empty or missing' % (self._file_path))
 
-		if self.is_integer(self.estimated_effort) == False:
-			Utility.report_error(1, '%s: Estimated effort field has value "%s", but it must be an integer' % (self._file_path, self.estimated_effort))
+		if self.is_integer(self.estimated_effort) == False and self.is_triple_point_estimate(self.estimated_effort) == False:
+			Utility.report_error(1, '%s: Estimated effort field has value "%s", but it must be either an integer or a triple point (best/likely/worst)' % (self._file_path, self.estimated_effort))
 
 		if self.is_integer(self.estimated_cost) == False:
 			Utility.report_error(1, '%s: Estimated cost field has value "%s", but it must be an integer' % (self._file_path, self.estimated_cost))
