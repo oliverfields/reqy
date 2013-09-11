@@ -126,6 +126,21 @@ class GenEstimationTriplePoint(Artifact):
       ['+3SD',float(mean+3*stddiv),99]
     ]
 
+		# Generate CSV and plot files
+		csv_file ='%s.csv' % target_file
+		csv = open(csv_file,'w')
+		for p in distribution_data:
+			csv.write('%s,%s\n' % (p[1],p[2]))
+
+		plot_file ='%s.plot' % target_file
+		plot = open(plot_file,'w')
+		plot.write("set title 'Project estimated effort at complete'\n")
+		plot.write("set xlabel 'Estimated effort'\n")
+		plot.write("set ylabel 'Probability of completion %'\n")
+		plot.write("set datafile separator ','\n")
+		plot.write("set nokey\n")
+		plot.write("plot '%s' using 1:2:(1.0) smooth acsplines" % csv_file)
+
 #		print est_data
 #		print "Stddiv: %s" % stddiv
 #		print "Stddiv mean: %s" % stddiv_mean
@@ -158,8 +173,6 @@ class GenEstimationTriplePoint(Artifact):
 		ods.spreadsheet.addElement(summary_tbl)
 
 		ods.spreadsheet.addElement(data_tbl)
-
-
 
 		try:
 			ods.save(target_file, True)
