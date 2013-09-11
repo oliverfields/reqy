@@ -97,9 +97,9 @@ class GenEstimationTriplePoint(Artifact):
 				best_case = float(triple_points[0])
 				likely_case = float(triple_points[1])
 				worst_case = float(triple_points[2])
-				varience = float(pow((worst_case-best_case)/5,2))
+				varience = float(pow((worst_case-best_case)/6,2))
 				sum_varience += varience
-				item_mean = float((best_case+3*likely_case+worst_case)/5)
+				item_mean = float((best_case+4*likely_case+worst_case)/6)
 				mean += item_mean
 
 				est_data.append({'name': item._pretty_name, 'best_case': best_case, 'likely': likely_case, 'worst_case': worst_case, 'varience': varience,'mean': item_mean}) 
@@ -116,7 +116,7 @@ class GenEstimationTriplePoint(Artifact):
 		n = 1
 		for i in sorted(est_data, key=itemgetter('varience_of_total'), reverse=True):
 			n += 1
-			data_tbl.addElement(self.make_row([i['name'], i['best_case'],i['likely'],i['worst_case'],'=((D%s-B%s)/5)^2' % (n,n),"=E%s/'Summary'.$B$4" % n,"=(B%s+3*C%s+D%s)/5" % (n,n,n)]))
+			data_tbl.addElement(self.make_row([i['name'], i['best_case'],i['likely'],i['worst_case'],'=((D%s-B%s)/6)^2' % (n,n),"=E%s/'Summary'.$B$4" % n,"=(B%s+4*C%s+D%s)/6" % (n,n,n)]))
 
 		# Sort by uncertaincy
 
@@ -156,10 +156,6 @@ class GenEstimationTriplePoint(Artifact):
 
 		if items == 1:
 			sys.exit(0)
-
-
-		#calc_tbl.insertBefore(self.make_row(['Total estimated hours', '=SUM(Data.B2:Data.B%s' % items]), calc_2nd_row)
-		#calc_tbl.insertBefore(self.make_row(['Total estimated cost', '=SUM(Data.C2:Data.C%s' % items]), calc_2nd_row)
 
 		summary_tbl = Table(name="Summary")
 
