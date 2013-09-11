@@ -60,7 +60,7 @@ class GenPlannerExport(Artifact):
 			if isinstance(item, Requirement) or isinstance(item, RequirementPackage):
 				# Planner work is specified in seconds, reqy is shockingly less
 				# granular at a whopping hour, so convert it
-				if item.estimated_effort > 0:
+				if isinstance(item.estimated_effort, int) == True and item.estimated_effort > 0:
 					effort=int(item.estimated_effort) * 3600
 				else:
 					effort=0

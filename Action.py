@@ -159,6 +159,7 @@ def build_artifacts(artifact_name):
 	from requirements.artifact import GenRequirementList
 	from requirements.artifact import GenRequirementListRst
 	from requirements.artifact import GenEstimation
+	from requirements.artifact import GenEstimationTriplePoint
 	from requirements.artifact import GenPlannerExport
 
 	artifact_dir = os.path.join(get_repo_dir(), 'artifacts')
@@ -174,6 +175,11 @@ def build_artifacts(artifact_name):
 	if artifact_name == 'estimate' or artifact_name == 'all':
 		target_file = os.path.join(artifact_dir, '%sproject-estimation' % short_name)
 		report = GenEstimation.GenEstimation()
+		report.generate(target_file)
+
+	if artifact_name == 'estimatetriple' or artifact_name == 'all':
+		target_file = os.path.join(artifact_dir, '%sproject-estimation-triple-point' % short_name)
+		report = GenEstimationTriplePoint.GenEstimationTriplePoint()
 		report.generate(target_file)
 
 	if artifact_name == 'graph' or artifact_name == 'all':
@@ -211,7 +217,7 @@ def build_artifacts(artifact_name):
 		export = GenPlannerExport.GenPlannerExport()
 		export.generate(target_file)
 
-	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate' and artifact_name != 'planner' and artifact_name != 'basiclist' and artifact_name != 'basiclistrst' and artifact_name != 'listrst':
+	if artifact_name != 'all' and artifact_name != 'graph' and artifact_name != 'rtm' and artifact_name != 'list' and artifact_name != 'estimate' and artifact_name != 'planner' and artifact_name != 'basiclist' and artifact_name != 'basiclistrst' and artifact_name != 'listrst' and artifact_name != 'estimatetriple':
 		report_error(1, 'Unknown artifact type "%s"' % artifact_name)
 
 
