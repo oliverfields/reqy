@@ -25,6 +25,7 @@ from ..Utility import get_repo_dir, documents_by_type, make_path_relative, xstr,
 import odf.opendocument
 import odf.meta
 import odf.dc
+from operator import itemgetter
 #from odf.style import Style, TextProperties, TableColumnProperties, ParagraphProperties
 from odf.text import P
 from odf.table import Table, TableCell, TableRow
@@ -80,7 +81,7 @@ class GenEstimationTriplePoint(Artifact):
 		data_tbl = Table(name="Data")
 
 		# Data header row
-		data_tbl.addElement(self.make_row(['Name', 'Best case', 'Likely', 'Worst case', 'Varience', 'Uncertaincy']))
+		data_tbl.addElement(self.make_row(['Name', 'Best case', 'Likely', 'Worst case', 'Varience', 'Uncertaincy','Mean']))
 
 		items = 1
 		mean = 0
@@ -98,20 +99,24 @@ class GenEstimationTriplePoint(Artifact):
 				worst_case = float(triple_points[2])
 				varience = float(pow((worst_case-best_case)/5,2))
 				sum_varience += varience
-				mean += float((best_case+3*likely_case+worst_case)/5)
+				item_mean = float((best_case+3*likely_case+worst_case)/5)
+				mean += item_mean
 
-				est_data.append({'name': item._pretty_name, 'best_case': best_case, 'likely': likely_case, 'worst_case': worst_case, 'varience': varience}) 
+				est_data.append({'name': item._pretty_name, 'best_case': best_case, 'likely': likely_case, 'worst_case': worst_case, 'varience': varience,'mean': item_mean}) 
 				#print("%s - %s/%s/%s - %s" % (item._pretty_name, best_case, likely_case, worst_case, varience)) 
 
 		stddiv = float(sqrt(sum_varience))
 		stddiv_mean = float(stddiv/mean)
 
 		# Work out % varience of total
-		n = 1
 		for i in est_data:
-			n += 1
 			i['varience_of_total'] = float(i['varience']/sum_varience)
-			data_tbl.addElement(self.make_row([i['name'], i['best_case'],i['likely'],i['worst_case'],i['varience'],i['varience_of_total']]))
+
+		# Sort by uncertaincy
+		n = 1
+		for i in sorted(est_data, key=itemgetter('varience_of_total'), reverse=True):
+			n += 1
+			data_tbl.addElement(self.make_row([i['name'], i['best_case'],i['likely'],i['worst_case'],'=((D%s-B%s)/5)^2' % (n,n),"=E%s/'Summary'.$B$4" % n,"=(B%s+3*C%s+D%s)/5" % (n,n,n)]))
 
 		# Sort by uncertaincy
 
@@ -158,17 +163,25 @@ class GenEstimationTriplePoint(Artifact):
 
 		summary_tbl = Table(name="Summary")
 
-		summary_tbl.addElement(self.make_row(['Mean', mean]))
-		summary_tbl.addElement(self.make_row(['StnDiv', stddiv]))
-		summary_tbl.addElement(self.make_row(['StdDiv % of Mean', stddiv_mean]))
-		summary_tbl.addElement(self.make_row(['Sum varience', sum_varience]))
+		summary_tbl.addElement(self.make_row(['Mean', "=SUM(('Data'.G2:'Data'.G301)"]))
+		summary_tbl.addElement(self.make_row(['StnDiv', "=SQRT(B4)"]))
+		summary_tbl.addElement(self.make_row(['StdDiv % of Mean', '=B2/B1']))
+		summary_tbl.addElement(self.make_row(['Sum varience', "=SUM('Data'.E2:'Data'.E201)"]))
 
 		summary_tbl.addElement(self.make_row([]))
 
-		summary_tbl.addElement(self.make_row(['Name', 'Probability of completion','Effort']))
+		summary_tbl.addElement(self.make_row(['Name','Effort','Probability of completion']))
 
-		for p in distribution_data:
-			summary_tbl.addElement(self.make_row(p))
+		summary_tbl.addElement(self.make_row(['-3SD','=B1-3*B2','1']))
+		summary_tbl.addElement(self.make_row(['-2SD','=B1-2*B2','3']))
+		summary_tbl.addElement(self.make_row(['-1SD','=B1-B2','16']))
+		summary_tbl.addElement(self.make_row(['Mean','=B1','50']))
+		summary_tbl.addElement(self.make_row(['+1SD','=B1+B2','85']))
+		summary_tbl.addElement(self.make_row(['+2SD','=B1+2*B2','97']))
+		summary_tbl.addElement(self.make_row(['+3SD','=B1+3*B2','99']))
+
+		#summary_tbl.addElement(self.make_row([]))
+		#summary_tbl.addElement(self.make_row([mean,'effort >>>',"=NORMDIST(A15,B1,B2,1)",'probability project complete']))
 
 		ods.spreadsheet.addElement(summary_tbl)
 
