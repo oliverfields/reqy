@@ -81,7 +81,7 @@ class GenEstimationTriplePoint(Artifact):
 		data_tbl = Table(name="Data")
 
 		# Data header row
-		data_tbl.addElement(self.make_row(['Name', 'Best case', 'Likely', 'Worst case', 'Varience', 'Uncertaincy','Mean']))
+		data_tbl.addElement(self.make_row(['Name', 'Best case', 'Likely', 'Worst case', 'Varience', 'Uncertaincy','Mean', 'Scope']))
 
 		items = 1
 		mean = 0
@@ -102,8 +102,8 @@ class GenEstimationTriplePoint(Artifact):
 				item_mean = float((best_case+4*likely_case+worst_case)/6)
 				mean += item_mean
 
-				est_data.append({'name': item._pretty_name, 'best_case': best_case, 'likely': likely_case, 'worst_case': worst_case, 'varience': varience,'mean': item_mean}) 
-				#print("%s - %s/%s/%s - %s" % (item._pretty_name, best_case, likely_case, worst_case, varience)) 
+				est_data.append({'name': item._pretty_name, 'best_case': best_case, 'likely': likely_case, 'worst_case': worst_case, 'varience': varience,'mean': item_mean, 'scope': item.scope}) 
+				#print("%s - %s/%s/%s - %s - %s" % (item._pretty_name, best_case, likely_case, worst_case, varience, item.scope)) 
 
 		stddiv = float(sqrt(sum_varience))
 		stddiv_mean = float(stddiv/mean)
@@ -116,7 +116,7 @@ class GenEstimationTriplePoint(Artifact):
 		n = 1
 		for i in sorted(est_data, key=itemgetter('varience_of_total'), reverse=True):
 			n += 1
-			data_tbl.addElement(self.make_row([i['name'], i['best_case'],i['likely'],i['worst_case'],'=((D%s-B%s)/6)^2' % (n,n),"=E%s/'Summary'.$B$4" % n,"=(B%s+4*C%s+D%s)/6" % (n,n,n)]))
+			data_tbl.addElement(self.make_row([i['name'], i['best_case'],i['likely'],i['worst_case'],'=((D%s-B%s)/6)^2' % (n,n),"=E%s/'Summary'.$B$4" % n,"=(B%s+4*C%s+D%s)/6" % (n,n,n), i['scope']]))
 
 		# Sort by uncertaincy
 
