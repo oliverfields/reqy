@@ -58,7 +58,7 @@ class ConfigFile:
 	def is_triple_point_estimate(self, string):
 		""" Check if string is triple point estimate, or None """
 		if string == None:
-			return True 
+			return False 
 		else:
 			match = re.search(r'^[0-9]*/[0-9]*/[0-9]*$', string)
 			if match:
