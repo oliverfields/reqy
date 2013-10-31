@@ -90,13 +90,23 @@ class GenEstimationTriplePoint(Artifact):
 
 		for item in rt.get_tree_items():
 			if isinstance(item, Requirement) or isinstance(item, RequirementPackage):
-				if item.is_triple_point_estimate(item.estimated_effort) == False:
-					report_error(1, '%s: Estimated effort "%s" is not a valid triple point estimate (best case/likely/worst case).' % (item._file_path, item.estimated_effort))
-				items += 1
-				triple_points = item.estimated_effort.split('/')
-				best_case = float(triple_points[0])
-				likely_case = float(triple_points[1])
-				worst_case = float(triple_points[2])
+
+				if item.is_triple_point_estimate(item.estimated_effort):
+					items += 1
+					triple_points = item.estimated_effort.split('/')
+					best_case = float(triple_points[0])
+					likely_case = float(triple_points[1])
+					worst_case = float(triple_points[2])
+				else:
+					try:
+						report_notice('%s: Estimated effort "%s" is a single point, not triple point estimate (best case/likely/worst case).' % (item._file_path, item.estimated_effort))
+						items += 1
+						best_case = float(item.estimated_effort)
+						likely_case = float(item.estimated_effort)
+						worst_case = float(item.estimated_effort)
+					except:
+						report_error(1, '%s: Estimated effort "%s" is not a valid triple point estimate (best case/likely/worst case).' % (item._file_path, item.estimated_effort))
+
 				varience = float(pow((worst_case-best_case)/6,2))
 				sum_varience += varience
 				item_mean = float((best_case+4*likely_case+worst_case)/6)
