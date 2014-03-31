@@ -11,6 +11,9 @@ Documents: none
 Estimated effort: 400
 Estimated cost: 15000
 Note: A quick note
+Preconditions:
+  * Being
+  * Alive
 Rationale: The why is paramount
 Rejected by: testclient2
 Status: rejected

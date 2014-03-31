@@ -38,6 +38,7 @@ class Requirement(ConfigFile):
 		self.note = None
 		self.postponed_by = None
 		self.postponed_on = None
+		self.preconditions = None
 		self.priority = 'must'
 		self.rationale = None
 		self.rejected_by = None

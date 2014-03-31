@@ -118,6 +118,8 @@ Postponed by
   Can only be set if status is postponed. Person who decided to postpone requirement
 Postponed on
   Can only be set if status is postponed
+Preconditions
+  Any items required by the requirement
 Priority
   Indicate how important the requirement is, see below
 Rationale - Mandatory
