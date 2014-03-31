@@ -70,9 +70,9 @@ Environment
 
 The following environment variables are used.
 
-*LANG*
+*LC_ALL*
 
-  Set generated artifact language
+  Set generated artifact language.
 
 
 Examples
@@ -90,7 +90,7 @@ Generate all requirements:
 
 Generate Norwegian artifacts:
 
-  LANG=nb_NO.UTF-8 reqy artifact all
+  LC_ALL=nb_NO reqy artifact all
 
 
 Bugs and support
