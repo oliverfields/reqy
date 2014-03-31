@@ -24,11 +24,14 @@ import sys
 
 def init_localization():
 	'''prepare l10n'''
-	l10n_file = "%s/requirements/l10n/%s.mo" % (sys.path[0], locale.getdefaultlocale()[0])
+	locale_str = locale.getdefaultlocale()[0]
+	l10n_file = "%s/requirements/l10n/%s.mo" % (sys.path[0], locale_str)
 
 	try:
 		trans = gettext.GNUTranslations(open( l10n_file, "rb" ) )
 	except IOError:
+		if locale_str != 'en_US':
+			Utility.report_warning('Unable to find translation for %s, using default (en_US)' % (locale_str))
 		trans = gettext.NullTranslations()
 
 	trans.install(unicode=1)

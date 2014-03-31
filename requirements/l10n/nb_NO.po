@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Reqy\n"
 "Report-Msgid-Bugs-To: oliver@phnd.net\n"
 "POT-Creation-Date: 2013-02-02 23:39:35+01:00\n"
-"PO-Revision-Date: 2013-02-22 15:35+0100\n"
+"PO-Revision-Date: 2014-03-31 20:36+0100\n"
 "Last-Translator: Oliver Fields <oliver@phnd.net>\n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb\n"
@@ -39,6 +39,9 @@ msgstr "Begrunnelse"
 
 msgid "Delineation"
 msgstr "Avgrensning"
+
+msgid "Preconditions"
+msgstr "Forutsetning"
 
 msgid "Note"
 msgstr "Notat"
