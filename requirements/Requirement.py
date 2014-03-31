@@ -79,7 +79,7 @@ class Requirement(ConfigFile):
 		if self.is_valid_priority(self.priority) == False:
 			Utility.report_error(1, '%s: Priority "%s" is not valid' % (self._file_path, self.priority))
 
-		if self.description == '' or self.rationale == None:
+		if self.description == '' or self.description == None:
 			Utility.report_error(1, '%s: Description attribute is empty or missing' % (self._file_path))
 
 		if self.rationale == '' or self.rationale == None:
