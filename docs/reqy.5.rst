@@ -126,7 +126,7 @@ Rejected by - Mandatory, if status rejected
   Can only be set if status is rejected. Person that rejected requirement, must be valid stakeholder defined in the configuration
 Rejected on
   Can only be set if status is rejected. The date format is not configurable
-Scope - Mandatory
+Delineation - Mandatory
   Describe how the requirement is deliniated/limited
 Status
   See below for list of status codes

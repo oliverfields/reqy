@@ -228,12 +228,12 @@ class GenRequirementListRst(Artifact):
 					if item.priority:
 						self.contents +=  self.attribute_line(_('Priority'), item.display_priority().capitalize())
 
-				# Description, rationale, scope and notes
+				# Description, rationale, delineation and notes
 				self.contents += self.attribute_line(_('Description'), item.description)
 				if item.rationale != 'none':
 					self.contents += self.attribute_line(_('Rationale'), item.rationale)
-				if item.scope != 'none':
-					self.contents += self.attribute_line(_('Scope'), item.scope)
+				if item.delineation != 'none':
+					self.contents += self.attribute_line(_('Delineation'), item.delineation)
 
 				if item.note:
 					self.contents += self.attribute_line(_('Note'), item.note)

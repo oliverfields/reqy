@@ -42,7 +42,7 @@ msgstr ""
 #
 # File: ../artifact/GenRequirementList.py, line: 286
 # File: ../artifact/GenRequirementListRst.py, line: 234
-msgid "Scope"
+msgid "Delineation"
 msgstr ""
 #
 # File: ../artifact/GenRequirementList.py, line: 289

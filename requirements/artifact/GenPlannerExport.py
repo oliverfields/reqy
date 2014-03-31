@@ -66,7 +66,7 @@ class GenPlannerExport(Artifact):
 					effort=0
 				name=item._name.replace('-', ' ')
 				name=name.capitalize()
-				planner_note = saxutils.quoteattr("Reqy requirement ref: " + item._id + "\n\n" + item.description + "\n\n" + item.rationale + "\n\n" + item.scope)
+				planner_note = saxutils.quoteattr("Reqy requirement ref: " + item._id + "\n\n" + item.description + "\n\n" + item.rationale + "\n\n" + item.delineation)
 				tasks+='<task id="%s" name="%s" note=%s work="%s" start="%s" end="%s" />\n' % (counter, name, planner_note, effort, timestamp, timestamp)
 				counter+=1
 		tasks+='</tasks>'

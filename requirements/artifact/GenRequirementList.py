@@ -278,12 +278,12 @@ class GenRequirementList(Artifact):
 					if item.priority:
 						self.add_attribute_row(tbl, _('Priority'), item.display_priority().capitalize())
 
-				# Description, rationale, scope and notes
+				# Description, rationale, delineation and notes
 				self.add_attribute_row(tbl, _('Description'), item.description)
 				if item.rationale != 'none':
 					self.add_attribute_row(tbl, _('Rationale'), item.rationale)
-				if item.scope != 'none':
-					self.add_attribute_row(tbl, _('Scope'), item.scope)
+				if item.delineation != 'none':
+					self.add_attribute_row(tbl, _('Delineation'), item.delineation)
 
 				if item.note:
 					self.add_attribute_row(tbl, _('Note'), item.note)

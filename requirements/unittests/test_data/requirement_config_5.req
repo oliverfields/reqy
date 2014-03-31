@@ -1,5 +1,5 @@
 Description: This does not fail because status is rejected and there is a rejected by
-Scope: none
+Delineation: none
 Rationale: To test
 Status: rejected
 Status reason: Something 

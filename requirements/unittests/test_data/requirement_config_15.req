@@ -1,5 +1,5 @@
 # Check that valid priority
-Scope: none
+Delineation: none
 Approved by: testuser
 Description: Must enforce that obligatory key-values pairs exist and check valid values.
 Rationale: Halt on errors and require user to fix them

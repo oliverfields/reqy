@@ -42,7 +42,7 @@ class Requirement(ConfigFile):
 		self.rationale = None
 		self.rejected_by = None
 		self.rejected_on = None
-		self.scope = None
+		self.delineation = None
 		self.status = 'elaboration'
 		self.status_reason = None
 		self.title = None
@@ -85,8 +85,8 @@ class Requirement(ConfigFile):
 		if self.rationale == '' or self.rationale == None:
 			Utility.report_error(1, '%s: Rationale attribute is empty or missing' % (self._file_path))
 
-		if self.scope == '' or self.scope == None:
-			Utility.report_error(1, '%s: Scope attribute is empty or missing' % (self._file_path))
+		if self.delineation == '' or self.delineation == None:
+			Utility.report_error(1, '%s: Delineation attribute is empty or missing' % (self._file_path))
 
 		if self.is_integer(self.estimated_effort) == False and self.is_triple_point_estimate(self.estimated_effort) == False:
 			Utility.report_error(1, '%s: Estimated effort field has value "%s", but it must be either an integer or a triple point (best/likely/worst)' % (self._file_path, self.estimated_effort))

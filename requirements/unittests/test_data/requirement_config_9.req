@@ -1,5 +1,5 @@
 Description: Test for multi link list that the links are on following lines 
-Scope: none
+Delineation: none
 Rationale: To test
 Documents:
   class/apple.uml,

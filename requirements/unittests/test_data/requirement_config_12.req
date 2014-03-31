@@ -1,5 +1,5 @@
 # Ensure Created by attrbute gets value test user
-Scope: none
+Delineation: none
 Description: Check both document links load
 Rationale: to test
 Documents:

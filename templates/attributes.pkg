@@ -12,7 +12,7 @@ Description:
 Rationale:
 
 # Describe how the requirement is deliniated/limited. Mandatory.
-Scope:
+Delineation:
 
 # Requirement status, see below for list of status codes. Mandatory, unless status is elaboration.
 # Status codes: elaboration, implementation, rejected, approved or postponed

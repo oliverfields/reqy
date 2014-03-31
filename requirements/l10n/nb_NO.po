@@ -37,8 +37,8 @@ msgstr "Beskrivelse"
 msgid "Rationale"
 msgstr "Begrunnelse"
 
-msgid "Scope"
-msgstr "Omfang"
+msgid "Delineation"
+msgstr "Avgrensning"
 
 msgid "Note"
 msgstr "Notat"

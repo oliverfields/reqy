@@ -1,5 +1,5 @@
 Description: Test for single link list that the link is on next line 
-Scope: none
+Delineation: none
 Rationale: To test
 Status: rejected
 Status reason: something
