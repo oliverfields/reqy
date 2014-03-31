@@ -280,7 +280,7 @@ class GenRequirementList(Artifact):
 
 				# Description, rationale, delineation and notes
 				self.add_attribute_row(tbl, _('Description'), item.description)
-				if item.rationale != None:
+				if item.rationale != 'none':
 					self.add_attribute_row(tbl, _('Rationale'), item.rationale)
 				if item.delineation != None:
 					self.add_attribute_row(tbl, _('Delineation'), item.delineation)
